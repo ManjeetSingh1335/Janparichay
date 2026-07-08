@@ -1,0 +1,78 @@
+.tc-page {
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Top info banner */
+.tc-banner {
+  background: #4a5568;
+  color: #e2e8f0;
+  padding: 20px 48px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.tc-banner strong {
+  color: #90cdf4;
+}
+
+/* Main content area */
+.tc-body {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 32px 60px;
+}
+
+/* Section headings like "TERMS OF SERVICE" */
+.tc-heading {
+  font-size: 40px;
+  font-weight: 300;
+  color: #1a202c;
+  margin: 40px 0 20px;
+  letter-spacing: 1px;
+}
+
+/* Body paragraphs */
+.tc-para {
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+/* Bullet / asterisk box */
+.tc-bullet-box {
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin: 28px 0;
+  background: #fff;
+}
+.tc-bullet-box p {
+  font-size: 13.5px;
+  color: #4a5568;
+  line-height: 1.8;
+  margin: 0 0 12px;
+}
+.tc-bullet-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* Back button */
+.tc-back-row {
+  margin-top: 40px;
+}
+.tc-back-btn {
+  background: #2b6cb0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tc-back-btn:hover {
+  background: #2c5282;
+}
