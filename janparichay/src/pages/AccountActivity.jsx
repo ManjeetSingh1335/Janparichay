@@ -52,11 +52,11 @@ function AccountActivity() {
   const [limitRecent, setLimitRecent] = useState(6)
   const [limitRemembered, setLimitRemembered] = useState(6)
   
-  // Sort states
+  //sort states
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
   const [sortConfigRemembered, setSortConfigRemembered] = useState({ key: null, direction: 'desc' });
 
-  // Pagination states
+  //pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageRemembered, setCurrentPageRemembered] = useState(1);
 
@@ -102,7 +102,7 @@ function AccountActivity() {
       }
     }
     
-    // Generate default/current active session to ensure real data is shown
+    //generate default/current active session to ensure real data is shown
     const now = new Date();
     const pad = (num) => String(num).padStart(2, '0');
     const timeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;

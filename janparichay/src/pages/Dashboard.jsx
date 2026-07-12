@@ -236,10 +236,10 @@ function Dashboard() {
                   }}
                 />
                 <div className={`chartjs-ring-label inner-ring-label ${hoveredDataset === 2 ? 'active' : ''}`}>
-                  └──────────────{latestActivity.browser}
+                  └───────{latestActivity.browser}
                 </div>
                 <div className={`chartjs-ring-label outer-ring-label ${hoveredDataset === 0 ? 'active' : ''}`}>
-                  └──────────────{latestActivity.os}
+                  └───────{latestActivity.os}
                 </div>
               </div>
             </div>

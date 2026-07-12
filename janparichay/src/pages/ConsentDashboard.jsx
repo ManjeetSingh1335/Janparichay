@@ -54,7 +54,7 @@ export default function ConsentDashboard() {
   const handleRevokeIndividual = (id) => {
     if (confirm('Are you sure you want to revoke consent for this service?')) {
       const updated = consents.filter(item => item.id !== id)
-        .map((item, index) => ({ ...item, sno: index + 1 })); // recalculate serial numbers
+        .map((item, index) => ({ ...item, sno: index + 1 })); 
       setConsents(updated);
       localStorage.setItem('consent_data', JSON.stringify(updated));
     }

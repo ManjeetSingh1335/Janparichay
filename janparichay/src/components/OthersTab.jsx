@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UAParser } from 'ua-parser-js'
+import { useLoginSession } from '../hooks/useLoginSession'
 import Input from './Input'
 import PasswordInput from './PasswordInput'
 
@@ -13,7 +13,8 @@ const LABEL_MAP = {
   'Service Id':    'Enter Service Id',
   'PAN':           'Enter PAN Number',
   'DL':            'Enter DL Number',
-} 
+}
+
 const NO_PASSWORD_METHODS = ['Aadhaar']
 
 export default function OthersTab({ onForgotPassword, onForgetUserId }) {
@@ -23,23 +24,8 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
   const [passlessAuth, setPasslessAuth] = useState(false)
   const [consent, setConsent] = useState(false)
   const navigate = useNavigate()
-  
-  const [ipData, setIpData] = useState({ ip: 'XXX.XXX.XX.X', city: '', country: 'India' });
 
-  useEffect(() => {
-    fetch('/api/ip-info')
-      .then(res => res.json())
-      .then(data => {
-        if (data.ip) {
-          setIpData({
-            ip: data.ip,
-            city: data.city || 'Delhi',
-            country: data.country_name || 'India'
-          });
-        }
-      })
-      .catch(() => {});
-  }, []);
+  const { recordSession } = useLoginSession()
 
   const needsPassword = !NO_PASSWORD_METHODS.includes(method) && !passlessAuth
   const canSubmit = identifier && consent && (!needsPassword || password)
@@ -48,86 +34,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
     e.preventDefault()
     if (!canSubmit) return
 
-    //record login session
-    const now = new Date();
-    const pad = (num) => String(num).padStart(2, '0');
-    const timeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-    const existing = localStorage.getItem('user_devices');
-    let devices = [];
-    if (existing) {
-      try {
-        devices = JSON.parse(existing);
-      } catch (err) {
-        devices = [];
-      }
-    }
-    const parser = new UAParser();
-    const result = parser.getResult();
-    let os = result.os.name || 'Windows';
-    if (os === 'Mac OS') os = 'macOS';
-
-    const browser = result.browser.name || 'Chrome';
-
-    const existingDeviceIndex = devices.findIndex(d => d.os === os && d.browser === browser);
-    if (existingDeviceIndex !== -1) {
-      devices[existingDeviceIndex].time = timeStr;
-    } else {
-      devices.push({
-        id: Date.now(),
-        os,
-        browser,
-        time: timeStr
-      });
-    }
-    devices.sort((a, b) => b.time.localeCompare(a.time));
-    localStorage.setItem('user_devices', JSON.stringify(devices));
-
-    //record recent activity
-    const validTime = new Date(now.getTime() + 12 * 60 * 60 * 1000);
-    const validStr = `${pad(validTime.getDate())}-${pad(validTime.getMonth() + 1)}-${validTime.getFullYear()} ${pad(validTime.getHours())}:${pad(validTime.getMinutes())}:${pad(validTime.getSeconds())}`;
-    
-    let city = ipData.city;
-    if (city === 'Bengaluru') {
-      city = 'Delhi';
-    }
-    const locationStr = `${city},${ipData.country}`;
-
-    const existingAct = localStorage.getItem('recent_activities');
-    let activities = [];
-    if (existingAct) {
-      try {
-        activities = JSON.parse(existingAct);
-      } catch (e) {
-        activities = [];
-      }
-    }
-    activities = activities.map(act => ({ ...act, isCurrent: false }));
-
-    const existingActIndex = activities.findIndex(act => act.os === os && act.browser === browser);
-    if (existingActIndex !== -1) {
-      activities[existingActIndex].loginTime = timeStr;
-      activities[existingActIndex].validUpto = validStr;
-      activities[existingActIndex].location = locationStr;
-      activities[existingActIndex].ip = ipData.ip;
-      activities[existingActIndex].isCurrent = true;
-      const [updatedAct] = activities.splice(existingActIndex, 1);
-      activities.unshift(updatedAct);
-    } else {
-      const newActivity = {
-        id: Date.now(),
-        os,
-        ip: ipData.ip,
-        browser,
-        location: locationStr,
-        loginTime: timeStr,
-        validUpto: validStr,
-        loginWith: method,
-        loginService: 'JanParichay',
-        isCurrent: true
-      };
-      activities.unshift(newActivity);
-    }
-    localStorage.setItem('recent_activities', JSON.stringify(activities));
+    recordSession(method)
 
     localStorage.setItem('mp_user', JSON.stringify({
       username: identifier,
@@ -138,7 +45,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
   }
 
   return (
-    <form onSubmit={handleSignIn} noValidate> 
+    <form onSubmit={handleSignIn} noValidate>
       <div className="mb-3">
         <select
           className="mp-select-plain"
@@ -151,7 +58,6 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
         </select>
       </div>
 
-     
       <Input
         id="others-id"
         label={LABEL_MAP[method]}
@@ -161,7 +67,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
         type={method === 'Email' || method === 'Govt Email Id' ? 'email' : 'text'}
         placeholder={LABEL_MAP[method]}
       />
- 
+
       {needsPassword && (
         <PasswordInput
           id="others-password"
@@ -171,7 +77,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
           onChange={e => setPassword(e.target.value)}
         />
       )}
- 
+
       {!NO_PASSWORD_METHODS.includes(method) && (
         <div className="d-flex justify-content-between mb-3" style={{ marginTop: -6 }}>
           <a
@@ -190,7 +96,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
           </a>
         </div>
       )}
- 
+
       {!NO_PASSWORD_METHODS.includes(method) && (
         <div className="form-check mb-2">
           <input
