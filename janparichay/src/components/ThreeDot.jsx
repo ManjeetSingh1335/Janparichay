@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const MENU_ITEMS = [
-  { label: 'About Us',              icon: 'bi-card-text',           path: null },
+  { label: 'About Us',              icon: 'bi-card-text',           path: '/about' },
   { label: 'User Manual',           icon: 'bi-box-arrow-in-right',  path: null },
   { label: 'JanParichay Offerings', icon: 'bi-box-arrow-in-right',  path: null },
-  { label: 'Password Policy',       icon: 'bi-box-arrow-in-right',  path: null },
-  { label: 'Application Policies',  icon: 'bi-link-45deg',          path: null },
+  { label: 'Password Policy',       icon: 'bi-box-arrow-in-right',  path: '/application-policies' },
+  { label: 'Application Policies',  icon: 'bi-link-45deg',          path: '/application-policies' },
   { label: 'Terms & Conditions',    icon: 'bi-file-text',           path: '/terms-conditions' },
-  { label: 'FAQ',                   icon: 'bi-question-circle',     path: null },
+  { label: 'FAQ',                   icon: 'bi-question-circle',     path: '/faq' },
 ]
 
 export default function ThreeDot({ open, onClose }) {

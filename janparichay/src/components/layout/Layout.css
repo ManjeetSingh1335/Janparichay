@@ -1,4 +1,4 @@
-/* Global Reset / Utilities for layout */
+/*global reset/utilities for layout*/
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -7,8 +7,8 @@ html, body, #root {
 .layout-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;           /* fixed viewport height, not min-height */
-  overflow: hidden;        /* page itself never scrolls */
+  height: 100dvh;           
+  overflow: hidden;        
   font-family: 'Inter', 'Outfit', sans-serif;
   background-color: white;
 }
@@ -19,7 +19,7 @@ html, body, #root {
   flex-direction: row;
   min-height: 0;
   overflow: hidden;
-  padding-top: 92px;         /* offset for fixed navbar */
+  padding-top: 92px;        
 }
 
 .layout-content {
@@ -30,7 +30,7 @@ html, body, #root {
   min-height: 0;
 }
 
-/* Navbar Styles */
+/*navbar styles*/
 .navbar-container {
   position: fixed;
   top: 0;
@@ -189,7 +189,7 @@ html, body, #root {
   margin-right: 6px;
 }
 
-/* Upload Profile Pic Modal */
+/*upload profile pic modal*/
 .upload-modal-overlay {
   position: fixed;
   top: 0;
@@ -342,7 +342,7 @@ html, body, #root {
   color: #0f172a;
 }
 
-/* Active and Non-active NavLinks */
+/*active and non-active navLinks*/
 .sidebar-nav a.active-link {
   background-color: #e2e8f0; 
   color: #0f172a;
@@ -354,7 +354,57 @@ html, body, #root {
   color: #475569;
 }
 
-/* Footer Styles */
+/*infinite logo slider styles*/
+.footer-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.logo-slider-wrapper {
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 0;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo-slider-track {
+  display: flex;
+  width: calc(180px * 24); 
+  animation: logoScroll 30s linear infinite;
+}
+
+.logo-slider-item {
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.logo-slider-item img {
+  height: 38px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@keyframes logoScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-180px * 8));
+  }
+}
+
+/*footer styles*/
 .footer-container {
   background-color: #124369;
   padding: 10px 24px;
@@ -403,7 +453,7 @@ html, body, #root {
   user-select: none;
 }
 
-/* ── Hamburger button ── */
+/*hamburger button*/
 .hamburger-btn {
   display: none;
   flex-direction: column;
@@ -427,7 +477,7 @@ html, body, #root {
   border-radius: 2px;
 }
 
-/* ── Mobile drawer overlay ── */
+/*mobile drawer overlay*/
 .mobile-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -439,7 +489,7 @@ html, body, #root {
   top: 0;
   right: 0;
   width: 260px;
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #fff;
   box-shadow: -4px 0 20px rgba(0,0,0,0.15);
   display: flex;
@@ -464,6 +514,12 @@ html, body, #root {
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+.mobile-drawer-avatar:hover {
+  transform: scale(1.05);
+  border-color: rgba(255,255,255,0.8);
+  box-shadow: 0 0 8px rgba(255,255,255,0.2);
 }
 .mobile-drawer-avatar-img {
   width: 100%;
@@ -486,11 +542,22 @@ html, body, #root {
   color: #90cdf4;
   margin: 0;
 }
-/* Upload row */
+
+/*upload row*/
 .mobile-drawer-upload {
-  padding: 14px 20px;
-  border-bottom: 1px solid #e2e8f0;
+  max-height: 0;
+  padding: 0 20px;
+  opacity: 0;
+  overflow: hidden;
+  border-bottom: 0 solid #e2e8f0;
   background: #f8fafc;
+  transition: max-height 0.25s ease-out, padding 0.25s ease-out, opacity 0.2s ease-out, border-bottom-width 0.25s ease-out;
+}
+.mobile-drawer-upload.open {
+  max-height: 80px;
+  padding: 14px 20px;
+  opacity: 1;
+  border-bottom: 1px solid #e2e8f0;
 }
 .mobile-drawer-upload-btn {
   background: none;
@@ -502,6 +569,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
 }
 .mobile-drawer-upload-btn:hover {
   color: #2b6cb0;
@@ -552,50 +620,48 @@ html, body, #root {
   border-left: 4px solid #124369;
 }
 
-/* Mobile Responsive Adjustments */
+/*responsive*/
 @media (max-width: 765px) {
   .hamburger-btn {
     display: flex;
   }
 
-  /* ── Unlock full-page scrolling on mobile ── */
   html, body, #root {
-    height: auto;
-    overflow-x: hidden;
+    height: 100%;
+    overflow: hidden;
   }
 
   .layout-container {
-    height: auto;
-    min-height: 100vh;
-    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   .layout-body {
+    display: flex;
     flex-direction: column;
-    overflow: visible;
-    min-height: auto;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
   }
 
   .layout-content {
-    overflow-y: visible;
-    /* fill the remainder of the viewport so no body-background gap shows */
-    min-height: calc(100vh - 92px);
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     background-color: #ffffff;
-    padding-bottom: 24px;   /* body handles footer clearance below */
+    padding-bottom: 24px;
+    min-height: 0;
   }
 
-  /* ── KEY FIX: body is the scroll container on mobile ──
-     padding-bottom must match the actual footer height          */
   body {
-    padding-bottom: 100px;
-    background-color: #ffffff; /* override light-blue global bg on small screens */
+    background-color: #ffffff;
   }
 
-  /* ── Shrink footer + fix it to bottom on mobile ── */
+  /*footer static at bottom of viewport flexbox*/
   .footer-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: static;
     width: 100%;
     padding: 8px 12px;
   }
@@ -608,7 +674,6 @@ html, body, #root {
     gap: 4px;
   }
 
-  /* hide the old sidebar on mobile — drawer replaces it */
   .sidebar-container {
     display: none;
   }
@@ -625,7 +690,7 @@ html, body, #root {
     display: none;
   }
 
-  /* ── Upload modal on mobile: scrollable, below navbar ── */
+  /*upload modal on mobile:can scroll*/
   .upload-modal-overlay {
     align-items: flex-start;
     overflow-y: auto;

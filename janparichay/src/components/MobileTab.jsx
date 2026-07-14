@@ -15,11 +15,11 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
 
   const canSubmit = mobile.length >= 7 && consent && (passlessAuth || password)
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault()
     if (!canSubmit) return
 
-    recordSession('Mobile')
+    await recordSession('Mobile')
 
     localStorage.setItem('mp_user', JSON.stringify({
       username: mobile,

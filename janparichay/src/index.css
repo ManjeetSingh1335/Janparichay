@@ -22,7 +22,7 @@ body {
   font-family: 'Segoe UI', Roboto, Arial, sans-serif;
   background-color: #ffffff;
   color: var(--mp-text);
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
 }
 
@@ -32,7 +32,7 @@ a { text-decoration: none; }
    AUTH PAGES (Login / Signup / Forgot)
 ══════════════════════════════════════ */
 .auth-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: linear-gradient(145deg, #b8d9f0 0%, #daeaf5 50%, #c5e0f0 100%);
   display: flex;
   flex-direction: column;
@@ -945,7 +945,7 @@ img, canvas, svg { max-width: 100%; }
 
   /* Account/Consent tables */
   .activity-table-wrapper,
-  .consent-table-wrapper { overflow-x: auto; }
+  .consent-table-wrapper { overflow-x: auto; flex-shrink: 0; }
 }
 
 /* ══════════════════════════════════════
@@ -954,9 +954,9 @@ img, canvas, svg { max-width: 100%; }
 @media (max-width: 765px) {
 
   /* ─ Layout ─ */
-  .layout-container { height: auto; overflow: visible; }
-  .layout-body      { flex-direction: column; overflow: visible; }
-  .layout-content   { padding: 16px; overflow-y: visible; min-height: auto; }
+  .layout-container { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+  .layout-body      { display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
+  .layout-content   { display: flex; flex-direction: column; flex: 1; padding: 16px; overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; }
 
   /* ─ Auth page ─ */
   .auth-page { padding: 16px 12px 32px; }
@@ -990,7 +990,7 @@ img, canvas, svg { max-width: 100%; }
 
   /* ─ Activity & Consent tables ─ */
   .activity-table-wrapper,
-  .consent-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .consent-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-shrink: 0; }
   .activity-data-table,
   .consent-data-table   { min-width: 520px; }
 
@@ -1144,6 +1144,6 @@ img, canvas, svg { max-width: 100%; }
   .mobile-drawer { width: 100%; }
   .navbar-logo { height: 32px; }
   .tc-heading { font-size: 20px; }
-  /* extra footer clearance on tiny screens where footer can wrap to 2 lines */
-  .layout-content { padding-bottom: 140px; }
+  /* footer is static so no extra bottom padding is needed */
+  .layout-content { padding-bottom: 16px; }
 }

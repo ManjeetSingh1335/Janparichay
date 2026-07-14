@@ -22,8 +22,6 @@
   color: #124369;
 }
 
-
-
 .services-panel {
   display: flex;
   flex-direction: column;
@@ -57,7 +55,7 @@
 /*grid layout*/
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 333.3px 1fr 388.3px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
   padding-top: 10px ;
   align-items: start;
@@ -366,7 +364,7 @@
   background-color: #be123c;
 }
 
-/*toggle switch*/
+/*toggle-switch*/
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -422,7 +420,7 @@
 
 }
 
-/* ── Chart.js Doughnut ── */
+/*concentric circle*/
 .donut-chart-wrapper {
   display: flex;
   flex-direction: column;
@@ -440,11 +438,9 @@
 .chartjs-ring-label {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
   font-family: monospace, monospace;
   font-size: 12.5px;
   color: #64748b;
-  padding: 7px 10px 10px 100px;
   opacity: 0.8;
   pointer-events: none;
   transition: all 0.15s ease-in-out;
@@ -458,14 +454,14 @@
 }
 
 .inner-ring-label {
-  top: 110px;
+  top: 73.125%;
 }
 
 .outer-ring-label {
-  top: 134px;
+  top: 88.125%;
 }
 
-/*Responsive*/
+/*responsive*/
 @media (max-width: 1100px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
@@ -479,7 +475,6 @@
   }
 }
 
-/*dashboard extended responsive */
 @media (max-width: 765px) {
   .dashboard-section-header {
     margin-left: -16px;
@@ -492,7 +487,6 @@
   .panel-title-1,
   .panel-title-2 { font-size: 16px; }
   .login-activity-row { flex-wrap: wrap; gap: 16px; }
-  .chartjs-ring-label { padding: 7px 10px 10px 400px; }
   .chartjs-donut-container { width: 130px; height: 130px; }
 }
 
@@ -506,7 +500,6 @@
   .settings-row { padding: 10px 12px; }
   .settings-label { font-size: 13px; }
   .chartjs-donut-container { width: 110px; height: 110px; }
-  .chartjs-ring-label { padding: 0.1px 10px 10px 170px; }
   .dashboard-panel-1,
   .dashboard-panel-2,
   .settings-column { padding: 14px; }
@@ -518,5 +511,4 @@
   .panel-title-1,
   .panel-title-2 { font-size: 14px; }
   .chartjs-donut-container { width: 90px; height: 90px; }
-  .chartjs-ring-label { padding: 0.1px 10px 10px 150px; }
 }

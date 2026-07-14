@@ -3,6 +3,7 @@ import './Layout.css'
 import {NavLink} from 'react-router-dom'
 
 function Sidebar() {
+
   const links=[
     {
       to: "/dashboard",
@@ -30,7 +31,7 @@ function Sidebar() {
             key={link.to}
             to={link.to}
             end={link.to==="/dashboard"}
-            className={({ isActive }) => (isActive ? "active-link" : "non-active-link")}
+            className={({isActive}) => (isActive? "active-link" : "non-active-link")}
           >
             {link.label}
           </NavLink>

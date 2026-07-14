@@ -1,0 +1,122 @@
+.user-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    height: 62px;
+    width: 62px;
+    border-radius: 30px;
+    background-color: #3a7b93;
+    color: #fff;
+    border: none;
+    padding: 0;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1050;
+    overflow: hidden;
+    /* transition: width 0.3s ease, padding 0.3s ease, justify-content 0.3s ease; */
+}
+
+.user-fab-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.user-fab-text {
+    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 500;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-width 0.3s ease, opacity 0.2s ease, margin-left 0.3s ease;
+}
+
+.user-fab:hover {
+  width: auto;
+  padding: 0 20px 0 18px;
+  justify-content: flex-start;
+}
+
+.user-fab:hover .user-fab-text {
+  max-width: 220px;
+  opacity: 1;
+  margin-left: 10px;
+}
+
+
+.user-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 520px;
+  max-width: 90vw;
+  background-color: #eef1f4;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+  z-index: 1052;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+
+.user-grid {
+    background-color: whitesmoke;
+}
+.user-panel.open {
+  transform: translateX(0);
+}
+
+.user-header {
+  background-color: #3a7b93;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.user-card {
+  background-color: white;
+  border: 1px solid #e0e4e8 !important;
+  border-radius: 8px;
+  padding: 18px 6px;
+  color: #333;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  min-height: 100px;
+}
+
+.user-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-card.active {
+  border-color: #3a7b93 !important;
+  background-color: #eaf4f8;
+}
+
+.user-card-icon {
+  font-size: 1.6rem;
+  color: #3a7b93;
+}
+
+.user-card-label {
+  font-size: 0.78rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+.user-reset-btn {
+  background-color: #cfe8f5;
+  color: #1a3a4a;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+}
+
+.user-reset-btn:hover {
+  background-color: #bcdcee;
+  color: #1a3a4a;
+}

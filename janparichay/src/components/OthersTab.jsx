@@ -30,11 +30,11 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
   const needsPassword = !NO_PASSWORD_METHODS.includes(method) && !passlessAuth
   const canSubmit = identifier && consent && (!needsPassword || password)
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault()
     if (!canSubmit) return
 
-    recordSession(method)
+    await recordSession(method)
 
     localStorage.setItem('mp_user', JSON.stringify({
       username: identifier,

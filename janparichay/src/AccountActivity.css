@@ -29,7 +29,7 @@
   margin-left: 2px;
 }
 
-/*Analytics Logo styling*/
+/*analytics logo styling*/
 .analytics-logo-wrapper {
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@
   display: block;
 }
 
-/*logout button(RED)*/
+/*logout button*/
 .btn-logout-all {
   background-color: #dc2626; /* Crimson red */
   color: #ffffff;
@@ -59,7 +59,7 @@
   background-color: #b91c1c;
 }
 
-/*table Controls*/
+/*table controls*/
 .table-controls-row {
   display: flex;
   justify-content: space-between;
@@ -76,11 +76,12 @@
   background-color: #ffffff;
 }
 
-/*styled Table*/
+/*styled table*/
 .activity-table-wrapper {
   overflow-x: auto;
   border-radius: 6px;
   border: 1px solid #cbd5e1;
+  flex-shrink: 0;
 }
 .activity-data-table {
   width: 100%;
@@ -120,7 +121,7 @@
   font-weight: 500;
 }
 
-/*table Footer / Pagination*/
+/*table-pag.*/
 .table-footer-row {
   display: flex;
   justify-content: space-between;
@@ -162,7 +163,7 @@
   font-weight: 600;
 }
 
-/*user Devices Card Grid*/
+/*user devices*/
 .user-devices-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -240,7 +241,7 @@
   margin-top: 16px;
 }
 
-/*Grey remove all button*/
+/*remove all button*/
 .btn-remove-all-devices {
   background-color: #cbd5e1;
   color: #64748b;
@@ -262,7 +263,8 @@
   justify-content: flex-end;
   padding: 12px 0 4px;
 }
-/*custom Interactive Sorting and Highlights*/
+
+
 .activity-data-table th {
   cursor: pointer;
 
@@ -318,13 +320,13 @@
   cursor: not-allowed;
 }
 
-/* ── AccountActivity Responsive ── */
+/*responsive*/
 @media (max-width: 1024px) {
   .activity-section { padding: 20px; }
 }
 
 @media (max-width: 765px) {
-  /* Analytics toolbar stack */
+  
   .activity-analytics-toolbar {
     flex-direction: column;
     align-items: flex-start;
@@ -332,30 +334,33 @@
     margin-left: 0;
     margin-top: 16px;
   }
-  /* Device cards: 2 columns on tablet */
+  .btn-logout-all {
+    align-self: flex-end;
+  }
+ 
   .device-cards-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  /* Table header negative margins adjust */
+  
   .activity-section-header {
     margin: -20px -20px 16px -20px;
   }
-  /* Load remembered row */
+
   .btn-load-remembered-row {
-    justify-content: center;
+    justify-content: flex-end;
   }
-  /* Remove-all row */
+
   .btn-remove-all-row {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
-  /* Table footer stack */
+
   .table-footer-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-  /* Table controls stack */
+
   .table-controls-row {
     flex-direction: column;
     align-items: flex-start;
@@ -364,28 +369,28 @@
 }
 
 @media (max-width: 480px) {
-  /* Device cards: 1 column on phone */
+  
   .device-cards-grid {
     grid-template-columns: 1fr;
   }
-  /* Full-width load button */
+  
   .btn-load-remembered {
     width: 100%;
     text-align: center;
   }
-  /* Smaller table text */
+  
   .activity-data-table th,
   .activity-data-table td {
     font-size: 12px;
     padding: 8px 10px;
   }
-  /* Pagination buttons */
+
   .btn-pagination-nav {
     width: 28px;
     height: 28px;
     font-size: 12px;
   }
-  /* Section */
+
   .activity-section {
     padding: 16px;
     border-radius: 8px;

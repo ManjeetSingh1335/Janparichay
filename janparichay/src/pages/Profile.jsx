@@ -348,7 +348,9 @@ function Profile() {
   const [showCountryDropdown, setShowCountryDropdown]=useState(false)
   const [showLicenseText, setShowLicenseText]=useState(false)
   const [showPanText, setShowPanText]=useState(false)
+  const [dropdownOpen, setDropdownOpen]=useState(false)
   const countryMenuRef=useRef(null)
+  const dropdownRef=useRef(null)
 
   const [editingFields,setEditingFields]=useState({
     name: false,
@@ -390,6 +392,20 @@ function Profile() {
       document.removeEventListener('mousedown',handleClickOutside)
     }
   },[showCountryDropdown]);
+
+  useEffect(()=>{
+    function handleClickOutside(e){
+      if(dropdownRef.current && !dropdownRef.current.contains(e.target)){
+        setDropdownOpen(false);
+      }
+    }
+     if(dropdownOpen){
+      document.addEventListener('mousedown',handleClickOutside)
+    }
+    return()=>{
+      document.removeEventListener('mousedown',handleClickOutside)
+    }
+  },[dropdownOpen]);
 
   const startEditField=(fieldName)=>{
     setEditingFields(prev=>({...prev, [fieldName]: true}));
@@ -897,23 +913,96 @@ function Profile() {
 
             {/*SELECT VERIFICATION PARAMETERS*/}
             <div className="verification-param-select-row">
-              <label htmlFor="verifyParamSelect" className="verification-param-label">
+              <label className="verification-param-label">
                 Select Verification Parameters
               </label>
-              <select
-                id="verifyParamSelect"
-                className="verification-param-select-dropdown"
-                value={verificationParam}
-                onChange={handleVerifyParamSelectChange}
+              <div 
+                className="verification-param-select-container" 
+                ref={dropdownRef} 
+                style={{ position: 'relative', flex: 1, width: '100%', minWidth: '200px' }}
               >
-                <option value="">Select</option>
-                <option value="secondary_email">Secondary Email Id</option>
-                <option value="primary_email">Primary Email Id</option>
-                <option value="aadhaar">Aadhaar</option>
-                <option value="secondary_mobile">Secondary Mobile No</option>
-                <option value="driving_license">Driving Licence</option>
-                <option value="pan">PAN</option>
-              </select>
+                <div 
+                  className="verification-param-select-dropdown" 
+                  onClick={() => setDropdownOpen(prev => !prev)}
+                  style={{ 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    userSelect: 'none'
+                  }}
+                >
+                  <span>
+                    {verificationParam === 'secondary_email' ? 'Secondary Email Id' :
+                     verificationParam === 'primary_email' ? 'Primary Email Id' :
+                     verificationParam === 'aadhaar' ? 'Aadhaar' :
+                     verificationParam === 'secondary_mobile' ? 'Secondary Mobile No' :
+                     verificationParam === 'driving_license' ? 'Driving Licence' :
+                     verificationParam === 'pan' ? 'PAN' : 'Select'}
+                  </span>
+                  <i className={`bi ${dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`} style={{ fontSize: '12px', color: '#64748b' }}></i>
+                </div>
+
+                {dropdownOpen && (
+                  <ul 
+                    style={{
+                      position: 'absolute',
+                      bottom: '100%',
+                      left: 0,
+                      width: '100%',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
+                      borderRadius: '6px',
+                      boxShadow: '0 -4px 12px rgba(0, 0, 0, 0.1)',
+                      padding: '4px 0',
+                      margin: '0 0 4px 0',
+                      listStyle: 'none',
+                      zIndex: 1000,
+                      maxHeight: '220px',
+                      overflowY: 'auto'
+                    }}
+                  >
+                    {[
+                      { value: '', label: 'Select' },
+                      { value: 'secondary_email', label: 'Secondary Email Id' },
+                      { value: 'primary_email', label: 'Primary Email Id' },
+                      { value: 'aadhaar', label: 'Aadhaar' },
+                      { value: 'secondary_mobile', label: 'Secondary Mobile No' },
+                      { value: 'driving_license', label: 'Driving Licence' },
+                      { value: 'pan', label: 'PAN' }
+                    ].map((opt) => (
+                      <li
+                        key={opt.value}
+                        onClick={() => {
+                          handleVerifyParamSelectChange({ target: { value: opt.value } });
+                          setDropdownOpen(false);
+                        }}
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '14px',
+                          color: opt.value === verificationParam ? '#2563eb' : '#334155',
+                          backgroundColor: opt.value === verificationParam ? '#f0f7ff' : 'transparent',
+                          cursor: 'pointer',
+                          fontWeight: opt.value === verificationParam ? '600' : 'normal',
+                          transition: 'background-color 0.15s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (opt.value !== verificationParam) {
+                            e.currentTarget.style.backgroundColor = '#f8fafc';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (opt.value !== verificationParam) {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                          }
+                        }}
+                      >
+                        {opt.label}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         </div>

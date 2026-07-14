@@ -15,11 +15,11 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
 
   const canSubmit = username && consent && (passlessAuth || password)
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault()
     if (!canSubmit) return
 
-    recordSession('UserId')
+    await recordSession('UserId')
 
     localStorage.setItem('mp_user', JSON.stringify({
       username,

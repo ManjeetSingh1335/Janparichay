@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/*page Header styling*/
+/*page header*/
 .profile-component-header {
   background-color: #f1f5f9;
   padding: 16px 24px;
@@ -32,7 +32,7 @@
   align-items: start;
 }
 
-/*box Panel container*/
+/*box panel*/
 .profile-details-panel {
   background-color: #f8fafc;
   border: 2px solid #e2e8f0;
@@ -51,7 +51,7 @@
   text-decoration: underline;
 }
 
-/*subsection containers (BASIC,OTHER)*/
+/*subsection containers*/
 .profile-details-section {
   background-color: #f1f5f9;
   border: 2px solid #e2e8f0;
@@ -88,7 +88,7 @@
   border-bottom: none;
 }
 
-/*field header (label and edit/cancel button)*/
+/*field header*/
 .profile-field-item-header {
   display: flex;
   align-items: center;
@@ -115,7 +115,7 @@
   font-weight: 400;
 }
 
-/*action button icons styling*/
+/*action button icons*/
 .profile-edit-pencil-btn {
   background: none;
   border: none;
@@ -196,7 +196,7 @@
 .profile-save-check-btn:hover {
   background-color: #15803d;
 }
-/* Main action button at bottom of USER DETAILS */
+/*main action button at bottom of USER DETAILS*/
 .profile-action-btn-row {
   display: flex;
   justify-content: center;
@@ -224,7 +224,7 @@
 .btn-profile-edit-toggle.active:hover {
   background-color: #0056b3;
 }
-/* Buttons in global edit mode */
+/*buttons in global edit mode*/
 .profile-global-editing-buttons {
   display: flex;
   gap: 12px;
@@ -362,13 +362,13 @@
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
-/*password Verification Modal Overlay*/
+/*password Verification modal ooverlay*/
 .profile-modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
@@ -470,13 +470,13 @@
 }
 
 
-/*verification Parameters Modal Styles*/
+/*verification parameters*/
 .profile-verify-modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
@@ -563,7 +563,7 @@
   background-color: #1f2937;
 }
 
-/*secondary Mobile No Country OR Flag Picker*/
+/*secondary mobile no country*/
 .profile-flag-picker-container {
   display: flex;
   align-items: center;
@@ -653,7 +653,7 @@
   color: #0f172a;
 }
 
-/*user custom country dropdown item styles*/
+/*user custom country dropdown item*/
 .country-option {
   display: flex;
   align-items: center;
@@ -673,7 +673,7 @@
 }
 
 
-/* Responsiveness */
+/*responsive*/
 @media (max-width: 992px) {
   .profile-component-grid {
     grid-template-columns: 1fr;
@@ -719,9 +719,8 @@
   .panel-box-title { font-size: 14px; }
 }
 
-/* ── Modal responsive fixes (fixed navbar = 92px offset) ── */
 @media (max-width: 765px) {
-  /* Both modal backdrops: push below navbar, leave room above footer */
+
   .profile-modal-backdrop,
   .profile-verify-modal-backdrop {
     padding-top: 100px;
@@ -731,12 +730,32 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Modal boxes: full width with breathing room */
   .profile-password-modal,
   .profile-verify-modal {
     width: 95%;
     padding: 20px 16px;
     margin-bottom: 16px;
+  }
+
+  .profile-verify-form-row,
+  .profile-modal-body-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .profile-verify-input-wrapper,
+  .profile-password-input-wrapper {
+    width: 100%;
+  }
+
+  .btn-profile-verify-submit,
+  .btn-profile-modal-submit {
+    margin-right: 0;
+    width: 100%;
+    text-align: center;
+    height: 44px; 
   }
 }
 
@@ -755,8 +774,8 @@
     border-radius: 6px;
   }
 
-  /* Verification param select full width */
-  .verification-param-select-dropdown {
+  .verification-param-select-dropdown,
+  .verification-param-select-container {
     width: 100%;
     font-size: 14px;
   }
@@ -767,4 +786,3 @@
     gap: 8px;
   }
 }
-

@@ -1,37 +1,39 @@
-import { useState, useEffect } from 'react';
-import { UAParser } from 'ua-parser-js';
+import {UAParser} from 'ua-parser-js';
 
 export function useLoginSession() {
-  const [ipData, setIpData] = useState({
-    ip: 'XXX.XXX.XX.XX',
-    city: 'Delhi',
-    country: 'India',
-  });
 
-  useEffect(() => {
-    fetch('/api/ip-info')
-      .then(res => res.json())
-      .then(data => {
-        if (data.ip) {
-          setIpData({
-            ip: data.ip,
-            city: data.city || 'Delhi',
-            country: data.country_name || 'India',
-          });
-        }
-      })
-      .catch(() => {}); 
-  }, []);
+  const getIpData = async() => {
+    try{
+      const response = await fetch('/api/ip-info');
+      if(!response.ok){
+        throw new Error('IP request failed');
+      }
+      const data = await response.json();
+      return{
+        ip: data.ip || 'Unavailable',
+        city: data.city || 'Unknown',
+        country: data.country_name || 'Unknown',
+      };
+    }catch{
+      return {ip: 'Unavailable', city: 'Unknown', country: 'Unknown'};
+    }
+  };
 
   function getDeviceInfo() {
+
     const result = new UAParser().getResult();
     let os = result.os.name || 'Windows';
-    if (os === 'Mac OS') os = 'macOS'; 
+    if (os === 'Mac OS'){
+      os = 'macOS';
+    } 
     const browser = result.browser.name || 'Chrome';
     return { os, browser };
+
   }
 
-  function recordSession(loginWith) {
+  async function recordSession(loginWith){
+
+    const ipData = await getIpData();
     const now = new Date();
     const pad = n => String(n).padStart(2, '0');
     const timeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ` +
@@ -41,20 +43,23 @@ export function useLoginSession() {
     const validStr  = `${pad(validTime.getDate())}-${pad(validTime.getMonth() + 1)}-${validTime.getFullYear()} ` +
                       `${pad(validTime.getHours())}:${pad(validTime.getMinutes())}:${pad(validTime.getSeconds())}`;
 
-    const { os, browser } = getDeviceInfo();
+    const {os, browser} = getDeviceInfo();
 
     let city = ipData.city === 'Delhi' ? 'Delhi' : ipData.city;
-    const locationStr = `${city},${ipData.country}`;
+    const locationStr = `${city}, ${ipData.country}`;
 
    
     let devices = [];
-    try { devices = JSON.parse(localStorage.getItem('user_devices') || '[]'); }
-    catch { devices = []; }
+    try{
+      devices = JSON.parse(localStorage.getItem('user_devices') || '[]'); 
+    }catch{
+      devices = []; 
+    }
 
     const devIdx = devices.findIndex(d => d.os === os && d.browser === browser);
-    if (devIdx !== -1) {
+    if(devIdx !== -1){
       devices[devIdx].time = timeStr;
-    } else {
+    }else{
       devices.push({ id: Date.now(), os, browser, time: timeStr });
     }
     devices.sort((a, b) => b.time.localeCompare(a.time));
@@ -62,13 +67,16 @@ export function useLoginSession() {
 
     
     let activities = [];
-    try { activities = JSON.parse(localStorage.getItem('recent_activities') || '[]'); }
-    catch { activities = []; }
+    try{ 
+      activities = JSON.parse(localStorage.getItem('recent_activities') || '[]'); 
+    }catch{ 
+      activities = []; 
+    }
 
-    activities = activities.map(act => ({ ...act, isCurrent: false }));
+    activities = activities.map(act => ({...act, isCurrent: false}));
 
     const actIdx = activities.findIndex(a => a.os === os && a.browser === browser);
-    if (actIdx !== -1) {
+    if(actIdx !== -1){
       activities[actIdx] = {
         ...activities[actIdx],
         loginTime: timeStr,
@@ -79,7 +87,7 @@ export function useLoginSession() {
       };
       const [updated] = activities.splice(actIdx, 1);
       activities.unshift(updated);
-    } else {
+    }else{
       activities.unshift({
         id: Date.now(),
         os,
@@ -96,5 +104,5 @@ export function useLoginSession() {
     localStorage.setItem('recent_activities', JSON.stringify(activities));
   }
 
-  return { ipData, recordSession };
+  return {recordSession};
 }

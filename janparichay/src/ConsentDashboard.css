@@ -83,6 +83,7 @@
   overflow-x: auto;
   border-radius: 6px;
   border: 1px solid #cbd5e1;
+  flex-shrink: 0;
 }
 
 .consent-data-table {
@@ -211,7 +212,7 @@
   cursor: not-allowed;
 }
 
-/* ── ConsentDashboard Responsive ── */
+/*responsive*/
 @media (max-width: 765px) {
   .consent-section-header {
     margin: -16px -16px 16px -16px;
@@ -230,7 +231,7 @@
     width: 100%;
   }
   .consent-toolbar-row {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
   .consent-footer-row {
     flex-direction: column;

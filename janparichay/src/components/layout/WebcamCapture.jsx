@@ -1,21 +1,19 @@
 import React from 'react'
 import Webcam from 'react-webcam'
 
-const videoConstraints={
+const videoConstraints = {
   width: 1280,
   height: 720,
   facingMode: "user"
 };
 
-export default function WebcamCapture(){
+export default function WebcamCapture() {
 
-  const webcamRef=React.useRef(null);
-  const capture=React.useCallback(
-    ()=>{
-      const imageSrc=webcamRef.current.getScreenshot();
-    },
-    [webcamRef]
-  );
+  const webcamRef = React.useRef(null);
+  
+  const capture = React.useCallback(() => {
+    const imageSrc=webcamRef.current.getScreenshot();
+  }, [webcamRef]);
 
   return (
     <>

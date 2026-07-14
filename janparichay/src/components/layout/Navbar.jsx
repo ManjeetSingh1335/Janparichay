@@ -1,15 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import Webcam from 'react-webcam'
 import meriPehchaanLogo from '../../images/meri-pehchaan.png';
 import keyIcon from '../../images/key-icon.png';
 import './Layout.css'
-import { useDashboard } from '../../context/DashboardContext.jsx'
-import { NavLink } from 'react-router-dom'
+import {useDashboard} from '../../context/DashboardContext.jsx'
+import {NavLink} from 'react-router-dom'
 
 function Navbar() {
-  const { profile, avatar, updateAvatar, logout } = useDashboard();
+
+  const {profile, avatar, updateAvatar, logout} = useDashboard();
   const [menuOpen, setMenuOpen] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [mobileUploadOpen, setMobileUploadOpen] = useState(false);
   const menuRef = useRef(null);
   
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -24,9 +26,11 @@ function Navbar() {
   const [isCameraHovered, setIsCameraHovered] = useState(false);
   const [isImageHovered, setIsImageHovered] = useState(false);
   const [isSubmitHovered, setIsSubmitHovered] = useState(false);
+
   const handleAvatarClick = () => {
     setMenuOpen(prev => !prev);
   }
+
   const handleUploadClickInMenu = () => {
     setMenuOpen(false);
     setSelectedFileName('');
@@ -35,6 +39,7 @@ function Navbar() {
     setCameraError(false);
     setShowUploadModal(true);
   }
+
   const triggerFileInput = () => {
     setShowWebcam(false); 
     setCameraError(false);
@@ -42,6 +47,7 @@ function Navbar() {
       fileInputRef.current.click();
     }
   }
+
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -55,6 +61,7 @@ function Navbar() {
       reader.readAsDataURL(file);
     }
   }
+
   const handleCameraToggle = () => {
     setShowWebcam(prev => {
       const next = !prev;
@@ -66,10 +73,12 @@ function Navbar() {
       return next;
     });
   }
+
   const handleWebcamError = (error) => {
     console.error("Webcam hardware error:", error);
     setCameraError(true);
   }
+
   const capturePhoto = () => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
@@ -80,12 +89,14 @@ function Navbar() {
       }
     }
   }
+
   const handleUploadSubmit = () => {
     if (tempFileUrl) {
       updateAvatar(tempFileUrl);
       setShowUploadModal(false);
     }
   }
+
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -105,7 +116,7 @@ function Navbar() {
     top: 0,
     left: 0,
     width: '100vw',
-    height: '100vh',
+    height: '100dvh',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     display: 'flex',
     justifyContent: 'center',
@@ -266,15 +277,17 @@ function Navbar() {
     cursor: tempFileUrl ? 'pointer' : 'not-allowed',
     transition: 'all 0.15s ease-in-out'
   };
+
   const navLinks = [
-    { to: '/dashboard',          label: 'Dashboard',         end: true },
-    { to: '/dashboard/profile',  label: 'Profile',           end: false },
-    { to: '/dashboard/activity', label: 'Account Activity',  end: false },
-    { to: '/dashboard/consent',  label: 'Consent Dashboard', end: false },
+    {to: '/dashboard',          label: 'Dashboard',         end: true},
+    {to: '/dashboard/profile',  label: 'Profile',           end: false},
+    {to: '/dashboard/activity', label: 'Account Activity',  end: false},
+    {to: '/dashboard/consent',  label: 'Consent Dashboard', end: false},
   ]
 
   return (
     <nav className="navbar-container">
+
       <div className="navbar-logo-container">
         <img
           src={meriPehchaanLogo}
@@ -282,6 +295,7 @@ function Navbar() {
           className="navbar-logo"
         />
       </div>
+
       <div className="navbar-user-container" ref={menuRef}>
         <div className="navbar-key-container">
           <img
@@ -324,10 +338,12 @@ function Navbar() {
         </div>
       </div>
 
-      {/* ── Hamburger button (visible ≤765px) ── */}
       <button
         className="hamburger-btn"
-        onClick={() => setHamburgerOpen(prev => !prev)}
+        onClick={() => {
+          setHamburgerOpen(prev => !prev);
+          setMobileUploadOpen(false);
+        }}
         aria-label="Toggle menu"
       >
         <span className="ham-line"></span>
@@ -335,13 +351,17 @@ function Navbar() {
         <span className="ham-line"></span>
       </button>
 
-      {/* ── Mobile drawer ── */}
+
       {hamburgerOpen && (
-        <div className="mobile-drawer-overlay" onClick={() => setHamburgerOpen(false)}>
+        <div className="mobile-drawer-overlay" onClick={() => { setHamburgerOpen(false); setMobileUploadOpen(false); }}>
           <div className="mobile-drawer" onClick={e => e.stopPropagation()}>
-            {/* User info header */}
+       
             <div className="mobile-drawer-header">
-              <div className="mobile-drawer-avatar">
+              <div 
+                className="mobile-drawer-avatar" 
+                onClick={() => setMobileUploadOpen(prev => !prev)}
+                style={{ cursor: 'pointer' }}
+              >
                 {avatar ? (
                   <img src={avatar} alt="Profile" className="mobile-drawer-avatar-img" />
                 ) : (
@@ -357,13 +377,13 @@ function Navbar() {
                 <p className="mobile-drawer-username">{profile.username}</p>
               </div>
             </div>
-            {/* Upload Profile Pic */}
-            <div className="mobile-drawer-upload">
-              <button className="mobile-drawer-upload-btn" onClick={() => { setHamburgerOpen(false); handleUploadClickInMenu(); }}>
+            {/*upload profile pic*/}
+            <div className={`mobile-drawer-upload ${mobileUploadOpen ? 'open' : ''}`}>
+              <button className="mobile-drawer-upload-btn" onClick={() => { setHamburgerOpen(false); setMobileUploadOpen(false); handleUploadClickInMenu(); }}>
                 <i className="bi bi-upload"></i> Upload Profile Pic
               </button>
             </div>
-            {/* Nav links */}
+            {/*nav links*/}
             <div className="mobile-drawer-nav">
               {navLinks.map(link => (
                 <NavLink
@@ -377,7 +397,7 @@ function Navbar() {
                 </NavLink>
               ))}
             </div>
-            {/* Logout pinned to bottom */}
+            {/*Logout*/}
             <div className="mobile-drawer-logout">
               <button className="mobile-drawer-logout-btn" onClick={() => { setHamburgerOpen(false); logout(); }}>
                 <i className="bi bi-power"></i> Logout
@@ -387,7 +407,8 @@ function Navbar() {
         </div>
       )}
 
-      {/* Upload Profile Pic Modal */}
+
+      {/*upload profile pic*/}
       {showUploadModal && (
         <div 
           style={overlayStyle} 
@@ -408,7 +429,7 @@ function Navbar() {
             >
               <i className="bi bi-x-lg"></i>
             </button>
-            {/* Pill-shaped selector with icons inside */}
+
             <div style={selectorBoxStyle}>
               <span style={placeholderStyle} className="text-truncate">
                 {selectedFileName || 'Select Profile Picture'}
@@ -436,7 +457,9 @@ function Navbar() {
                 </button>
               </div>
             </div>
-            {/* Webcam Live Capture Container */}
+
+
+            {/*webcam*/}
             {showWebcam && (
               <div style={webcamContainerStyle}>
                
@@ -466,7 +489,7 @@ function Navbar() {
                 )}
               </div>
             )}
-            {/* Captured / Uploaded Image Preview */}
+
             {tempFileUrl && (
               <div style={previewContainerStyle}>
                 <img 
@@ -476,7 +499,7 @@ function Navbar() {
                 />
               </div>
             )}
-            {/* Hidden native file input element */}
+      
             <input 
               type="file" 
               ref={fileInputRef} 
@@ -484,7 +507,7 @@ function Navbar() {
               accept="image/*"
               onChange={handleFileInput}
             />
-            {/* Submit Action Row */}
+
             <div style={actionRowStyle}>
               <button 
                 type="button" 
@@ -500,6 +523,7 @@ function Navbar() {
           </div>
         </div>
       )}
+
     </nav>
   )
 }

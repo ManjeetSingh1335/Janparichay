@@ -1,5 +1,5 @@
-import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
@@ -8,7 +8,11 @@ import Profile from './pages/Profile'
 import AccountActivity from './pages/AccountActivity'
 import ConsentDashboard from './pages/ConsentDashboard'
 import TermsConditions from './pages/TermsConditions'
+import ApplicationPolicies from './pages/ApplicationPolicies'
+import FAQ from './pages/FAQ'
+import AboutUs from './pages/AboutUs'
 import {DashboardProvider} from './context/DashboardContext.jsx'
+import AccessibilityWidget from './components/AccessibilityOptions/AccessibilityWidget.jsx'
 
 
 function PrivateRoute({ children }) {
@@ -17,18 +21,40 @@ function PrivateRoute({ children }) {
 }
 
 export default function App() {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if(location.hash){
+      const timeoutId = setTimeout(() => {
+        const id = location.hash.replace('#', '')
+        const el = document.getElementById(id)
+        if(el){
+          el.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+      return() => clearTimeout(timeoutId);
+    }
+  }, [location]);
+
   return (
     <DashboardProvider>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/application-policies" element={<ApplicationPolicies />} />
+        <Route path="/faq" element={<FAQ />} />
+
 
         <Route
           path="/dashboard"
           element={
             <PrivateRoute>
               <MainLayout />
+              <AccessibilityWidget/>
             </PrivateRoute>
           }
         >
@@ -43,4 +69,3 @@ export default function App() {
     </DashboardProvider>
   )
 }
-
