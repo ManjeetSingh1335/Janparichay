@@ -1,0 +1,111 @@
+/* ── Language Switcher ────────────────────────────── */
+.lang-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  z-index: 1000;
+}
+
+/* Trigger button — white pill with border */
+.lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  padding: 6px 12px 6px 10px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+  min-width: 110px;
+  justify-content: space-between;
+}
+
+.lang-trigger:hover {
+  border-color: #a0aec0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.lang-trigger.open {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26,115,232,0.15);
+}
+
+/* Globe icon */
+.lang-globe {
+  width: 16px;
+  height: 16px;
+  color: #444;
+  flex-shrink: 0;
+}
+
+/* Current language name */
+.lang-current-name {
+  flex: 1;
+  text-align: left;
+}
+
+/* Chevron arrow */
+.lang-chevron {
+  width: 14px;
+  height: 14px;
+  color: #666;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.lang-chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* Dropdown list */
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 140px;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  animation: langDropIn 0.15s ease;
+  overflow: hidden;
+}
+
+@keyframes langDropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Each language option */
+.lang-option {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  color: #1a73e8;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  font-weight: 400;
+}
+
+.lang-option:hover {
+  background: #f0f7ff;
+}
+
+/* Selected / active item — blue highlight */
+.lang-option.selected {
+  background: #1a73e8;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.lang-option.selected:hover {
+  background: #1558b0;
+}

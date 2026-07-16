@@ -8,6 +8,7 @@ import OthersTab from '../components/OthersTab'
 import SSOSection from '../components/SSOSection'
 import ForgotPassword from '../components/ForgotPassword'
 import RecoverUserId from '../components/RecoverUserId'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 const TABS = ['Username', 'Mobile', 'Others']
 
@@ -30,7 +31,12 @@ export default function Login() {
   }
 
   return (
-    <div className="auth-page">
+    <div className="auth-page" style={{ position: 'relative' }}>
+      {/* Language Switcher — top-right */}
+      <div style={{ position: 'absolute', top: '14px', right: '18px', zIndex: 100 }}>
+        <LanguageSwitcher />
+      </div>
+
       <HeaderLogo />
 
       <div className="auth-card">

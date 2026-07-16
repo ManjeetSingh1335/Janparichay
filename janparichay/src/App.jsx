@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
+import {LanguageProvider} from './context/LanguageContext.jsx'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
@@ -38,34 +39,39 @@ export default function App() {
   }, [location]);
 
   return (
-    <DashboardProvider>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup/>} />
-        <Route path="/terms-conditions" element={<TermsConditions />} />
-        <Route path="/application-policies" element={<ApplicationPolicies />} />
-        <Route path="/faq" element={<FAQ />} />
+    <LanguageProvider>
+      <>
+        <DashboardProvider>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup/>} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/application-policies" element={<ApplicationPolicies />} />
+            <Route path="/faq" element={<FAQ />} />
+
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <MainLayout />
+                  <AccessibilityWidget/>
+                </PrivateRoute>
+              }
+            >
+              <Route index element={<Dashboard />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="activity" element={<AccountActivity />} />
+              <Route path="consent" element={<ConsentDashboard />} />
+            </Route>
+
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </DashboardProvider>
 
 
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <MainLayout />
-              <AccessibilityWidget/>
-            </PrivateRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="activity" element={<AccountActivity />} />
-          <Route path="consent" element={<ConsentDashboard />} />
-        </Route>
-
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </DashboardProvider>
+      </>
+    </LanguageProvider>
   )
 }
