@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import COUNTRIES from '../data/countries'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function PhoneInput({
   id,
-  label = 'Mobile No',
+  label,
   required = true,
   value,
   onChange,
@@ -13,6 +14,7 @@ export default function PhoneInput({
   className = '',
 }) {
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
   const [search, setSearch] = useState('')
   const [country, setCountry] = useState(COUNTRIES[0])  
   const wrapRef = useRef(null)
@@ -37,7 +39,7 @@ export default function PhoneInput({
   return (
     <div className={`mp-notched-field ${className}`}>
       <span className="mp-notched-label">
-        {label} {required && <span className="required-star">*</span>}
+        {label ?? t('phone_input_default_label')} {required && <span className="required-star">*</span>}
         {infoTooltip && (
           <i className="bi bi-info-circle ms-1" style={{ fontSize: '0.75rem', color: '#6c757d' }} title={infoTooltip}></i>
         )}
@@ -75,7 +77,7 @@ export default function PhoneInput({
                 <input
                   type="text"
                   autoFocus
-                  placeholder="Search country or code"
+                  placeholder={t('phone_input_search_placeholder')}
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   className="phone-country-search"
@@ -83,7 +85,7 @@ export default function PhoneInput({
               </div>
               <div className="phone-country-list">
                 {filtered.length === 0 && (
-                  <div className="phone-country-empty">No matches</div>
+                  <div className="phone-country-empty">{t('phone_input_no_matches')}</div>
                 )}
                 {filtered.map(c => (
                   <div

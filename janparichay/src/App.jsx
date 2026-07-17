@@ -12,6 +12,7 @@ import TermsConditions from './pages/TermsConditions'
 import ApplicationPolicies from './pages/ApplicationPolicies'
 import FAQ from './pages/FAQ'
 import AboutUs from './pages/AboutUs'
+import Services from './pages/Services'
 import {DashboardProvider} from './context/DashboardContext.jsx'
 import AccessibilityWidget from './components/AccessibilityOptions/AccessibilityWidget.jsx'
 
@@ -65,6 +66,16 @@ export default function App() {
               <Route path="activity" element={<AccountActivity />} />
               <Route path="consent" element={<ConsentDashboard />} />
             </Route>
+
+            <Route
+              path="/dashboard/services"
+              element={
+                <PrivateRoute>
+                  <Services />
+                  <AccessibilityWidget/>
+                </PrivateRoute>
+              }
+            />
 
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>

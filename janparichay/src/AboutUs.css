@@ -227,6 +227,9 @@
 }
 
 .about-section-tag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 12px;
   font-weight: 600;
   color: #94a3b8;
@@ -235,23 +238,18 @@
   margin-bottom: 4px;
 }
 
+.about-section-tag::after {
+  content: '';
+  width: 100px;
+  height: 1px;
+  background-color: #f97316;
+}
+
 .about-section-title {
   font-size: 28px;
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 40px 0;
-  position: relative;
-  display: inline-block;
-}
-
-.about-section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 48px;
-  height: 3px;
-  background-color: #f97316;
 }
 
 /*Who We Are*/

@@ -2,6 +2,7 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import '../Dashboard.css'
 import {useDashboard} from '../context/DashboardContext.jsx'
+import { useLanguage } from '../context/LanguageContext'
 import chromeLogo from '../images/chrome.png'
 import edgeLogo from '../images/edge.png'
 import firefoxLogo from '../images/firefox.png'
@@ -20,6 +21,7 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 function Dashboard() {
+  const { t } = useLanguage()
   const navigate = useNavigate();
   const { settings, updateSetting, logoutAll } = useDashboard();
   const [showUpdatePassword, setShowUpdatePassword] = React.useState(false);
@@ -50,10 +52,10 @@ function Dashboard() {
   };
 
   const activityCards = [
-    { key: 'logged', label: 'Logged In Devices', value: getLoggedDevicesCount(), className: 'card-indigo' },
-    { key: 'remember', label: 'Remember Devices', value: 0, className: 'card-teal' },
-    { key: 'consent', label: 'Consent to Service', value: 0, className: 'card-red' },
-    { key: 'mfa', label: 'Multi-factor Device Configured', value: 0, className: 'card-orange' },
+    { key: 'logged', label: t('dashboard_card_logged_in_devices'), value: getLoggedDevicesCount(), className: 'card-indigo' },
+    { key: 'remember', label: t('dashboard_card_remember_devices'), value: 0, className: 'card-teal' },
+    { key: 'consent', label: t('dashboard_card_consent_to_service'), value: 0, className: 'card-red' },
+    { key: 'mfa', label: t('dashboard_card_mfa_configured'), value: 0, className: 'card-orange' },
   ];
 
   const getLatestActivity = () => {
@@ -92,15 +94,17 @@ function Dashboard() {
     <div className="dashboard-container">
 
       <div className="dashboard-section-header">
-        <h2>Frequently Used Services</h2>
+        <h2>{t('dashboard_section_heading_frequently_used_services')}</h2>
       </div>
       <div className="services-panel">
-        <p className="services-empty-text">No Recent Services Found !</p>
-        <a href="#services" className="view-all-link">View all Services...</a>
+        <p className="services-empty-text">{t('dashboard_no_recent_services')}</p>
+        <button type="button" className="view-all-link" onClick={() => navigate('/dashboard/services')}>
+          {t('dashboard_view_all_services_link')}
+        </button>
       </div>
 
       <div className="dashboard-section-header">
-        <h2>Activities</h2>
+        <h2>{t('dashboard_section_heading_activities')}</h2>
       </div>
 
       <div className="dashboard-grid">
@@ -126,7 +130,7 @@ function Dashboard() {
         <div className="dashboard-middle-column">
 
           <div className="dashboard-panel-1">
-            <h3 className="panel-title-1">Current Login Activity</h3>
+            <h3 className="panel-title-1">{t('dashboard_panel_current_login_activity')}</h3>
             <div className="login-activity-row">
               <div className="login-activity-item">
                 {latestActivity.os === 'Windows' ? (
@@ -166,7 +170,7 @@ function Dashboard() {
           </div>
 
           <div className="dashboard-panel-2">
-            <h3 className="panel-title-2">User Devices — Operating Systems &amp; Browsers</h3>
+            <h3 className="panel-title-2">{t('dashboard_panel_user_devices_os_browsers')}</h3>
             <div className="donut-chart-wrapper">
               <div className="chartjs-donut-container">
                 <Doughnut
@@ -248,14 +252,14 @@ function Dashboard() {
         </div>
 
         <div className="settings-column">
-          <h3 className="panel-title">Settings</h3>
+          <h3 className="panel-title">{t('dashboard_settings_heading')}</h3>
 
           <div className="settings-panel">
 
             <div className="settings-row">
               <span className="settings-label">
                 <i className="bi bi-bell settings-icon"></i>
-                New Login Device Alert
+                {t('dashboard_settings_new_login_device_alert')}
                 <i className="bi bi-info-circle settings-info"></i>
               </span>
               <label className="toggle-switch">
@@ -278,7 +282,7 @@ function Dashboard() {
               <div className="settings-row">
                 <span className="settings-label">
                   <i className="bi bi-lock settings-icon"></i>
-                  Update Password
+                  {t('dashboard_settings_update_password')}
                   <i className="bi bi-info-circle settings-info"></i>
                 </span>
                 <button
@@ -428,16 +432,16 @@ function Dashboard() {
             <div className="settings-row">
               <span className="settings-label">
                 <i className="bi bi-person settings-icon"></i>
-                Account Deactivation
+                {t('dashboard_settings_account_deactivation')}
                 <i className="bi bi-info-circle settings-info"></i>
               </span>
-              <button type="button" className="btn-deactivate">Deactivate</button>
+              <button type="button" className="btn-deactivate">{t('dashboard_button_deactivate')}</button>
             </div>
 
             <div className="settings-row">
               <span className="settings-label">
                 <i className="bi bi-lock settings-icon"></i>
-                Passwordless Authentication
+                {t('dashboard_settings_passwordless_authentication')}
               </span>
               <label className="toggle-switch">
                 <input
@@ -452,7 +456,7 @@ function Dashboard() {
             <div className="settings-row">
               <span className="settings-label">
                 <i className="bi bi-geo-alt settings-icon"></i>
-                Manage GeoFencing
+                {t('dashboard_settings_manage_geofencing')}
                 <i className="bi bi-info-circle settings-info"></i>
               </span>
               <label className="toggle-switch">
@@ -468,7 +472,7 @@ function Dashboard() {
             <div className="settings-row">
               <span className="settings-label">
                 <i className="bi bi-shield settings-icon"></i>
-                Backup Code
+                {t('dashboard_settings_backup_code')}
                 <i className="bi bi-info-circle settings-info"></i>
               </span>
               <label className="toggle-switch">
@@ -484,7 +488,7 @@ function Dashboard() {
             <div className="settings-row">
               <span className="settings-label">
                 <i className="bi bi-key settings-icon"></i>
-                Multi-Factor
+                {t('dashboard_settings_multi_factor')}
                 <i className="bi bi-info-circle settings-info"></i>
               </span>
               <label className="toggle-switch">

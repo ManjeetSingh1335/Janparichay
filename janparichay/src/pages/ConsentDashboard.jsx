@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useLanguage } from '../context/LanguageContext'
 import '../ConsentDashboard.css'
 
 function SortDiamond({ active, direction }) {
@@ -13,6 +14,7 @@ function SortDiamond({ active, direction }) {
 }
 
 export default function ConsentDashboard() {
+  const { t } = useLanguage()
   const [limit, setLimit] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
@@ -44,15 +46,15 @@ export default function ConsentDashboard() {
 
   const handleRevokeAll = () => {
     if (consents.length === 0) return;
-    if (confirm('Are you sure you want to revoke consent for all services?')) {
+    if (confirm(t('consent_confirm_revoke_all'))) {
       setConsents([]);
       localStorage.setItem('consent_data', JSON.stringify([]));
-      alert('All consents revoked successfully.');
+      alert(t('consent_alert_all_revoked_success'));
     }
   };
 
   const handleRevokeIndividual = (id) => {
-    if (confirm('Are you sure you want to revoke consent for this service?')) {
+    if (confirm(t('consent_confirm_revoke_individual'))) {
       const updated = consents.filter(item => item.id !== id)
         .map((item, index) => ({ ...item, sno: index + 1 })); 
       setConsents(updated);
@@ -124,7 +126,7 @@ export default function ConsentDashboard() {
   return (
     <div className="consent-dashboard-container">
       <div className="consent-section-header">
-        <h3 className="consent-section-title">CONSENT DASHBOARD</h3>
+        <h3 className="consent-section-title">{t('consent_section_title')}</h3>
       </div>
       
       <div className="consent-toolbar-row">
@@ -134,7 +136,7 @@ export default function ConsentDashboard() {
           onClick={handleRevokeAll}
           disabled={consents.length === 0}
         >
-          REVOKE ALL
+          {t('consent_button_revoke_all')}
         </button>
       </div>
 
@@ -151,7 +153,7 @@ export default function ConsentDashboard() {
           </select>
         </div>
         <div className="search-box-group">
-          <label>Search: </label>
+          <label>{t('consent_search_label')}</label>
           <input 
             type="search" 
             value={searchQuery}
@@ -166,34 +168,34 @@ export default function ConsentDashboard() {
           <thead>
             <tr>
               <th className={sortConfig.key === 'sno' ? 'active-header' : ''} onClick={() => handleSort('sno')}>
-                SNo <SortDiamond active={sortConfig.key === 'sno'} direction={sortConfig.direction} />
+                {t('consent_table_header_sno')} <SortDiamond active={sortConfig.key === 'sno'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'serviceName' ? 'active-header' : ''} onClick={() => handleSort('serviceName')}>
-                Service Name <SortDiamond active={sortConfig.key === 'serviceName'} direction={sortConfig.direction} />
+                {t('consent_table_header_service_name')} <SortDiamond active={sortConfig.key === 'serviceName'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'createdOn' ? 'active-header' : ''} onClick={() => handleSort('createdOn')}>
-                Created On <SortDiamond active={sortConfig.key === 'createdOn'} direction={sortConfig.direction} />
+                {t('consent_table_header_created_on')} <SortDiamond active={sortConfig.key === 'createdOn'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'updatedOn' ? 'active-header' : ''} onClick={() => handleSort('updatedOn')}>
-                Updated On <SortDiamond active={sortConfig.key === 'updatedOn'} direction={sortConfig.direction} />
+                {t('consent_table_header_updated_on')} <SortDiamond active={sortConfig.key === 'updatedOn'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'consentProvided' ? 'active-header' : ''} onClick={() => handleSort('consentProvided')}>
-                Consent Provided <SortDiamond active={sortConfig.key === 'consentProvided'} direction={sortConfig.direction} />
+                {t('consent_table_header_consent_provided')} <SortDiamond active={sortConfig.key === 'consentProvided'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'validUpto' ? 'active-header' : ''} onClick={() => handleSort('validUpto')}>
-                Valid Upto <SortDiamond active={sortConfig.key === 'validUpto'} direction={sortConfig.direction} />
+                {t('consent_table_header_valid_upto')} <SortDiamond active={sortConfig.key === 'validUpto'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'ip' ? 'active-header' : ''} onClick={() => handleSort('ip')}>
-                IP <SortDiamond active={sortConfig.key === 'ip'} direction={sortConfig.direction} />
+                {t('consent_table_header_ip')} <SortDiamond active={sortConfig.key === 'ip'} direction={sortConfig.direction} />
               </th>
-              <th>Action</th>
+              <th>{t('consent_table_header_action')}</th>
             </tr>
           </thead>
           <tbody>
             {paginatedConsents.length === 0 ? (
               <tr>
                 <td colSpan={8} className="consent-table-no-data">
-                  No data available in table
+                  {t('consent_table_no_data')}
                 </td>
               </tr>
             ) : (
@@ -214,7 +216,7 @@ export default function ConsentDashboard() {
                       className="btn-revoke-action" 
                       onClick={() => handleRevokeIndividual(item.id)}
                     >
-                      Revoke
+                      {t('consent_button_revoke')}
                     </button>
                   </td>
                 </tr>

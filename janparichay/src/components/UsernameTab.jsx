@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLoginSession } from '../hooks/useLoginSession'
 import Input from './Input'
 import PasswordInput from './PasswordInput'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
   const [username, setUsername] = useState('')
@@ -10,6 +11,7 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
   const [passlessAuth, setPasslessAuth] = useState(false)
   const [consent, setConsent] = useState(false)
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const { recordSession } = useLoginSession()
 
@@ -33,17 +35,17 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
     <form onSubmit={handleSignIn} noValidate>
       <Input
         id="un-username"
-        label="Enter Username"
+        label={t('username_tab_enter_username_label')}
         required
         value={username}
         onChange={e => setUsername(e.target.value)}
-        placeholder="Username"
+        placeholder={t('username_tab_username_placeholder')}
       />
 
       {!passlessAuth && (
         <PasswordInput
           id="un-password"
-          label="Password"
+          label={t('username_tab_password_label')}
           required
           value={password}
           onChange={e => setPassword(e.target.value)}
@@ -56,14 +58,14 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
           className="link-blue"
           onClick={e => { e.preventDefault(); onForgetUserId() }}
         >
-          Forget User Id
+          {t('username_tab_forget_user_id')}
         </a>
         <a
           href="#"
           className="link-blue"
           onClick={e => { e.preventDefault(); onForgotPassword() }}
         >
-          Forgot Password
+          {t('username_tab_forgot_password')}
         </a>
       </div>
 
@@ -79,7 +81,7 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
           }}
         />
         <label className="form-check-label" htmlFor="passless" style={{ fontSize: '0.85rem' }}>
-          Password Less Authentication
+          {t('username_tab_passless_auth')}
         </label>
       </div>
 
@@ -92,8 +94,8 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
           onChange={e => setConsent(e.target.checked)}
         />
         <label className="form-check-label" htmlFor="consent-username" style={{ fontSize: '0.85rem' }}>
-          I consent to MeriPehchaan{' '}
-          <a href="#" className="link-blue" style={{ fontSize: 'inherit' }}>terms of use.</a>
+          {t('username_tab_consent_text')}{' '}
+          <a href="#" className="link-blue" style={{ fontSize: 'inherit' }}>{t('username_tab_terms_of_use_link')}</a>
         </label>
       </div>
 
@@ -101,7 +103,7 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
         type="submit"
         className={`btn-mp-primary${canSubmit ? ' is-active' : ''}`}
       >
-        Sign In
+        {t('username_tab_sign_in_button')}
       </button>
     </form>
   )

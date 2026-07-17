@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLoginSession } from '../hooks/useLoginSession'
 import Input from './Input'
 import PasswordInput from './PasswordInput'
+import { useLanguage } from '../context/LanguageContext'
 
 const LOGIN_METHODS = ['Email', 'Govt Email Id', 'Aadhaar', 'Service Id', 'PAN', 'DL']
 
@@ -24,6 +25,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
   const [passlessAuth, setPasslessAuth] = useState(false)
   const [consent, setConsent] = useState(false)
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const { recordSession } = useLoginSession()
 
@@ -53,25 +55,25 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
           onChange={e => { setMethod(e.target.value); setIdentifier(''); setPassword('') }}
         >
           {LOGIN_METHODS.map(m => (
-            <option key={m} value={m}>{m}</option>
+            <option key={m} value={m}>{t(`others_tab_method_${m === 'Govt Email Id' ? 'govt_email' : m === 'Service Id' ? 'service_id' : m.toLowerCase()}`)}</option>
           ))}
         </select>
       </div>
 
       <Input
         id="others-id"
-        label={LABEL_MAP[method]}
+        label={t(`others_tab_label_${method === 'Govt Email Id' ? 'govt_email' : method === 'Service Id' ? 'service_id' : method.toLowerCase()}`)}
         required
         value={identifier}
         onChange={e => setIdentifier(e.target.value)}
         type={method === 'Email' || method === 'Govt Email Id' ? 'email' : 'text'}
-        placeholder={LABEL_MAP[method]}
+        placeholder={t(`others_tab_label_${method === 'Govt Email Id' ? 'govt_email' : method === 'Service Id' ? 'service_id' : method.toLowerCase()}`)}
       />
 
       {needsPassword && (
         <PasswordInput
           id="others-password"
-          label="Password"
+          label={t('others_tab_password_label')}
           required
           value={password}
           onChange={e => setPassword(e.target.value)}
@@ -85,14 +87,14 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
             className="link-blue"
             onClick={e => { e.preventDefault(); onForgetUserId() }}
           >
-            Forget User Id
+            {t('others_tab_forget_user_id')}
           </a>
           <a
             href="#"
             className="link-blue"
             onClick={e => { e.preventDefault(); onForgotPassword() }}
           >
-            Forgot Password
+            {t('others_tab_forgot_password')}
           </a>
         </div>
       )}
@@ -110,7 +112,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
             }}
           />
           <label className="form-check-label" htmlFor="passless-others" style={{ fontSize: '0.85rem' }}>
-            Password Less Authentication
+            {t('others_tab_passless_auth')}
           </label>
         </div>
       )}
@@ -124,8 +126,8 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
           onChange={e => setConsent(e.target.checked)}
         />
         <label className="form-check-label" htmlFor="consent-others" style={{ fontSize: '0.85rem' }}>
-          I consent to MeriPehchaan{' '}
-          <a href="#" className="link-blue" style={{ fontSize: 'inherit' }}>terms of use.</a>
+          {t('others_tab_consent_text')}{' '}
+          <a href="#" className="link-blue" style={{ fontSize: 'inherit' }}>{t('others_tab_terms_of_use_link')}</a>
         </label>
       </div>
 
@@ -133,7 +135,7 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
         type="submit"
         className={`btn-mp-primary${canSubmit ? ' is-active' : ''}`}
       >
-        Sign In
+        {t('others_tab_sign_in_button')}
       </button>
     </form>
   )

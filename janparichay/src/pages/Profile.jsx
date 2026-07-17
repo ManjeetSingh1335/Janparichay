@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {useDashboard} from '../context/DashboardContext.jsx'
+import { useLanguage } from '../context/LanguageContext'
 import '../Profile.css'
 
 const INDIAN_STATES=[
@@ -310,6 +311,7 @@ const convertYYYYMMDDToDDMMYYYY=(dateStr)=>{
 
 
 function Profile() {
+  const { t } = useLanguage()
 
   const {profile, updateProfile}=useDashboard();
   const getNameParts=(fullNameStr)=>{
@@ -527,24 +529,24 @@ function Profile() {
     if(!verifyInputVal && showVerifyModal!=='secondary_mobile'){
       return
     }
-    alert(`Verified details submitted successfully.`);
+    alert(t('profile_alert_verified_success'));
     setShowVerifyModal(null)
   }
 
   const getVerifyModalDetails=()=>{
     switch(showVerifyModal){
       case 'secondary_email':
-        return {title:'Add Secondary Email Id', placeholder:'Enter Secondary Email Id*'}
+        return {title:t('profile_modal_title_add_secondary_email'), placeholder:t('profile_modal_placeholder_secondary_email')}
       case 'primary_email':
-        return {title:'Add Primary Email Id', placeholder:'Enter Primary Email Id*'}
+        return {title:t('profile_modal_title_add_primary_email'), placeholder:t('profile_modal_placeholder_primary_email')}
       case 'aadhaar':
-        return {title:'Add Aadhaar', placeholder:'Enter Aadhaar*'}
+        return {title:t('profile_modal_title_add_aadhaar'), placeholder:t('profile_modal_placeholder_aadhaar')}
       case 'secondary_mobile':
-        return {title:'Add Secondary Mobile No', placeholder:'Enter Secondary Mobile No*'}
+        return {title:t('profile_modal_title_add_secondary_mobile'), placeholder:t('profile_modal_placeholder_secondary_mobile')}
       case 'driving_license':
-        return {title:'Add Driving Licence', placeholder:'Enter Driving Licence*' }
+        return {title:t('profile_modal_title_add_driving_licence'), placeholder:t('profile_modal_placeholder_driving_licence') }
       case 'pan':
-        return {title:'Add PAN', placeholder:'Enter PAN*' }
+        return {title:t('profile_modal_title_add_pan'), placeholder:t('profile_modal_placeholder_pan') }
       default:
         return {title:'', placeholder:''}
     }
@@ -557,29 +559,29 @@ function Profile() {
   return (
     <div className="profile-component-container">
       <div className="profile-component-header">
-        <h2>EDIT PROFILE</h2>
+        <h2>{t('profile_page_heading')}</h2>
       </div>
       <div className="profile-component-grid">
         
         {/*USER DETAILS*/}
         <div className="profile-details-panel user-details-box">
-          <h3 className="panel-box-title">USER DETAILS</h3>
+          <h3 className="panel-box-title">{t('profile_panel_user_details')}</h3>
           {/*BASIC SECTION*/}
           <div className="profile-details-section">
-            <h4 className="section-subtitle">BASIC</h4>
+            <h4 className="section-subtitle">{t('profile_section_basic')}</h4>
             
             <div className="profile-fields-card-box">
               
               {/*NAME*/}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
-                  <span className="profile-field-item-label">NAME</span>
+                  <span className="profile-field-item-label">{t('profile_label_name')}</span>
                   {isEditing('name')? (
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
                       onClick={()=>cancelEditField('name')}
-                      aria-label="Cancel editing name"
+                      aria-label={t('profile_aria_cancel_edit_name')}
                     >
                       <i className="bi bi-x-lg"></i>
                     </button>
@@ -588,8 +590,8 @@ function Profile() {
                       type="button"
                       className="profile-edit-pencil-btn"
                       onClick={()=>startEditField('name')}
-                      title="Click to Edit Name"
-                      aria-label="Edit name"
+                      title={t('profile_tooltip_edit_name')}
+                      aria-label={t('profile_aria_edit_name')}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
@@ -602,7 +604,7 @@ function Profile() {
                       className="profile-field-text-input"
                       value={firstName}
                       onChange={(e)=>setFirstName(e.target.value)}
-                      placeholder="FIRST NAME / FULL NAME"
+                      placeholder={t('profile_placeholder_first_name')}
                       autoFocus
                     />
                     <input
@@ -610,7 +612,7 @@ function Profile() {
                       className="profile-field-text-input"
                       value={lastName}
                       onChange={(e)=>setLastName(e.target.value)}
-                      placeholder="LAST NAME"
+                      placeholder={t('profile_placeholder_last_name')}
                     />
                   </div>
                 ) : (
@@ -623,13 +625,13 @@ function Profile() {
               {/*GENDER*/}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
-                  <span className="profile-field-item-label">GENDER</span>
+                  <span className="profile-field-item-label">{t('profile_label_gender')}</span>
                   {isEditing('gender')? (
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
                       onClick={() => cancelEditField('gender')}
-                      aria-label="Cancel editing gender"
+                      aria-label={t('profile_aria_cancel_edit_gender')}
                     >
                       <i className="bi bi-x-lg"></i>
                     </button>
@@ -638,8 +640,8 @@ function Profile() {
                       type="button"
                       className="profile-edit-pencil-btn"
                       onClick={() => startEditField('gender')}
-                      title="Click to Edit Gender"
-                      aria-label="Edit gender"
+                      title={t('profile_title_edit_gender')}
+                      aria-label={t('profile_aria_edit_gender')}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
@@ -654,10 +656,10 @@ function Profile() {
                       onChange={(e)=>setGender(e.target.value)}
                       autoFocus
                     >
-                      <option value="">SELECT</option>
-                      <option value="MALE">MALE</option>
-                      <option value="FEMALE">FEMALE</option>
-                      <option value="OTHER">OTHER</option>
+                      <option value="">{t('profile_gender_option_select')}</option>
+                      <option value="MALE">{t('profile_gender_option_male')}</option>
+                      <option value="FEMALE">{t('profile_gender_option_female')}</option>
+                      <option value="OTHER">{t('profile_gender_option_other')}</option>
                     </select>
                   </div>
                 ) : (
@@ -668,13 +670,13 @@ function Profile() {
               {/*D.O.B*/}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
-                  <span className="profile-field-item-label">D.O.B</span>
+                  <span className="profile-field-item-label">{t('profile_label_dob')}</span>
                   {isEditing('dob') ? (
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
                       onClick={()=>cancelEditField('dob')}
-                      aria-label="Cancel editing date of birth"
+                      aria-label={t('profile_aria_cancel_edit_dob')}
                     >
                       <i className="bi bi-x-lg"></i>
                     </button>
@@ -683,8 +685,8 @@ function Profile() {
                       type="button"
                       className="profile-edit-pencil-btn"
                       onClick={()=>startEditField('dob')}
-                      title="Click to Edit DOB"
-                      aria-label="Edit date of birth"
+                      title={t('profile_title_edit_dob')}
+                      aria-label={t('profile_aria_edit_dob')}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
@@ -697,7 +699,7 @@ function Profile() {
                       className="profile-field-text-input"
                       value={dob}
                       onChange={(e)=>setDob(e.target.value)}
-                      placeholder="DD-MM-YYYY"
+                      placeholder={t('profile_placeholder_dob')}
                     />
                   </div>
                 ) : (
@@ -711,19 +713,19 @@ function Profile() {
 
           {/*OTHER*/}
           <div className="profile-details-section">
-            <h4 className="section-subtitle">OTHER</h4>
+            <h4 className="section-subtitle">{t('profile_section_other')}</h4>
             <div className="profile-fields-card-box">
               
               {/*FATHER'S NAME*/}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
-                  <span className="profile-field-item-label">FATHER'S NAME</span>
+                  <span className="profile-field-item-label">{t('profile_label_fathers_name')}</span>
                   {isEditing('fatherName')? (
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
                       onClick={()=>cancelEditField('fatherName')}
-                      aria-label="Cancel editing father's name"
+                      aria-label={t('profile_aria_cancel_edit_fathers_name')}
                     >
                       <i className="bi bi-x-lg"></i>
                     </button>
@@ -732,8 +734,8 @@ function Profile() {
                       type="button"
                       className="profile-edit-pencil-btn"
                       onClick={()=>startEditField('fatherName')}
-                      title="Click to Edit Father's Name"
-                      aria-label="Edit father's name"
+                      title={t('profile_title_edit_fathers_name')}
+                      aria-label={t('profile_aria_edit_fathers_name')}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
@@ -746,7 +748,7 @@ function Profile() {
                       className="profile-field-text-input"
                       value={fatherName}
                       onChange={(e)=>setFatherName(e.target.value)}
-                      placeholder="Father's Name"
+                      placeholder={t('profile_placeholder_fathers_name')}
                       autoFocus
                     />
                   </div>
@@ -760,13 +762,13 @@ function Profile() {
               {/*ADDRESS*/}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
-                  <span className="profile-field-item-label">ADDRESS</span>
+                  <span className="profile-field-item-label">{t('profile_label_address')}</span>
                   {isEditing('address') ? (
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
                       onClick={()=>cancelEditField('address')}
-                      aria-label="Cancel editing address"
+                      aria-label={t('profile_aria_cancel_edit_address')}
                     >
                       <i className="bi bi-x-lg"></i>
                     </button>
@@ -775,8 +777,8 @@ function Profile() {
                       type="button"
                       className="profile-edit-pencil-btn"
                       onClick={()=>startEditField('address')}
-                      title="Click to Edit Address"
-                      aria-label="Edit address"
+                      title={t('profile_title_edit_address')}
+                      aria-label={t('profile_aria_edit_address')}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
@@ -789,7 +791,7 @@ function Profile() {
                       className="profile-field-text-input"
                       value={address}
                       onChange={(e)=>setAddress(e.target.value)}
-                      placeholder="Address"
+                      placeholder={t('profile_placeholder_address')}
                       autoFocus
                     />
                   </div>
@@ -801,13 +803,13 @@ function Profile() {
               {/*STATE*/}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
-                  <span className="profile-field-item-label">STATE</span>
+                  <span className="profile-field-item-label">{t('profile_label_state')}</span>
                   {isEditing('state')? (
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
                       onClick={()=>cancelEditField('state')}
-                      aria-label="Cancel editing state"
+                      aria-label={t('profile_aria_cancel_edit_state')}
                     >
                       <i className="bi bi-x-lg"></i>
                     </button>
@@ -816,8 +818,8 @@ function Profile() {
                       type="button"
                       className="profile-edit-pencil-btn"
                       onClick={()=>startEditField('state')}
-                      title="Click to Edit State"
-                      aria-label="Edit state"
+                      title={t('profile_title_edit_state')}
+                      aria-label={t('profile_aria_edit_state')}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
@@ -831,7 +833,7 @@ function Profile() {
                       onChange={(e)=>setStateName(e.target.value)}
                       autoFocus
                     >
-                      <option value="">Select State</option>
+                      <option value="">{t('profile_state_option_select')}</option>
                       {INDIAN_STATES.map((st)=>(
                         <option key={st} value={st}>
                           {st}
@@ -855,7 +857,7 @@ function Profile() {
               className={`btn-profile-edit-toggle ${isAnyFieldEditing ? 'active' : ''}`}
               onClick={isAnyFieldEditing ? handleSaveChanges : undefined}
             >
-              Edit
+              {t('profile_button_edit')}
             </button>
           </div>
         </div>
@@ -863,12 +865,12 @@ function Profile() {
 
         {/*VERIFICATION DETAILS*/}
         <div className="profile-details-panel verification-details-box">
-          <h3 className="panel-box-title underline">VERIFICATION DETAILS</h3>
+          <h3 className="panel-box-title underline">{t('profile_panel_verification_details')}</h3>
           <div className="verification-details-content">
             
             {/*PRIMARY MOBILE NO*/}
             <div className="verification-field-row">
-              <span className="verification-field-label">PRIMARY MOBILE NO</span>
+              <span className="verification-field-label">{t('profile_label_primary_mobile_no')}</span>
               {!isEditingMobile ? (
                 <div className="verification-value-display-row">
                   <span className="verification-field-value">{maskedMobile}</span>
@@ -876,7 +878,7 @@ function Profile() {
                     type="button"
                     className="profile-edit-pencil-btn"
                     onClick={startEditMobile}
-                    aria-label="Edit mobile number"
+                    aria-label={t('profile_aria_edit_mobile')}
                   >
                     <i className="bi bi-pencil-square"></i>
                   </button>
@@ -888,14 +890,14 @@ function Profile() {
                     className="profile-field-text-input mobile-edit-input"
                     value={mobileDraft}
                     onChange={(e)=>setMobileDraft(e.target.value)}
-                    placeholder="Enter mobile number"
+                    placeholder={t('profile_placeholder_enter_mobile')}
                     autoFocus
                   />
                   <button
                     type="button"
                     className="profile-inline-save-btn"
                     onClick={saveMobile}
-                    title="Save mobile number"
+                    title={t('profile_title_save_mobile')}
                   >
                     <i className="bi bi-check2"></i>
                   </button>
@@ -903,7 +905,7 @@ function Profile() {
                     type="button"
                     className="profile-inline-cancel-btn"
                     onClick={cancelEditMobile}
-                    title="Cancel editing"
+                    title={t('profile_title_cancel_edit')}
                   >
                     <i className="bi bi-x"></i>
                   </button>
@@ -914,7 +916,7 @@ function Profile() {
             {/*SELECT VERIFICATION PARAMETERS*/}
             <div className="verification-param-select-row">
               <label className="verification-param-label">
-                Select Verification Parameters
+                {t('profile_label_select_verification_parameters')}
               </label>
               <div 
                 className="verification-param-select-container" 
@@ -933,12 +935,12 @@ function Profile() {
                   }}
                 >
                   <span>
-                    {verificationParam === 'secondary_email' ? 'Secondary Email Id' :
-                     verificationParam === 'primary_email' ? 'Primary Email Id' :
-                     verificationParam === 'aadhaar' ? 'Aadhaar' :
-                     verificationParam === 'secondary_mobile' ? 'Secondary Mobile No' :
-                     verificationParam === 'driving_license' ? 'Driving Licence' :
-                     verificationParam === 'pan' ? 'PAN' : 'Select'}
+                    {verificationParam === 'secondary_email' ? t('profile_verification_option_secondary_email') :
+                     verificationParam === 'primary_email' ? t('profile_verification_option_primary_email') :
+                     verificationParam === 'aadhaar' ? t('profile_verification_option_aadhaar') :
+                     verificationParam === 'secondary_mobile' ? t('profile_verification_option_secondary_mobile') :
+                     verificationParam === 'driving_license' ? t('profile_verification_option_driving_licence') :
+                     verificationParam === 'pan' ? t('profile_verification_option_pan') : t('profile_verification_option_select')}
                   </span>
                   <i className={`bi ${dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`} style={{ fontSize: '12px', color: '#64748b' }}></i>
                 </div>
@@ -963,13 +965,13 @@ function Profile() {
                     }}
                   >
                     {[
-                      { value: '', label: 'Select' },
-                      { value: 'secondary_email', label: 'Secondary Email Id' },
-                      { value: 'primary_email', label: 'Primary Email Id' },
-                      { value: 'aadhaar', label: 'Aadhaar' },
-                      { value: 'secondary_mobile', label: 'Secondary Mobile No' },
-                      { value: 'driving_license', label: 'Driving Licence' },
-                      { value: 'pan', label: 'PAN' }
+                      { value: '', label: t('profile_verification_option_select') },
+                      { value: 'secondary_email', label: t('profile_verification_option_secondary_email') },
+                      { value: 'primary_email', label: t('profile_verification_option_primary_email') },
+                      { value: 'aadhaar', label: t('profile_verification_option_aadhaar') },
+                      { value: 'secondary_mobile', label: t('profile_verification_option_secondary_mobile') },
+                      { value: 'driving_license', label: t('profile_verification_option_driving_licence') },
+                      { value: 'pan', label: t('profile_verification_option_pan') }
                     ].map((opt) => (
                       <li
                         key={opt.value}
@@ -1016,12 +1018,12 @@ function Profile() {
               type="button"
               className="profile-modal-close-btn"
               onClick={()=>setShowPasswordModal(false)}
-              aria-label="Close modal"
+              aria-label={t('profile_aria_close_modal')}
             >
               <i className="bi bi-x-lg"></i>
             </button>
             
-            <h4 className="profile-modal-title">Verify your password</h4>
+            <h4 className="profile-modal-title">{t('profile_password_modal_title')}</h4>
             
             <form onSubmit={handlePasswordSubmit} className="profile-modal-body-row">
               <div className="profile-password-input-wrapper">
@@ -1030,20 +1032,20 @@ function Profile() {
                   className="profile-password-input-field"
                   value={passwordInput}
                   onChange={(e)=>setPasswordInput(e.target.value)}
-                  placeholder="Enter Current Password"
+                  placeholder={t('profile_password_modal_placeholder')}
                   autoFocus
                 />
                 <button
                   type="button"
                   className="profile-password-eye-icon-btn"
                   onClick={() => setShowPassword(prev=>!prev)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-label={showPassword ? t('password_input_aria_label_hide') : t('password_input_aria_label_show')}
                 >
                   <i className={`bi ${showPassword ? 'bi-eye' : 'bi-eye-slash'}`}></i>
                 </button>
               </div>
               <button type="submit" className="btn-profile-modal-submit">
-                Submit
+                {t('profile_button_submit')}
               </button>
             </form>
           </div>
@@ -1059,7 +1061,7 @@ function Profile() {
               type="button"
               className="profile-verify-modal-close"
               onClick={closeVerifyModal}
-              aria-label="Close modal"
+              aria-label={t('profile_aria_close_modal')}
             >
               <i className="bi bi-x-lg"></i>
             </button>
@@ -1134,7 +1136,7 @@ function Profile() {
                       autoFocus
                     />
                     <div className="profile-input-icons-wrapper">
-                      <i className="bi bi-info-circle profile-input-icon-action" title="Licence Format: e.g. DL-1420110012345"></i>
+                      <i className="bi bi-info-circle profile-input-icon-action" title={t('profile_driving_licence_format_hint')}></i>
                       <i
                         className={`bi ${showLicenseText ? 'bi-eye' : 'bi-eye-slash'} profile-input-icon-action`}
                         onClick={()=>setShowLicenseText(prev=>!prev)}
@@ -1152,7 +1154,7 @@ function Profile() {
                       autoFocus
                     />
                     <div className="profile-input-icons-wrapper">
-                      <i className="bi bi-info-circle profile-input-icon-action" title="PAN Format: e.g. ABCDE1234F"></i>
+                      <i className="bi bi-info-circle profile-input-icon-action" title={t('profile_pan_format_hint')}></i>
                       <i
                         className={`bi ${showPanText ? 'bi-eye' : 'bi-eye-slash'} profile-input-icon-action`}
                         onClick={()=>setShowPanText(prev=>!prev)}
@@ -1171,7 +1173,7 @@ function Profile() {
                 )}
               </div>
               <button type="submit" className="btn-profile-verify-submit">
-                Verify
+                {t('profile_button_verify')}
               </button>
             </form>
           </div>

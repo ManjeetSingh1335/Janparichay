@@ -20,9 +20,11 @@ import partner9 from '../images/9.png'
 import partner10 from '../images/10.png'
 import partner11 from '../images/11.png'
 import partner12 from '../images/12.png'
+import { useLanguage } from '../context/LanguageContext'
 
 
 export default function AboutUs() {
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const location = useLocation()
   const [activeTab, setActiveTab] = useState('about')
@@ -172,11 +174,11 @@ export default function AboutUs() {
   }
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'services', label: 'Services' },
-    { id: 'faq', label: 'FAQs' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'home', label: t('about_nav_item_home') },
+    { id: 'about', label: t('about_nav_item_about') },
+    { id: 'services', label: t('about_nav_item_services') },
+    { id: 'faq', label: t('about_nav_item_faqs') },
+    { id: 'contact', label: t('about_nav_item_contact') }
   ]
 
   if (isLoading) {
@@ -195,7 +197,7 @@ export default function AboutUs() {
       {/* Navigation bar */}
       <nav className="about-nav">
         <Link to="/login">
-          <img src={meriPehchaanLogo} alt="Meri Pehchaan" className="about-nav-logo" style={{ cursor: 'pointer' }} />
+          <img src={meriPehchaanLogo} alt={t('about_logo_alt')} className="about-nav-logo" style={{ cursor: 'pointer' }} />
         </Link>
         <ul className="about-nav-links">
           {navItems.map(({ id, label }) => (
@@ -214,7 +216,7 @@ export default function AboutUs() {
           type="button"
           className="about-mobile-menu-toggle"
           onClick={() => setMobileMenuOpen(true)}
-          aria-label="Open navigation menu"
+          aria-label={t('about_mobile_menu_open_aria')}
           aria-expanded={mobileMenuOpen}
         >
           <span></span><span></span><span></span>
@@ -227,11 +229,11 @@ export default function AboutUs() {
             type="button"
             className="about-mobile-menu-close"
             onClick={() => setMobileMenuOpen(false)}
-            aria-label="Close navigation menu"
+            aria-label={t('about_mobile_menu_close_aria')}
           >
             ×
           </button>
-          <nav className="about-mobile-menu" aria-label="Mobile navigation" onClick={(event) => event.stopPropagation()}>
+          <nav className="about-mobile-menu" aria-label={t('about_mobile_navigation_aria')} onClick={(event) => event.stopPropagation()}>
             {navItems.map(({ id, label }) => (
               <button
                 type="button"
@@ -264,7 +266,7 @@ export default function AboutUs() {
               <a href={slide.link} target="_blank" rel="noopener noreferrer">
                 <img
                   src={slide.img}
-                  alt={`Banner ${index + 1}`}
+                  alt={t('about_banner_alt').replace('{{number}}', index + 1)}
                   className="about-hero-banner-img"
                 />
               </a>
@@ -286,58 +288,55 @@ export default function AboutUs() {
 
       {/*About Section*/}
       <section className="about-section" id="about">
-        <div className="about-section-tag">About</div>
-        <h2 className="about-section-title">WHO WE ARE</h2>
+        <div className="about-section-tag">{t('about_section_tag_about')}</div>
+        <h2 className="about-section-title">{t('about_section_title_who_we_are')}</h2>
         
         <div className="about-intro-grid">
           <div className="about-intro-left">
             <p className="about-intro-desc">
-              JanParichay is a single sign-on application designed to integrate services under a single authentication domain. It is a centralized session and user authentication service in which one set of login credentials can be used to access multiple applications. The service authenticates user one on one designated platform, enabling the user to use a plethora of services without having to log in and logout each time.
+              {t('about_intro_paragraph_1')}
             </p>
             <p className="about-intro-desc">
-              The sole purpose of the application is to provide SSO framework for the various Government services along with an added layer of security by providing a strong authentication mechanism.
-            </p>
-            <p className="about-intro-desc">
-              MeriPehchaan merges diverse authentication frameworks under a single umbrella, enhancing usability and security while establishing a trust-based ecosystem for seamless digital service delivery.
+              {t('about_intro_paragraph_2')}
             </p>
             <button 
               className="about-readmore-btn" 
               onClick={() => window.open('https://meripehchaan.gov.in/', '_blank', 'noopener,noreferrer')}
             >
-              Read More
+              {t('about_read_more_button')}
             </button>
           </div>
           
           <div className="about-intro-right">
-            <h3 className="salient-title">Salient features</h3>
+            <h3 className="salient-title">{t('about_salient_features_title')}</h3>
             <ul className="salient-list">
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Provides e-Authentication as a service to government departments for providing a secure and convenient way for users to access government services.</span>
+                <span>{t('about_salient_feature_1')}</span>
               </li>
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Designed to formulate authentication standards and develop pluggable authentication components for seamless user onboarding and authentication.</span>
+                <span>{t('about_salient_feature_2')}</span>
               </li>
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Authenticates the user for all the services and does authorization based on the service enforced verification parameters.</span>
+                <span>{t('about_salient_feature_3')}</span>
               </li>
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Integrated with multiple backend verification parameters including Aadhaar Card, Pan Card, Driving License, Application dependent Id and others.</span>
+                <span>{t('about_salient_feature_4')}</span>
               </li>
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Allows user as well as integrated service to enforce multi-factor authentication including OTP, Backup Codes, Tap and Token.</span>
+                <span>{t('about_salient_feature_5')}</span>
               </li>
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Offers Real-time analytics capabilities via JanParichay Analytics application, which help to identify a user session activity thus reducing potential profile hacks.</span>
+                <span>{t('about_salient_feature_6')}</span>
               </li>
               <li className="salient-item">
                 <i className="bi bi-check-circle"></i>
-                <span>Extended to any number of user bases but restricted to the size of the backend infrastructure cluster.</span>
+                <span>{t('about_salient_feature_7')}</span>
               </li>
             </ul>
           </div>
@@ -346,7 +345,7 @@ export default function AboutUs() {
 
       {/*Service Partners*/}
       <section className="about-partners">
-        <h3 className="about-partners-title">Service Partners</h3>
+        <h3 className="about-partners-title">{t('about_partners_title')}</h3>
         <div className="about-partners-slider-viewport">
           <div 
             className="about-partners-slider-track" 
@@ -354,42 +353,42 @@ export default function AboutUs() {
           >
             <div className="about-partners-pack">
               <div className="about-partner-logo-box">
-                <img src={partner1} alt="Odisha One" />
+                <img src={partner1} alt={t('about_partner_odisha_one_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner2} alt="ServicePlus" />
+                <img src={partner2} alt={t('about_partner_serviceplus_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner3} alt="eOffice" />
+                <img src={partner3} alt={t('about_partner_eoffice_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner4} alt="@gov.in" />
+                <img src={partner4} alt={t('about_partner_gov_in_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner5} alt="Karmayogi Bharat" />
+                <img src={partner5} alt={t('about_partner_karmayogi_bharat_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner6} alt="CSC" />
+                <img src={partner6} alt={t('about_partner_csc_alt')} />
               </div>
             </div>
             <div className="about-partners-pack">
               <div className="about-partner-logo-box">
-                <img src={partner7} alt="myGov" />
+                <img src={partner7} alt={t('about_partner_mygov_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner8} alt="SWAAS" />
+                <img src={partner8} alt={t('about_partner_swaas_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner9} alt="Digital Gujarat" />
+                <img src={partner9} alt={t('about_partner_digital_gujarat_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner10} alt="National Literacy Mission" />
+                <img src={partner10} alt={t('about_partner_national_literacy_mission_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner11} alt="DRDO" />
+                <img src={partner11} alt={t('about_partner_drdo_alt')} />
               </div>
               <div className="about-partner-logo-box">
-                <img src={partner12} alt="AAI" />
+                <img src={partner12} alt={t('about_partner_aai_alt')} />
               </div>
             </div>
           </div>
@@ -408,8 +407,8 @@ export default function AboutUs() {
 
       {/* Key Features */}
       <section className="about-section" id="services">
-        <div className="about-section-tag">Features</div>
-        <h2 className="about-section-title">KEY FEATURES</h2>
+        <div className="about-section-tag">{t('about_section_tag_features')}</div>
+        <h2 className="about-section-title">{t('about_section_title_key_features')}</h2>
         
         <div className="features-grid">
           <div className="feature-card">
@@ -417,9 +416,9 @@ export default function AboutUs() {
               <i className="bi bi-qr-code"></i>
             </div>
             <div className="feature-card-content">
-              <h4 className="feature-card-title">Multifactor Authentication</h4>
+              <h4 className="feature-card-title">{t('about_feature_title_multifactor_auth')}</h4>
               <p className="feature-card-desc">
-                By using Parichay Authenticator, users can enable multiple-factor authentication to login Parichay via Tap, and Token Authentication.
+                {t('about_feature_desc_multifactor_auth')}
               </p>
             </div>
           </div>
@@ -428,9 +427,9 @@ export default function AboutUs() {
               <i className="bi bi-sliders"></i>
             </div>
             <div className="feature-card-content">
-              <h4 className="feature-card-title">Standard Integration Methods</h4>
+              <h4 className="feature-card-title">{t('about_feature_title_standard_integration')}</h4>
               <p className="feature-card-desc">
-                Application owners can opt for various integration methods to integrate their application with Parichay i.e. Rest APIs, SAML 2.0, and OAuth 2.0.
+                {t('about_feature_desc_standard_integration')}
               </p>
             </div>
           </div>
@@ -439,9 +438,9 @@ export default function AboutUs() {
               <i className="bi bi-graph-up-arrow"></i>
             </div>
             <div className="feature-card-content">
-              <h4 className="feature-card-title">Real-time analytics</h4>
+              <h4 className="feature-card-title">{t('about_feature_title_realtime_analytics')}</h4>
               <p className="feature-card-desc">
-                An analytical dashboard to track user activities and reduce suspicious actions.
+                {t('about_feature_desc_realtime_analytics')}
               </p>
             </div>
           </div>
@@ -450,9 +449,9 @@ export default function AboutUs() {
               <i className="bi bi-geo-alt"></i>
             </div>
             <div className="feature-card-content">
-              <h4 className="feature-card-title">Geofencing</h4>
+              <h4 className="feature-card-title">{t('about_feature_title_geofencing')}</h4>
               <p className="feature-card-desc">
-                Users can restrict their individual access for specific locations by enabling the virtual boundaries.
+                {t('about_feature_desc_geofencing')}
               </p>
             </div>
           </div>
@@ -461,9 +460,9 @@ export default function AboutUs() {
               <i className="bi bi-translate"></i>
             </div>
             <div className="feature-card-content">
-              <h4 className="feature-card-title">Multilingual Support</h4>
+              <h4 className="feature-card-title">{t('about_feature_title_multilingual')}</h4>
               <p className="feature-card-desc">
-                The platform offers multiple language support to meet the diverse understanding of the users PAN India.
+                {t('about_feature_desc_multilingual')}
               </p>
             </div>
           </div>
@@ -472,9 +471,9 @@ export default function AboutUs() {
               <i className="bi bi-fingerprint"></i>
             </div>
             <div className="feature-card-content">
-              <h4 className="feature-card-title">Aadhaar eKYC</h4>
+              <h4 className="feature-card-title">{t('about_feature_title_aadhaar_ekyc')}</h4>
               <p className="feature-card-desc">
-                Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae ducimus enim.
+                {t('about_feature_desc_aadhaar_ekyc')}
               </p>
             </div>
           </div>
@@ -483,54 +482,54 @@ export default function AboutUs() {
 
       {/* FAQ Section */}
       <section className="about-section about-faq" id="faq">
-        <div className="about-section-tag">Frequently Asked Questions</div>
-        <h2 className="about-section-title">FREQUENTLY ASKED QUESTIONS</h2>
+        <div className="about-section-tag">{t('about_section_tag_faq')}</div>
+        <h2 className="about-section-title">{t('about_section_title_faq')}</h2>
         
         <div className="about-faq-list">
           <div className={`about-faq-item ${openFaq === 0 ? 'active' : ''}`}>
             <button className="about-faq-question" onClick={() => toggleFaq(0)}>
-              <span>1. What is Jan Parichay?</span>
+              <span>{t('about_faq_q1')}</span>
               <i className={`bi bi-chevron-${openFaq === 0 ? 'up' : 'down'}`}></i>
             </button>
             {openFaq === 0 && (
               <div className="about-faq-answer">
-                Jan Parichay is a Single Sign On Platform for Government to Citizen (G2C) services like transport applications, MyGov and others. Jan Parichay authenticates the user for all the services and does authorization based on the rights given to the user.
+                {t('about_faq_a1')}
               </div>
             )}
           </div>
           <div className={`about-faq-item ${openFaq === 1 ? 'active' : ''}`}>
             <button className="about-faq-question" onClick={() => toggleFaq(1)}>
-              <span>2. What is a Single Sign On Platform?</span>
+              <span>{t('about_faq_q2')}</span>
               <i className={`bi bi-chevron-${openFaq === 1 ? 'up' : 'down'}`}></i>
             </button>
             {openFaq === 1 && (
               <div className="about-faq-answer">
-                Single sign-on (SSO) is a centralized session and user authentication service in which a set of login credentials can be used to access multiple applications. This offers major benefits for the users as it eliminates the need to repeatedly prove their identities.
+                {t('about_faq_a2')}
               </div>
             )}
           </div>
           <div className={`about-faq-item ${openFaq === 2 ? 'active' : ''}`}>
             <button className="about-faq-question" onClick={() => toggleFaq(2)}>
-              <span>3. What are the benefits of using Jan Parichay?</span>
+              <span>{t('about_faq_q3')}</span>
               <i className={`bi bi-chevron-${openFaq === 2 ? 'up' : 'down'}`}></i>
             </button>
             {openFaq === 2 && (
               <div className="about-faq-answer">
-                The basic objective of Jan Parichay is to eliminate individual sign-on procedures by centralizing user authentication and identity management at a central identity provider. It enhances security of user credentials.
+                {t('about_faq_a3')}
               </div>
             )}
           </div>
         </div>
         
         <Link to="/faq" className="about-readmore-btn">
-          Read All FAQs
+          {t('about_read_all_faqs_link')}
         </Link>
       </section>
 
       {/* Contact Us */}
       <section className="about-section" id="contact">
-        <div className="about-section-tag">Contact</div>
-        <h2 className="about-section-title">CONTACT US</h2>
+        <div className="about-section-tag">{t('about_section_tag_contact')}</div>
+        <h2 className="about-section-title">{t('about_section_title_contact_us')}</h2>
         
         <div className="about-contact-grid">
           <div className="contact-card">
@@ -538,8 +537,8 @@ export default function AboutUs() {
               <i className="bi bi-telephone"></i>
             </div>
             <div>
-              <h4 className="contact-card-title">Call Us</h4>
-              <p className="contact-card-value">1800 111 555</p>
+              <h4 className="contact-card-title">{t('about_contact_call_title')}</h4>
+              <p className="contact-card-value">{t('about_contact_call_value')}</p>
             </div>
           </div>
           <div className="contact-card">
@@ -547,8 +546,8 @@ export default function AboutUs() {
               <i className="bi bi-envelope"></i>
             </div>
             <div>
-              <h4 className="contact-card-title">Mail Us</h4>
-              <p className="contact-card-value">support-parichay[at]nic[dot]in</p>
+              <h4 className="contact-card-title">{t('about_contact_mail_title')}</h4>
+              <p className="contact-card-value">{t('about_contact_mail_value')}</p>
             </div>
           </div>
           <div className="contact-card">
@@ -556,8 +555,8 @@ export default function AboutUs() {
               <i className="bi bi-globe"></i>
             </div>
             <div>
-              <h4 className="contact-card-title">Reach Us</h4>
-              <p className="contact-card-value">https://servicedesk.nic.in/</p>
+              <h4 className="contact-card-title">{t('about_contact_reach_title')}</h4>
+              <p className="contact-card-value">{t('about_contact_reach_value')}</p>
             </div>
           </div>
           <div className="contact-card">
@@ -565,9 +564,9 @@ export default function AboutUs() {
               <i className="bi bi-geo-alt"></i>
             </div>
             <div>
-              <h4 className="contact-card-title">Address</h4>
+              <h4 className="contact-card-title">{t('about_contact_address_title')}</h4>
               <p className="contact-card-value">
-                National Informatics Centre, Block III, Delhi IT Park, Shastri Park, New Delhi - 110053
+                {t('about_contact_address_value')}
               </p>
             </div>
           </div>
@@ -577,14 +576,14 @@ export default function AboutUs() {
       {/* Partners Footer */}
       <div className="about-footer-partners">
         <div className="about-footer-partner-card">
-          <img src={NIC_logo} alt="NIC" className="about-footer-partner-img" />
+          <img src={NIC_logo} alt={t('about_footer_nic_alt')} className="about-footer-partner-img" />
           <div className="about-footer-partner-info">
             <span className="about-footer-partner-name">National Informatics Centre</span>
             <span className="about-footer-partner-dept">Ministry of Electronics & Information Technology (MeitY) Government of India</span>
           </div>
         </div>
         <div className="about-footer-partner-card">
-          <img src={digitalIndia} alt="Digital India" className="about-footer-partner-img" />
+          <img src={digitalIndia} alt={t('about_footer_digital_india_alt')} className="about-footer-partner-img" />
           <div className="about-footer-partner-info">
             <span className="about-footer-partner-name">Digital India Corporation</span>
             <span className="about-footer-partner-dept">Ministry of Electronics & Information Technology (MeitY) Government of India</span>
@@ -601,7 +600,7 @@ export default function AboutUs() {
       <button 
         className={`about-back-to-top ${showBackToTop ? 'visible' : ''}`}
         onClick={scrollToTop}
-        aria-label="Back to top"
+        aria-label={t('about_back_to_top_aria')}
       >
         <i className="bi bi-arrow-up"></i>
       </button>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLoginSession } from '../hooks/useLoginSession'
 import PhoneInput from './PhoneInput'
 import PasswordInput from './PasswordInput'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function MobileTab({ onForgotPassword, onForgetUserId }) {
   const [mobile, setMobile] = useState('')
@@ -10,6 +11,7 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
   const [passlessAuth, setPasslessAuth] = useState(false)
   const [consent, setConsent] = useState(false)
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const { recordSession } = useLoginSession()
 
@@ -33,7 +35,7 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
     <form onSubmit={handleSignIn} noValidate>
       <PhoneInput
         id="mob-number"
-        label="Enter Mobile Number"
+        label={t('mobile_tab_enter_mobile_label')}
         required
         value={mobile}
         onChange={e => setMobile(e.target.value.replace(/\D/g, ''))}
@@ -42,7 +44,7 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
       {!passlessAuth && (
         <PasswordInput
           id="mob-password"
-          label="Password"
+          label={t('mobile_tab_password_label')}
           required
           value={password}
           onChange={e => setPassword(e.target.value)}
@@ -55,14 +57,14 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
           className="link-blue"
           onClick={e => { e.preventDefault(); onForgetUserId() }}
         >
-          Forget User Id
+          {t('mobile_tab_forget_user_id')}
         </a>
         <a
           href="#"
           className="link-blue"
           onClick={e => { e.preventDefault(); onForgotPassword() }}
         >
-          Forgot Password
+          {t('mobile_tab_forgot_password')}
         </a>
       </div>
 
@@ -78,7 +80,7 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
           }}
         />
         <label className="form-check-label" htmlFor="passless-mob" style={{ fontSize: '0.85rem' }}>
-          Password Less Authentication
+          {t('mobile_tab_passless_auth')}
         </label>
       </div>
 
@@ -91,8 +93,8 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
           onChange={e => setConsent(e.target.checked)}
         />
         <label className="form-check-label" htmlFor="consent-mobile" style={{ fontSize: '0.85rem' }}>
-          I consent to MeriPehchaan{' '}
-          <a href="#" className="link-blue" style={{ fontSize: 'inherit' }}>terms of use.</a>
+          {t('mobile_tab_consent_text')}{' '}
+          <a href="#" className="link-blue" style={{ fontSize: 'inherit' }}>{t('mobile_tab_terms_of_use_link')}</a>
         </label>
       </div>
 
@@ -100,7 +102,7 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
         type="submit"
         className={`btn-mp-primary${canSubmit ? ' is-active' : ''}`}
       >
-        Sign In
+        {t('mobile_tab_sign_in_button')}
       </button>
     </form>
   )

@@ -1,0 +1,36 @@
+.services-page { min-height: 100dvh; display: flex; background: #fff; font-family: Arial, sans-serif; color: #14243d; }
+.services-sidebar { width: 300px; flex: 0 0 300px; height: 100dvh; overflow-y: auto; background: linear-gradient(#5277dc, #214cb8); color: #fff; box-shadow: inset -1px 0 rgba(0,0,0,.22); }
+.services-brand { height: 87px; display: flex; align-items: center; padding: 8px 31px; box-sizing: border-box; border-bottom: 1px solid rgba(0,0,0,.2); }
+.services-brand img { width: 229px; max-height: 66px; object-fit: contain; object-position: left center; filter: brightness(0) invert(1); }
+.services-sidebar nav { padding: 0 0 18px; }
+.services-group { position: relative; display: block; width: 100%; padding: 11px 14px; background: transparent; border: 0; color: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+.services-group:hover, .services-group.selected { background: rgba(0,0,0,.13); }
+.services-group.has-chevron { padding-left: 28px; }
+.services-group.has-chevron::before { content: '\00bb'; position: absolute; left: 11px; font-size: 23px; line-height: 10px; top: 11px; }
+.services-main { width: calc(100% - 300px); min-width: 0; background: #fff; }
+.services-topbar { height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px 0 46px; background: #f8f9fc; box-shadow: 0 3px 13px rgba(0,0,0,.11); box-sizing: border-box; }
+.service-search { height: 32px; width: 334px; position: relative; display: block; }
+.service-search input { width: 100%; height: 100%; padding: 0 46px 0 10px; border: 1px solid #dee1e7; border-radius: 5px; background: #fff; color: #344054; font-size: 11px; box-sizing: border-box; outline-color: #2765e8; }
+.service-search i { position: absolute; right: 0; top: 0; width: 35px; height: 32px; display: grid; place-items: center; background: #1768ed; border-radius: 4px; color: #fff; font-size: 15px; pointer-events: none; }
+.services-user-area { display: flex; align-items: center; gap: 30px; height: 100%; }
+.digital-india-mark { width: 66px; max-height: 48px; object-fit: contain; }
+.services-user-menu { align-self: stretch; position: relative; border-left: 1px solid #e0e4eb; display: flex; align-items: center; padding-left: 24px; }
+.services-user-trigger { background: transparent; border: 0; color: #1460ef; font-size: 11px; text-transform: uppercase; cursor: pointer; }
+.services-user-trigger i { margin-left: 6px; font-size: 13px; }
+.services-dropdown { position: absolute; z-index: 4; top: 66px; right: 0; width: 150px; padding: 8px 0; background: #fff; border: 1px solid #c8c8c8; border-radius: 4px; box-shadow: 0 2px 9px rgba(0,0,0,.16); }
+.services-dropdown a, .services-dropdown button { display: flex; gap: 9px; align-items: center; width: 100%; padding: 11px 14px; border: 0; background: transparent; color: #17416b; font-size: 13px; text-align: left; text-decoration: none; cursor: pointer; box-sizing: border-box; }
+.services-dropdown a:hover, .services-dropdown button:hover { background: #f3f5f8; }
+.services-content { padding: 16px 12px 34px 43px; }
+.services-content h1 { margin: 0 0 34px; font-size: 23px; line-height: 1.25; font-weight: 600; color: #14243d; }
+.services-content h1 span { color: #2d60eb; font-weight: 500; }
+.services-grid { display: grid; grid-template-columns: repeat(6, minmax(160px, 1fr)); gap: 15px 20px; }
+.service-card { height: 104px; min-width: 0; padding: 10px 9px 8px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; border: 0; border-bottom: 3px solid #4676ed; border-radius: 6px; background: #f8f9fd; box-shadow: 0 8px 17px rgba(31,51,86,.1); color: #14243d; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.service-card:hover, .service-card:focus-visible { transform: translateY(-2px); box-shadow: 0 9px 19px rgba(31,51,86,.2); outline: none; }
+.service-logo-wrap { height: 57px; display: grid; place-items: center; width: 100%; }
+.service-logo-wrap img { max-width: 88%; max-height: 51px; object-fit: contain; }
+.service-card span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 700; }
+.services-no-results { color: #61708a; font-size: 15px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 1200px) { .services-grid { grid-template-columns: repeat(4, minmax(150px, 1fr)); } }
+@media (max-width: 800px) { .services-sidebar { width: 220px; flex-basis: 220px; } .services-main { width: calc(100% - 220px); } .services-brand { padding-inline: 16px; } .services-brand img { width: 185px; } .services-topbar { padding-left: 20px; } .services-grid { grid-template-columns: repeat(2, minmax(135px, 1fr)); } .services-content { padding-left: 20px; } .services-user-area { gap: 10px; } .digital-india-mark { display: none; } }
+@media (max-width: 560px) { .services-sidebar { display: none; } .services-main { width: 100%; } .services-topbar { height: 61px; padding: 0 12px; } .service-search { width: 190px; } .services-user-menu { padding-left: 8px; border: 0; } .services-user-trigger { font-size: 0; } .services-user-trigger i { font-size: 17px; } .services-content { padding: 18px 12px 28px; } .services-content h1 { font-size: 19px; margin-bottom: 24px; } .services-grid { gap: 12px; } }

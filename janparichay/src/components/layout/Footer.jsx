@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Layout.css'
+import englishTranslations from '../../locales/en.json'
 
-// Import all sliding logos
 import digilocker from '../../images/digilocker.png'
 import digitalIndia from '../../images/Digital-India.png'
 import epramaan from '../../images/epramaan.png'
@@ -42,16 +42,16 @@ function Footer({ showSlider = false }) {
       <footer className="footer-container">
           <div className="footer-content">
               <p className="footer-copyright">
-                  Copyright @ 2026 Government Of India. Designed and Maintained by National Informatics Centre
+                  {englishTranslations.footer_copyright}
               </p>
               <div className="footer-links">
-                  <Link to="/about#about">About Us</Link>
+                  <Link to="/about#about">{englishTranslations.footer_link_about_us}</Link>
                   <span className="footer-separator">|</span>
-                  <Link to="/application-policies">Application Policies</Link>
+                  <Link to="/application-policies">{englishTranslations.footer_link_application_policies}</Link>
                   <span className="footer-separator">|</span>
-                  <Link to="/terms-conditions">Terms &amp; Conditions</Link>
+                  <Link to="/terms-conditions">{englishTranslations.footer_link_terms_conditions}</Link>
                   <span className="footer-separator">|</span>
-                  <Link to="/faq">FAQ</Link>
+                  <Link to="/faq">{englishTranslations.footer_link_faq}</Link>
               </div>
           </div>
       </footer>

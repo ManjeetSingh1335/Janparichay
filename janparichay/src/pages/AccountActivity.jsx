@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {useLocation} from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext'
 import analyticsLogo from '../images/analytics-logo.png'
 import chromeLogo from '../images/chrome.png'
 import edgeLogo from '../images/edge.png'
@@ -48,6 +49,7 @@ function SortDiamond({ active, direction }) {
 
 function AccountActivity() {
   const location = useLocation()
+  const { t } = useLanguage()
   const [showRemembered, setShowRemembered] = useState(false)
   const [limitRecent, setLimitRecent] = useState(6)
   const [limitRemembered, setLimitRemembered] = useState(6)
@@ -155,16 +157,16 @@ function AccountActivity() {
   }, []);
 
   const handleLogoutAll = () => {
-    if (confirm('Are you sure you want to logout from all active sessions?')) {
+    if (confirm(t('activity_confirm_logout_all'))) {
       const updated = activities.filter(act => act.isCurrent);
       setActivities(updated);
       localStorage.setItem('recent_activities', JSON.stringify(updated));
-      alert('Successfully logged out from all other sessions.')
+      alert(t('activity_alert_logout_all_success'))
     }
   }
 
   const handleIndividualLogout = (id) => {
-    if (confirm('Are you sure you want to logout from this session?')) {
+    if (confirm(t('activity_confirm_logout_individual'))) {
       const updated = activities.filter(act => act.id !== id);
       setActivities(updated);
       localStorage.setItem('recent_activities', JSON.stringify(updated));
@@ -176,15 +178,15 @@ function AccountActivity() {
   }
 
   const handleRemoveAllDevices = () => {
-    if (confirm('Are you sure you want to remove all remembered devices?')) {
+    if (confirm(t('activity_confirm_remove_all_remembered'))) {
       setRemembered([]);
       localStorage.setItem('remembered_devices', JSON.stringify([]));
-      alert('All remembered devices removed.')
+      alert(t('activity_alert_all_remembered_removed'))
     }
   }
 
   const handleRemoveIndividualRemembered = (id) => {
-    if (confirm('Are you sure you want to remove this remembered device?')) {
+    if (confirm(t('activity_confirm_remove_individual_remembered'))) {
       const updated = remembered.filter(r => r.id !== id);
       setRemembered(updated);
       localStorage.setItem('remembered_devices', JSON.stringify(updated));
@@ -286,12 +288,12 @@ function AccountActivity() {
   return (
     <>
       <div className="activity-section-header">
-        <h3 className="activity-section-title">RECENT ACTIVITIES</h3>
+        <h3 className="activity-section-title">{t('activity_section_title_recent_activities')}</h3>
       </div>
       <div className="activity-analytics-toolbar">
         <AnalyticsLogo />
         <button type="button" className="btn-logout-all" onClick={handleLogoutAll}>
-          Logout from all Sessions
+          {t('activity_button_logout_all_sessions')}
         </button>
       </div>
       <div className="table-controls-row">
@@ -311,37 +313,37 @@ function AccountActivity() {
           <thead>
             <tr>
               <th className={sortConfig.key === 'os' ? 'active-header' : ''} onClick={() => handleSort('os')}>
-                Operating System <SortDiamond active={sortConfig.key === 'os'} direction={sortConfig.direction} />
+                {t('activity_table_header_operating_system')} <SortDiamond active={sortConfig.key === 'os'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'ip' ? 'active-header' : ''} onClick={() => handleSort('ip')}>
-                IP <SortDiamond active={sortConfig.key === 'ip'} direction={sortConfig.direction} />
+                {t('activity_table_header_ip')} <SortDiamond active={sortConfig.key === 'ip'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'browser' ? 'active-header' : ''} onClick={() => handleSort('browser')}>
-                Browser <SortDiamond active={sortConfig.key === 'browser'} direction={sortConfig.direction} />
+                {t('activity_table_header_browser')} <SortDiamond active={sortConfig.key === 'browser'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'location' ? 'active-header' : ''} onClick={() => handleSort('location')}>
-                Location <SortDiamond active={sortConfig.key === 'location'} direction={sortConfig.direction} />
+                {t('activity_table_header_location')} <SortDiamond active={sortConfig.key === 'location'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'loginTime' ? 'active-header' : ''} onClick={() => handleSort('loginTime')}>
-                Login Time <SortDiamond active={sortConfig.key === 'loginTime'} direction={sortConfig.direction} />
+                {t('activity_table_header_login_time')} <SortDiamond active={sortConfig.key === 'loginTime'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'validUpto' ? 'active-header' : ''} onClick={() => handleSort('validUpto')}>
-                Valid Upto <SortDiamond active={sortConfig.key === 'validUpto'} direction={sortConfig.direction} />
+                {t('activity_table_header_valid_upto')} <SortDiamond active={sortConfig.key === 'validUpto'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'loginWith' ? 'active-header' : ''} onClick={() => handleSort('loginWith')}>
-                Login With <SortDiamond active={sortConfig.key === 'loginWith'} direction={sortConfig.direction} />
+                {t('activity_table_header_login_with')} <SortDiamond active={sortConfig.key === 'loginWith'} direction={sortConfig.direction} />
               </th>
               <th className={sortConfig.key === 'loginService' ? 'active-header' : ''} onClick={() => handleSort('loginService')}>
-                Login Service <SortDiamond active={sortConfig.key === 'loginService'} direction={sortConfig.direction} />
+                {t('activity_table_header_login_service')} <SortDiamond active={sortConfig.key === 'loginService'} direction={sortConfig.direction} />
               </th>
-              <th>Logout</th>
+              <th>{t('activity_table_header_logout')}</th>
             </tr>
           </thead>
           <tbody>
             {paginatedActivities.length === 0 ? (
               <tr>
                 <td colSpan={9} className="activity-table-no-data">
-                  No data available in table
+                  {t('activity_table_no_data')}
                 </td>
               </tr>
             ) : (
@@ -370,13 +372,13 @@ function AccountActivity() {
                   <td>
                     {act.isCurrent ? (
                       <span className="current-session-label">
-                        Current
+                        {t('activity_current_session_label_line1')}
                         <br />
-                        Session
+                        {t('activity_current_session_label_line2')}
                       </span>
                     ) : (
                       <button type="button" className="btn-table-logout" onClick={() => handleIndividualLogout(act.id)}>
-                        Logout
+                        {t('activity_button_logout')}
                       </button>
                     )}
                   </td>
@@ -433,7 +435,7 @@ function AccountActivity() {
       </div>
 
       <div className="activity-section-header">
-        <h3 className="activity-section-title">USER DEVICES</h3>
+        <h3 className="activity-section-title">{t('activity_section_title_user_devices')}</h3>
       </div>
       <div className="user-devices-grid">
         {devices.map((device) => (
@@ -458,7 +460,7 @@ function AccountActivity() {
 
       <div className="btn-load-remembered-row">
         <button type="button" className="btn-load-remembered" onClick={handleLoadRememberDevices}>
-          Load Remember Devices
+          {t('activity_button_load_remember_devices')}
         </button>
       </div>
       <br/>
@@ -468,11 +470,11 @@ function AccountActivity() {
       {showRemembered && (
         <div className="activity-section" ref={rememberedSectionRef}>
           <div className="activity-section-header">
-            <h3 className="activity-section-title">REMEMBERED DEVICES</h3>
+            <h3 className="activity-section-title">{t('activity_section_title_remembered_devices')}</h3>
           </div>
           <div className="btn-remove-all-row">
             <button type="button" className="btn-remove-all-devices" onClick={handleRemoveAllDevices}>
-              Remove all
+              {t('activity_button_remove_all')}
             </button>
           </div>
           <div className="table-controls-row">
@@ -491,28 +493,28 @@ function AccountActivity() {
               <thead>
                 <tr>
                   <th className={sortConfigRemembered.key === 'os' ? 'active-header' : ''} onClick={() => handleSortRemembered('os')}>
-                    Operating System <SortDiamond active={sortConfigRemembered.key === 'os'} direction={sortConfigRemembered.direction} />
+                    {t('activity_remembered_table_header_operating_system')} <SortDiamond active={sortConfigRemembered.key === 'os'} direction={sortConfigRemembered.direction} />
                   </th>
                   <th className={sortConfigRemembered.key === 'ip' ? 'active-header' : ''} onClick={() => handleSortRemembered('ip')}>
-                    IP <SortDiamond active={sortConfigRemembered.key === 'ip'} direction={sortConfigRemembered.direction} />
+                    {t('activity_remembered_table_header_ip')} <SortDiamond active={sortConfigRemembered.key === 'ip'} direction={sortConfigRemembered.direction} />
                   </th>
                   <th className={sortConfigRemembered.key === 'browser' ? 'active-header' : ''} onClick={() => handleSortRemembered('browser')}>
-                    Browser <SortDiamond active={sortConfigRemembered.key === 'browser'} direction={sortConfigRemembered.direction} />
+                    {t('activity_remembered_table_header_browser')} <SortDiamond active={sortConfigRemembered.key === 'browser'} direction={sortConfigRemembered.direction} />
                   </th>
                   <th className={sortConfigRemembered.key === 'loginWith' ? 'active-header' : ''} onClick={() => handleSortRemembered('loginWith')}>
-                    Login With <SortDiamond active={sortConfigRemembered.key === 'loginWith'} direction={sortConfigRemembered.direction} />
+                    {t('activity_remembered_table_header_login_with')} <SortDiamond active={sortConfigRemembered.key === 'loginWith'} direction={sortConfigRemembered.direction} />
                   </th>
                   <th className={sortConfigRemembered.key === 'rememberTime' ? 'active-header' : ''} onClick={() => handleSortRemembered('rememberTime')}>
-                    Remember Time <SortDiamond active={sortConfigRemembered.key === 'rememberTime'} direction={sortConfigRemembered.direction} />
+                    {t('activity_remembered_table_header_remember_time')} <SortDiamond active={sortConfigRemembered.key === 'rememberTime'} direction={sortConfigRemembered.direction} />
                   </th>
-                  <th>Delete</th>
+                  <th>{t('activity_remembered_table_header_delete')}</th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedRemembered.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="activity-table-no-data">
-                      No data available in table
+                      {t('activity_remembered_table_no_data')}
                     </td>
                   </tr>
                 ) : (
@@ -531,7 +533,7 @@ function AccountActivity() {
                       </td>
                       <td>
                         <button type="button" className="btn-table-logout" onClick={() => handleRemoveIndividualRemembered(rem.id)}>
-                          Delete
+                          {t('activity_remembered_button_delete')}
                         </button>
                       </td>
                     </tr>

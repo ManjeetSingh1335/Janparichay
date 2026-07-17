@@ -9,13 +9,19 @@ import SSOSection from '../components/SSOSection'
 import ForgotPassword from '../components/ForgotPassword'
 import RecoverUserId from '../components/RecoverUserId'
 import LanguageSwitcher from '../components/LanguageSwitcher'
-
-const TABS = ['Username', 'Mobile', 'Others']
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState('Username')
   const [view, setView] = useState('login')
   const [kebabOpen, setKebabOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const tabs = [
+    { id: 'Username', label: t('login_tab_username') },
+    { id: 'Mobile', label: t('login_tab_mobile') },
+    { id: 'Others', label: t('login_tab_others') }
+  ]
 
   const renderTab = () => {
     const props = {
@@ -43,13 +49,13 @@ export default function Login() {
         {/* Header row: title + kebab menu */}
         <div className="auth-card-header">
           <h2>
-            Sign In to your account via <span className="jp-link">JanParichay</span>
+            {t('login_sign_in_via')} <span className="jp-link">{t('login_janparichay')}</span>
           </h2>
           <button
             type="button"
             className="kebab-btn"
             onClick={() => setKebabOpen(v => !v)}
-            aria-label="More options"
+            aria-label={t('login_kebab_aria_label')}
           >
             ⋮
           </button>
@@ -60,14 +66,14 @@ export default function Login() {
           <>
             {/* Tab navigation — pure state, NO route change */}
             <div className="login-tabs-row">
-              {TABS.map(tab => (
+              {tabs.map(tab => (
                 <button
                   type="button"
-                  key={tab}
-                  className={`login-tab-btn${activeTab === tab ? ' active' : ''}`}
-                  onClick={() => setActiveTab(tab)}
+                  key={tab.id}
+                  className={`login-tab-btn${activeTab === tab.id ? ' active' : ''}`}
+                  onClick={() => setActiveTab(tab.id)}
                 >
-                  {tab}
+                  {tab.label}
                 </button>
               ))}
             </div>
@@ -80,9 +86,9 @@ export default function Login() {
 
             {/* Sign up link */}
             <p className="text-center mt-3 mb-0" style={{ fontSize: '0.86rem' }}>
-              New user?{' '}
+              {t('login_new_user')}{' '}
               <Link to="/signup" className="link-blue" style={{ fontWeight: 600 }}>
-                Sign up for MeriPehchaan
+                {t('login_signup_link')}
               </Link>
             </p>
           </>

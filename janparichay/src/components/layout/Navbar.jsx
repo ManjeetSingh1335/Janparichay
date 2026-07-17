@@ -4,11 +4,13 @@ import meriPehchaanLogo from '../../images/meri-pehchaan.png';
 import keyIcon from '../../images/key-icon.png';
 import './Layout.css'
 import {useDashboard} from '../../context/DashboardContext.jsx'
+import { useLanguage } from '../../context/LanguageContext'
 import {NavLink} from 'react-router-dom'
 
 function Navbar() {
 
   const {profile, avatar, updateAvatar, logout} = useDashboard();
+  const { t } = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [mobileUploadOpen, setMobileUploadOpen] = useState(false);
@@ -279,10 +281,10 @@ function Navbar() {
   };
 
   const navLinks = [
-    {to: '/dashboard',          label: 'Dashboard',         end: true},
-    {to: '/dashboard/profile',  label: 'Profile',           end: false},
-    {to: '/dashboard/activity', label: 'Account Activity',  end: false},
-    {to: '/dashboard/consent',  label: 'Consent Dashboard', end: false},
+    {to: '/dashboard',          label: t('navbar_nav_link_dashboard'),         end: true},
+    {to: '/dashboard/profile',  label: t('navbar_nav_link_profile'),           end: false},
+    {to: '/dashboard/activity', label: t('navbar_nav_link_account_activity'),  end: false},
+    {to: '/dashboard/consent',  label: t('navbar_nav_link_consent_dashboard'), end: false},
   ]
 
   return (
@@ -291,7 +293,7 @@ function Navbar() {
       <div className="navbar-logo-container">
         <img
           src={meriPehchaanLogo}
-          alt="Meri Pehchaan"
+          alt={t('navbar_logo_alt')}
           className="navbar-logo"
         />
       </div>
@@ -300,7 +302,7 @@ function Navbar() {
         <div className="navbar-key-container">
           <img
             src={keyIcon}
-            alt="User Icon"
+            alt={t('navbar_key_icon_alt')}
             className="navbar-key-icon"
           />
         </div>
@@ -316,7 +318,7 @@ function Navbar() {
         <div className="navbar-avatar-wrapper" style={{ position: 'relative' }}>
           <div className="navbar-avatar-container" onClick={handleAvatarClick} style={{ cursor: 'pointer', overflow: 'hidden' }}>
             {avatar ? (
-              <img src={avatar} alt="Profile" className="navbar-avatar-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={avatar} alt={t('navbar_avatar_img_alt')} className="navbar-avatar-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             ) : (
               <span className="navbar-avatar-text">
                 {(profile.fullName || profile.name || 'M').charAt(0).toUpperCase()}
@@ -327,11 +329,11 @@ function Navbar() {
             <div className="profile-dropdown-menu">
               <button type="button" className="dropdown-item" onClick={handleUploadClickInMenu}>
                 <i className="bi bi-upload dropdown-icon"></i>
-                Upload Profile Pic
+                {t('navbar_dropdown_upload_profile_pic')}
               </button>
               <button type="button" className="dropdown-item" onClick={logout}>
                 <i className="bi bi-power dropdown-icon"></i>
-                Logout
+                {t('navbar_dropdown_logout')}
               </button>
             </div>
           )}
@@ -344,7 +346,7 @@ function Navbar() {
           setHamburgerOpen(prev => !prev);
           setMobileUploadOpen(false);
         }}
-        aria-label="Toggle menu"
+        aria-label={t('navbar_hamburger_aria_label')}
       >
         <span className="ham-line"></span>
         <span className="ham-line"></span>
@@ -363,7 +365,7 @@ function Navbar() {
                 style={{ cursor: 'pointer' }}
               >
                 {avatar ? (
-                  <img src={avatar} alt="Profile" className="mobile-drawer-avatar-img" />
+                  <img src={avatar} alt={t('navbar_avatar_img_alt')} className="mobile-drawer-avatar-img" />
                 ) : (
                   <span className="mobile-drawer-avatar-text">
                     {(profile.fullName || profile.name || 'U').charAt(0).toUpperCase()}
@@ -380,7 +382,7 @@ function Navbar() {
             {/*upload profile pic*/}
             <div className={`mobile-drawer-upload ${mobileUploadOpen ? 'open' : ''}`}>
               <button className="mobile-drawer-upload-btn" onClick={() => { setHamburgerOpen(false); setMobileUploadOpen(false); handleUploadClickInMenu(); }}>
-                <i className="bi bi-upload"></i> Upload Profile Pic
+                <i className="bi bi-upload"></i> {t('navbar_mobile_drawer_upload_profile_pic')}
               </button>
             </div>
             {/*nav links*/}
@@ -400,7 +402,7 @@ function Navbar() {
             {/*Logout*/}
             <div className="mobile-drawer-logout">
               <button className="mobile-drawer-logout-btn" onClick={() => { setHamburgerOpen(false); logout(); }}>
-                <i className="bi bi-power"></i> Logout
+                <i className="bi bi-power"></i> {t('navbar_mobile_drawer_logout')}
               </button>
             </div>
           </div>
@@ -425,14 +427,14 @@ function Navbar() {
               onClick={() => setShowUploadModal(false)}
               onMouseEnter={() => setIsCloseHovered(true)}
               onMouseLeave={() => setIsCloseHovered(false)}
-              aria-label="Close modal"
+              aria-label={t('navbar_upload_modal_close_aria_label')}
             >
               <i className="bi bi-x-lg"></i>
             </button>
 
             <div style={selectorBoxStyle}>
               <span style={placeholderStyle} className="text-truncate">
-                {selectedFileName || 'Select Profile Picture'}
+                {selectedFileName || t('navbar_upload_modal_placeholder')}
               </span>
               <div style={iconsContainerStyle}>
                 <button 
@@ -441,7 +443,7 @@ function Navbar() {
                   onClick={handleCameraToggle}
                   onMouseEnter={() => setIsCameraHovered(true)}
                   onMouseLeave={() => setIsCameraHovered(false)}
-                  title="Open Camera"
+                  title={t('navbar_upload_modal_camera_title')}
                 >
                   <i className="bi bi-camera-fill"></i>
                 </button>
@@ -451,7 +453,7 @@ function Navbar() {
                   onClick={triggerFileInput}
                   onMouseEnter={() => setIsImageHovered(true)}
                   onMouseLeave={() => setIsImageHovered(false)}
-                  title="Select File"
+                  title={t('navbar_upload_modal_file_title')}
                 >
                   <i className="bi bi-image-fill"></i>
                 </button>
@@ -465,7 +467,7 @@ function Navbar() {
                
                 {cameraError ? (
                   <div style={cameraErrorBoxStyle}>
-                    Camera is not working properly!
+                    {t('navbar_upload_modal_camera_error')}
                   </div>
                 ) : (
                   <Webcam
@@ -484,7 +486,7 @@ function Navbar() {
                 )}
                 {!cameraError && (
                   <button type="button" style={btnCaptureStyle} onClick={capturePhoto}>
-                    <i className="bi bi-camera"></i> Capture Photo
+                    <i className="bi bi-camera"></i> {t('navbar_upload_modal_capture_photo')}
                   </button>
                 )}
               </div>
@@ -494,7 +496,7 @@ function Navbar() {
               <div style={previewContainerStyle}>
                 <img 
                   src={tempFileUrl} 
-                  alt="Preview" 
+                  alt={t('navbar_upload_modal_preview_alt')} 
                   style={previewImgStyle}
                 />
               </div>
@@ -517,7 +519,7 @@ function Navbar() {
                 onMouseEnter={() => setIsSubmitHovered(true)}
                 onMouseLeave={() => setIsSubmitHovered(false)}
               >
-                Upload Picture
+                {t('navbar_upload_modal_submit')}
               </button>
             </div>
           </div>

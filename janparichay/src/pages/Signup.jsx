@@ -6,8 +6,10 @@ import PasswordInput from '../components/PasswordInput'
 import PhoneInput from '../components/PhoneInput'
 import DateInput from '../components/DateInput'
 import TermsModal from '../components/TermsModal'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Signup() {
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const [form, setForm] = useState({
     mobile: '',
@@ -32,22 +34,22 @@ export default function Signup() {
 
   const validate = () => {
     const e = {}
-    if (!form.mobile || form.mobile.length < 7) e.mobile = 'Enter a valid mobile number'
-    if (!otpSent) e.otp = 'Please generate and verify OTP first'
-    if (!form.firstName.trim()) e.firstName = 'First name is required'
-    if (!form.dob) e.dob = 'Date of birth is required'
-    if (!form.gender) e.gender = 'Please select gender'
-    if (!form.suggestedId.trim()) e.suggestedId = 'User ID is required'
-    if (!form.password || form.password.length < 8) e.password = 'Password must be at least 8 characters'
-    if (form.password !== form.confirmPassword) e.confirmPassword = 'Passwords do not match'
-    if (!form.terms) e.terms = 'You must accept Terms and Conditions'
+    if (!form.mobile || form.mobile.length < 7) e.mobile = t('signup_error_mobile')
+    if (!otpSent) e.otp = t('signup_error_otp')
+    if (!form.firstName.trim()) e.firstName = t('signup_error_first_name')
+    if (!form.dob) e.dob = t('signup_error_dob')
+    if (!form.gender) e.gender = t('signup_error_gender')
+    if (!form.suggestedId.trim()) e.suggestedId = t('signup_error_suggested_id')
+    if (!form.password || form.password.length < 8) e.password = t('signup_error_password')
+    if (form.password !== form.confirmPassword) e.confirmPassword = t('signup_error_confirm_password')
+    if (!form.terms) e.terms = t('signup_error_terms')
     return e
   }
 
   const handleOTP = () => {
     if (form.mobile.length >= 7) {
       setOtpSent(true)
-      alert('OTP sent to ' + form.mobile + '\n(Demo: use 123456)')
+      alert(`${t('signup_alert_otp_sent')} ${form.mobile}\n${t('signup_alert_otp_demo')}`)
     }
   }
 
@@ -62,7 +64,7 @@ export default function Signup() {
       username: form.suggestedId + '@janparichay.gov.in',
       name: form.firstName + ' ' + form.lastName,
     }))
-    alert('Account created successfully! Redirecting to dashboard...')
+    alert(t('signup_alert_account_created'))
     navigate('/dashboard')
   }
 
@@ -94,7 +96,7 @@ export default function Signup() {
 
       <div className="auth-card" style={{ maxWidth: 520}}>
         <h2 style={{marginBottom:'20px' }}>
-          Sign up for <span className="jp-link">JanParichay</span>
+          {t('signup_heading')} <span className="jp-link">{t('signup_janparichay')}</span>
         </h2>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -102,11 +104,11 @@ export default function Signup() {
           {/* ── Mobile No with country picker + Generate OTP ── */}
           <PhoneInput
             id="signup-mobile"
-            label="Mobile No"
+            label={t('signup_mobile_label')}
             required
             value={form.mobile}
             onChange={e => update('mobile', e.target.value.replace(/\D/g, ''))}
-            infoTooltip="We'll send a verification code to this number"
+            infoTooltip={t('signup_mobile_tooltip')}
             rightAddon={
               <button
                 type="button"
@@ -114,7 +116,7 @@ export default function Signup() {
                 onClick={handleOTP}
                 disabled={form.mobile.length < 7}
               >
-                Generate OTP
+                {t('signup_generate_otp')}
               </button>
             }
           />
@@ -125,15 +127,15 @@ export default function Signup() {
             <div style={{ marginBottom: 4 }}>
               <Input
                 id="signup-otp"
-                label="Enter OTP"
+                label={t('signup_enter_otp_label')}
                 required
                 value={otp}
                 onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
-                placeholder="6-digit OTP"
+                placeholder={t('signup_otp_placeholder')}
                 maxLength={6}
               />
               <div style={{ fontSize: '0.78rem', color: '#1a73e8', marginTop: -12, marginBottom: 16 }}>
-                Didn&apos;t receive? <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={handleOTP}>Resend OTP</span>
+                {t('signup_otp_didnt_receive')} <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={handleOTP}>{t('signup_resend_otp')}</span>
               </div>
             </div>
           )}
@@ -141,11 +143,11 @@ export default function Signup() {
           {/* ── First Name ── */}
           <Input
             id="firstName"
-            label="First Name"
+            label={t('signup_first_name_label')}
             required
             value={form.firstName}
             onChange={e => update('firstName', e.target.value)}
-            placeholder="First Name"
+            placeholder={t('signup_first_name_placeholder')}
             rightAddon={<i className="bi bi-info-circle" title="As per official ID proof" style={{ fontSize: '0.9rem', cursor: 'help' }}></i>}
           />
           {errors.firstName && <div className="text-danger" style={{ fontSize: '0.78rem', marginTop: -12, marginBottom: 12 }}>{errors.firstName}</div>}
@@ -153,16 +155,16 @@ export default function Signup() {
           {/* ── Last Name (optional) ── */}
           <Input
             id="lastName"
-            label="Last Name (optional)"
+            label={t('signup_last_name_label')}
             value={form.lastName}
             onChange={e => update('lastName', e.target.value)}
-            placeholder="Last Name"
+            placeholder={t('signup_last_name_placeholder')}
           />
 
           {/* ── Date of Birth — click anywhere opens calendar ── */}
           <DateInput
             id="dob"
-            label="Date of Birth"
+            label={t('signup_dob_label')}
             required
             value={form.dob}
             onChange={e => update('dob', e.target.value)}
@@ -172,7 +174,7 @@ export default function Signup() {
           {/* ── Select Gender ── */}
           <div className="mp-notched-field">
             <span className="mp-notched-label">
-              Select Gender <span className="required-star">*</span>
+              {t('signup_select_gender_label')} <span className="required-star">*</span>
             </span>
             <div className="mp-notched-box">
               <select
@@ -181,11 +183,11 @@ export default function Signup() {
                 onChange={e => update('gender', e.target.value)}
                 style={{ paddingLeft: 14, cursor: 'pointer' }}
               >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-                <option value="prefer_not">Prefer not to say</option>
+                <option value="">{t('signup_gender_default_option')}</option>
+                <option value="male">{t('signup_gender_male')}</option>
+                <option value="female">{t('signup_gender_female')}</option>
+                <option value="other">{t('signup_gender_other')}</option>
+                <option value="prefer_not">{t('signup_gender_prefer_not')}</option>
               </select>
             </div>
           </div>
@@ -194,17 +196,17 @@ export default function Signup() {
           {/* ── Suggested User Id ── */}
           <div className="mb-1">
             <label className="form-label fw-600" style={{ fontSize: '0.9rem', color: '#1a73e8', fontWeight: 600 }}>
-              Suggested User Id <span className="required-star">*</span>
+              {t('signup_suggested_user_id_label')} <span className="required-star">*</span>
             </label>
             <div className="suggested-id-field">
               <input
                 type="text"
                 className="suggested-id-input"
-                placeholder="e.g. abc_123"
+                placeholder={t('signup_suggested_id_placeholder')}
                 value={form.suggestedId}
                 onChange={e => update('suggestedId', e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
               />
-              <div className="suggested-id-suffix">@janparichay.gov.in</div>
+              <div className="suggested-id-suffix">{t('signup_suggested_id_suffix')}</div>
             </div>
             {errors.suggestedId && <div className="text-danger" style={{ fontSize: '0.78rem', marginTop: 4 }}>{errors.suggestedId}</div>}
           </div>
@@ -216,7 +218,7 @@ export default function Signup() {
           {/* ── Password with show/hide ── */}
           <PasswordInput
             id="signup-pass"
-            label="Password"
+            label={t('signup_password_label')}
             required
             value={form.password}
             onChange={e => update('password', e.target.value)}
@@ -226,7 +228,7 @@ export default function Signup() {
           {/* ── Confirm Password with show/hide ── */}
           <PasswordInput
             id="confirm-pass"
-            label="Confirm Password"
+            label={t('signup_confirm_password_label')}
             required
             value={form.confirmPassword}
             onChange={e => update('confirmPassword', e.target.value)}
@@ -250,7 +252,7 @@ export default function Signup() {
               style={{ fontSize: '0.875rem', cursor: 'pointer' }}
               onClick={handleTermsCheckboxClick}
             >
-              I accept Terms and Conditions
+              {t('signup_terms_checkbox')}
             </label>
             {errors.terms && <div className="text-danger" style={{ fontSize: '0.78rem', marginTop: 2 }}>{errors.terms}</div>}
           </div>
@@ -261,15 +263,15 @@ export default function Signup() {
             className={`btn-mp-primary${form.terms ? ' is-active' : ''}`}
             disabled={!form.terms}
           >
-            Submit
+            {t('signup_submit_button')}
           </button>
         </form>
 
         {/* Sign in link */}
         <p className="text-center mt-3 mb-0" style={{ fontSize: '0.875rem' }}>
-          Already have an account?{' '}
+          {t('signup_already_have_account')}{' '}
           <Link to="/login" className="link-blue" style={{ fontWeight: 600 }}>
-            Sign in to an existing MeriPehchaan account
+            {t('signup_sign_in_link')}
           </Link>
         </p>
       </div>

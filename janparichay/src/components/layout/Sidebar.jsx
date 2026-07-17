@@ -1,25 +1,27 @@
 import React from 'react'
 import './Layout.css'
 import {NavLink} from 'react-router-dom'
+import {useLanguage} from '../../context/LanguageContext'
 
 function Sidebar() {
+  const {t}=useLanguage()
 
   const links=[
     {
       to: "/dashboard",
-      label: "Dashboard"
+      label: t('sidebar_nav_link_dashboard')
     },
     {
       to: "/dashboard/profile",
-      label: "Profile"
+      label: t('sidebar_nav_link_profile')
     },
     {
       to: "/dashboard/activity",
-      label: "Account Activity"
+      label: t('sidebar_nav_link_account_activity')
     },
     {
       to: "/dashboard/consent",
-      label: "Consent Dashboard"
+      label: t('sidebar_nav_link_consent_dashboard')
     },
   ]
     
