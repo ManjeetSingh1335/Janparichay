@@ -514,7 +514,7 @@ a { text-decoration: none; }
 }
 .settings-row:last-child { border-bottom: none; }
 .settings-row .settings-label { display: flex; align-items: center; gap: 6px; }
-.settings-row i.bi-info-circle { color: #8a93a0; font-size: 0.78rem; cursor: help; }
+.settings-row i.bi-info-circle-fill { color: #000; font-size: 0.78rem; cursor: help; }
 
  
 .mp-toggle {

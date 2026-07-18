@@ -331,14 +331,14 @@
 }
 
 .settings-icon {
-  color: #1f2937;
+  color: #000000;
   font-size: 16px;
   margin-left: 5px;
   
 }
 
 .settings-info {
-  color: #94a3b8;
+  color: #000000;
   font-size: 13px;
   margin-left: 4px;
 }
@@ -346,7 +346,7 @@
 .settings-gear-btn {
   background: none;
   border: none;
-  color: #124369;
+  color: #6b7280;
   font-size: 17px;
   cursor: pointer;
   margin-right:15px;
@@ -416,6 +416,107 @@
 .toggle-switch input:checked + .toggle-slider::before {
   transform: translateX(20px);
 }
+
+/* GeoFencing is currently unavailable, so its switch remains visibly inactive. */
+.toggle-switch input:disabled + .toggle-slider {
+  cursor: not-allowed;
+  background-color: #e5e7eb;
+}
+
+.toggle-switch input:disabled + .toggle-slider::before {
+  background-color: #d1d5db;
+}
+
+.backup-code-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.backup-code-panel-toggle {
+  margin-left: auto;
+  margin-right: 10px;
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.backup-code-panel-toggle:hover,
+.backup-code-panel-toggle.is-open {
+  color: #4b5563;
+  background: #f1f3f5;
+}
+
+.backup-code-panel-toggle:focus-visible {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+.backup-code-panel {
+  margin: 3px 1px 5px;
+  padding: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0 0 10px 10px;
+}
+
+.backup-code-legend {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #334155;
+}
+
+.backup-code-legend span { display: inline-flex; align-items: center; gap: 7px; }
+
+.backup-code-swatch {
+  width: 27px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid #f9d978;
+}
+
+.backup-code-swatch.unused { background: #fff3ce; }
+.backup-code-swatch.used { background: #e5e7eb; border-color: #d1d5db; }
+
+.backup-code-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.backup-code {
+  min-height: 29px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #f9d978;
+  border-radius: 5px;
+  background: #fff3ce;
+  color: #9a6700;
+  font-size: 12px;
+}
+
+.backup-code.is-used { background: #e5e7eb; border-color: #d1d5db; color: #ffffff; cursor: not-allowed; }
+
+.backup-code-actions { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+
+.backup-code-actions button {
+  border: 0;
+  border-radius: 3px;
+  padding: 6px 10px;
+  background: #0d6efd;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.backup-code-actions button:hover { background: #0b5ed7; }
 
 .login-activity-icon-img {
   height: 34px;

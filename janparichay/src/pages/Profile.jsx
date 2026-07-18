@@ -1136,7 +1136,7 @@ function Profile() {
                       autoFocus
                     />
                     <div className="profile-input-icons-wrapper">
-                      <i className="bi bi-info-circle profile-input-icon-action" title={t('profile_driving_licence_format_hint')}></i>
+                      <i className="bi bi-info-circle-fill profile-input-icon-action" title={t('profile_driving_licence_format_hint')}></i>
                       <i
                         className={`bi ${showLicenseText ? 'bi-eye' : 'bi-eye-slash'} profile-input-icon-action`}
                         onClick={()=>setShowLicenseText(prev=>!prev)}
@@ -1154,7 +1154,7 @@ function Profile() {
                       autoFocus
                     />
                     <div className="profile-input-icons-wrapper">
-                      <i className="bi bi-info-circle profile-input-icon-action" title={t('profile_pan_format_hint')}></i>
+                      <i className="bi bi-info-circle-fill profile-input-icon-action" title={t('profile_pan_format_hint')}></i>
                       <i
                         className={`bi ${showPanText ? 'bi-eye' : 'bi-eye-slash'} profile-input-icon-action`}
                         onClick={()=>setShowPanText(prev=>!prev)}

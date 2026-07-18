@@ -4,6 +4,7 @@ import { useLoginSession } from '../hooks/useLoginSession'
 import Input from './Input'
 import PasswordInput from './PasswordInput'
 import { useLanguage } from '../context/LanguageContext'
+import { isBackupAuthenticationRequired, savePendingUser } from '../utils/backupAuthentication'
 
 const LOGIN_METHODS = ['Email', 'Govt Email Id', 'Aadhaar', 'Service Id', 'PAN', 'DL']
 
@@ -36,13 +37,18 @@ export default function OthersTab({ onForgotPassword, onForgetUserId }) {
     e.preventDefault()
     if (!canSubmit) return
 
-    await recordSession(method)
-
-    localStorage.setItem('mp_user', JSON.stringify({
+    const user = {
       username: identifier,
       name: identifier.split('@')[0].toUpperCase(),
       mobile: '9955634664',
-    }))
+    }
+    if (isBackupAuthenticationRequired(user.username)) {
+      savePendingUser(user)
+      navigate('/authentication')
+      return
+    }
+    await recordSession(method)
+    localStorage.setItem('mp_user', JSON.stringify(user))
     navigate('/dashboard')
   }
 

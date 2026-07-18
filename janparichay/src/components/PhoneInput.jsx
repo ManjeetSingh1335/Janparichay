@@ -41,7 +41,7 @@ export default function PhoneInput({
       <span className="mp-notched-label">
         {label ?? t('phone_input_default_label')} {required && <span className="required-star">*</span>}
         {infoTooltip && (
-          <i className="bi bi-info-circle ms-1" style={{ fontSize: '0.75rem', color: '#6c757d' }} title={infoTooltip}></i>
+          <i className="bi bi-info-circle-fill ms-1" style={{ fontSize: '0.75rem', color: '#6c757d' }} title={infoTooltip}></i>
         )}
       </span>
 

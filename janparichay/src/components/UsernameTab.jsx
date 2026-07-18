@@ -4,6 +4,7 @@ import { useLoginSession } from '../hooks/useLoginSession'
 import Input from './Input'
 import PasswordInput from './PasswordInput'
 import { useLanguage } from '../context/LanguageContext'
+import { isBackupAuthenticationRequired, savePendingUser } from '../utils/backupAuthentication'
 
 export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
   const [username, setUsername] = useState('')
@@ -21,13 +22,18 @@ export default function UsernameTab({ onForgotPassword, onForgetUserId }) {
     e.preventDefault()
     if (!canSubmit) return
 
-    await recordSession('UserId')
-
-    localStorage.setItem('mp_user', JSON.stringify({
+    const user = {
       username,
       name: username.split('@')[0].split('.').join(' ').toUpperCase(),
       mobile: '9955634664',
-    }))
+    }
+    if (isBackupAuthenticationRequired(user.username)) {
+      savePendingUser(user)
+      navigate('/authentication')
+      return
+    }
+    await recordSession('UserId')
+    localStorage.setItem('mp_user', JSON.stringify(user))
     navigate('/dashboard')
   }
 

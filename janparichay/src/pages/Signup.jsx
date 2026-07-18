@@ -148,7 +148,7 @@ export default function Signup() {
             value={form.firstName}
             onChange={e => update('firstName', e.target.value)}
             placeholder={t('signup_first_name_placeholder')}
-            rightAddon={<i className="bi bi-info-circle" title="As per official ID proof" style={{ fontSize: '0.9rem', cursor: 'help' }}></i>}
+            rightAddon={<i className="bi bi-info-circle-fill" title="As per official ID proof" style={{ fontSize: '0.9rem', cursor: 'help' }}></i>}
           />
           {errors.firstName && <div className="text-danger" style={{ fontSize: '0.78rem', marginTop: -12, marginBottom: 12 }}>{errors.firstName}</div>}
 

@@ -2,7 +2,8 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import '../Dashboard.css'
 import {useDashboard} from '../context/DashboardContext.jsx'
-import { useLanguage } from '../context/LanguageContext'
+import { clearPendingUser } from '../utils/backupAuthentication'
+import {useLanguage} from '../context/LanguageContext'
 import chromeLogo from '../images/chrome.png'
 import edgeLogo from '../images/edge.png'
 import firefoxLogo from '../images/firefox.png'
@@ -10,7 +11,7 @@ import androidLogo from '../images/android.png'
 import macosLogo from '../images/macOS.png'
 import iosLogo from '../images/ios.png'
 import windowsLogo from '../images/windows.jpg'
-import { Doughnut } from 'react-chartjs-2'
+import {Doughnut} from 'react-chartjs-2'
 import {
   Chart as ChartJS,
   ArcElement,
@@ -20,19 +21,90 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-function Dashboard() {
-  const { t } = useLanguage()
-  const navigate = useNavigate();
-  const { settings, updateSetting, logoutAll } = useDashboard();
-  const [showUpdatePassword, setShowUpdatePassword] = React.useState(false);
-  const [currentPassword, setCurrentPassword] = React.useState('');
-  const [newPassword, setNewPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [showCurrent, setShowCurrent] = React.useState(false);
-  const [showNew, setShowNew] = React.useState(false);
-  const [hoveredDataset, setHoveredDataset] = React.useState(null);
+const createBackupCodes = () => {
+  const codes = new Set();
+  while (codes.size < 6) {
+    const value = new Uint32Array(1);
+    crypto.getRandomValues(value);
+    codes.add(String(100000 + (value[0] % 900000)));
+  }
+  return [...codes].map(code => ({ code, used: false }));
+};
 
-  const getLoggedDevicesCount = () => {
+const loadBackupCodes = () => {
+  try {
+    const savedCodes = JSON.parse(localStorage.getItem('mp_backup_codes') || '[]');
+    return Array.isArray(savedCodes) ? savedCodes : [];
+  } catch {
+    return [];
+  }
+};
+// 889624
+function Dashboard() {
+  const {t}=useLanguage()
+  const navigate=useNavigate();
+  const {settings, updateSetting, logoutAll}=useDashboard();
+  const [showUpdatePassword, setShowUpdatePassword]=React.useState(false);
+  const [currentPassword, setCurrentPassword]=React.useState('');
+  const [newPassword, setNewPassword]=React.useState('');
+  const [confirmPassword, setConfirmPassword]=React.useState('');
+  const [showCurrent, setShowCurrent]=React.useState(false);
+  const [showNew, setShowNew]=React.useState(false);
+  const [hoveredDataset, setHoveredDataset]=React.useState(null);
+  const [backupCodes, setBackupCodes] = React.useState(loadBackupCodes);
+  const [showBackupCodePanel, setShowBackupCodePanel] = React.useState(false);
+
+  React.useEffect(() => {
+    localStorage.setItem('mp_backup_codes', JSON.stringify(backupCodes));
+  }, [backupCodes]);
+
+  const regenerateBackupCodes = () => setBackupCodes(createBackupCodes());
+
+  const downloadBackupCodes = async () => {
+    const content = [
+      'JanParichay Backup Codes',
+      'Keep these codes in a safe place. Each code can be used only once.',
+      '',
+      ...backupCodes.map(({ code, used }) => `${code}${used ? ' (already used)' : ''}`),
+    ].join('\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+
+    if ('showSaveFilePicker' in window) {
+      try {
+        const fileHandle = await window.showSaveFilePicker({
+          suggestedName: 'BackupCodes.txt',
+          types: [{
+            description: 'Text file',
+            accept: { 'text/plain': ['.txt'] },
+          }],
+        });
+        const writable = await fileHandle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        return;
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+      }
+    }
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'BackupCodes.txt';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(link.href);
+  };
+
+  const handleBackupCodeToggle = (enabled) => {
+    updateSetting('backupCode', enabled);
+    updateSetting('backupCodeEnabled', enabled);
+    if (enabled && backupCodes.length === 0) regenerateBackupCodes();
+    if (!enabled) clearPendingUser();
+    setShowBackupCodePanel(enabled);
+  };
+
+  const getLoggedDevicesCount=()=>{
     const existing = localStorage.getItem('user_devices');
     if (existing) {
       try {
@@ -51,14 +123,14 @@ function Dashboard() {
     return 1;
   };
 
-  const activityCards = [
+  const activityCards=[
     { key: 'logged', label: t('dashboard_card_logged_in_devices'), value: getLoggedDevicesCount(), className: 'card-indigo' },
     { key: 'remember', label: t('dashboard_card_remember_devices'), value: 0, className: 'card-teal' },
     { key: 'consent', label: t('dashboard_card_consent_to_service'), value: 0, className: 'card-red' },
     { key: 'mfa', label: t('dashboard_card_mfa_configured'), value: 0, className: 'card-orange' },
   ];
 
-  const getLatestActivity = () => {
+  const getLatestActivity=()=>{
     const existing = localStorage.getItem('recent_activities');
     if (existing) {
       try {
@@ -78,7 +150,7 @@ function Dashboard() {
     return { os: 'Windows', browser: 'Chrome', time: '06-07-2026 06:16:19' };
   };
 
-  const latestActivity = getLatestActivity();
+  const latestActivity=getLatestActivity();
 
   const handleCardClick=(key)=>{
     if(key==='logged'){
@@ -252,15 +324,16 @@ function Dashboard() {
         </div>
 
         <div className="settings-column">
+
           <h3 className="panel-title">{t('dashboard_settings_heading')}</h3>
 
           <div className="settings-panel">
 
             <div className="settings-row">
               <span className="settings-label">
-                <i className="bi bi-bell settings-icon"></i>
+                <i className="bi bi-bell-fill settings-icon"></i>
                 {t('dashboard_settings_new_login_device_alert')}
-                <i className="bi bi-info-circle settings-info"></i>
+                <i className="bi bi-info-circle-fill settings-info"></i>
               </span>
               <label className="toggle-switch">
                 <input
@@ -281,9 +354,9 @@ function Dashboard() {
             <div className="settings-row-wrapper" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
               <div className="settings-row">
                 <span className="settings-label">
-                  <i className="bi bi-lock settings-icon"></i>
+                  <i className="bi bi-lock-fill settings-icon"></i>
                   {t('dashboard_settings_update_password')}
-                  <i className="bi bi-info-circle settings-info"></i>
+                  <i className="bi bi-info-circle-fill settings-info"></i>
                 </span>
                 <button
                   type="button"
@@ -291,7 +364,7 @@ function Dashboard() {
                   onClick={() => setShowUpdatePassword(!showUpdatePassword)}
                   style={{ transform: showUpdatePassword ? 'rotate(45deg)' : 'none', transition: 'transform 0.2s ease' }}
                 >
-                  <i className="bi bi-gear"></i>
+                  <i className="bi bi-gear-fill"></i>
                 </button>
               </div>
 
@@ -431,16 +504,16 @@ function Dashboard() {
 
             <div className="settings-row">
               <span className="settings-label">
-                <i className="bi bi-person settings-icon"></i>
+                <i className="bi bi-person-fill settings-icon"></i>
                 {t('dashboard_settings_account_deactivation')}
-                <i className="bi bi-info-circle settings-info"></i>
+                <i className="bi bi-info-circle-fill settings-info"></i>
               </span>
               <button type="button" className="btn-deactivate">{t('dashboard_button_deactivate')}</button>
             </div>
 
             <div className="settings-row">
               <span className="settings-label">
-                <i className="bi bi-lock settings-icon"></i>
+                <i className="bi bi-lock-fill settings-icon"></i>
                 {t('dashboard_settings_passwordless_authentication')}
               </span>
               <label className="toggle-switch">
@@ -455,41 +528,80 @@ function Dashboard() {
 
             <div className="settings-row">
               <span className="settings-label">
-                <i className="bi bi-geo-alt settings-icon"></i>
+                <i className="bi bi-geo-alt-fill settings-icon"></i>
                 {t('dashboard_settings_manage_geofencing')}
-                <i className="bi bi-info-circle settings-info"></i>
+                <i className="bi bi-info-circle-fill settings-info"></i>
               </span>
               <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  checked={settings.geoFencing}
-                  onChange={(e) => updateSetting('geoFencing', e.target.checked)}
+                  checked={false}
+                  disabled
+                  aria-label={t('dashboard_settings_manage_geofencing')}
                 />
                 <span className="toggle-slider"></span>
               </label>
             </div>
 
-            <div className="settings-row">
-              <span className="settings-label">
-                <i className="bi bi-shield settings-icon"></i>
-                {t('dashboard_settings_backup_code')}
-                <i className="bi bi-info-circle settings-info"></i>
-              </span>
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.backupCode}
-                  onChange={(e) => updateSetting('backupCode', e.target.checked)}
-                />
-                <span className="toggle-slider"></span>
-              </label>
+            <div className="settings-row-wrapper backup-code-wrapper">
+              <div className="settings-row">
+                <span className="settings-label">
+                  <i className="bi bi-shield-shaded settings-icon"></i>
+                  {t('dashboard_settings_backup_code')}
+                  <i className="bi bi-info-circle-fill settings-info"></i>
+                </span>
+                {settings.backupCode && (
+                  <button
+                    type="button"
+                    className={`backup-code-panel-toggle${showBackupCodePanel ? ' is-open' : ''}`}
+                    onClick={() => setShowBackupCodePanel(open => !open)}
+                    aria-label={showBackupCodePanel ? 'Hide backup code details' : 'Show backup code details'}
+                    aria-expanded={showBackupCodePanel}
+                    title={showBackupCodePanel ? 'Hide backup codes' : 'Show backup codes'}
+                  >
+                    <i className="bi bi-gear-fill" aria-hidden="true"></i>
+                  </button>
+                )}
+                <label className="toggle-switch">
+                  <input
+                    type="checkbox"
+                    checked={settings.backupCode}
+                    onChange={(e) => handleBackupCodeToggle(e.target.checked)}
+                  />
+                  <span className="toggle-slider"></span>
+                </label>
+              </div>
+
+              {settings.backupCode && showBackupCodePanel && (
+                <div className="backup-code-panel">
+                  <div className="backup-code-legend">
+                    <span><i className="backup-code-swatch unused"></i>Unused</span>
+                    <span><i className="backup-code-swatch used"></i>Already Used</span>
+                  </div>
+                  <div className="backup-code-grid">
+                    {backupCodes.map(backupCode => (
+                      <span
+                        key={backupCode.code}
+                        className={`backup-code ${backupCode.used ? 'is-used' : ''}`}
+                        title={backupCode.used ? 'This backup code has already been used.' : 'Unused backup code'}
+                      >
+                        {backupCode.code}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="backup-code-actions">
+                    <button type="button" onClick={regenerateBackupCodes}>Re-Generate Backup Codes</button>
+                    <button type="button" onClick={downloadBackupCodes}>Download Backup Codes</button>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="settings-row">
               <span className="settings-label">
-                <i className="bi bi-key settings-icon"></i>
+                <i className="bi bi-key-fill settings-icon"></i>
                 {t('dashboard_settings_multi_factor')}
-                <i className="bi bi-info-circle settings-info"></i>
+                <i className="bi bi-info-circle-fill settings-info"></i>
               </span>
               <label className="toggle-switch">
                 <input

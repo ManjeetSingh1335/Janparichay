@@ -39,7 +39,9 @@ export function DashboardProvider({children}){
     const saved_data=localStorage.getItem('mp_settings');
     if(saved_data){
       try{
-        return JSON.parse(saved_data);
+        const savedSettings = JSON.parse(saved_data);
+        const backupCodeEnabled = savedSettings.backupCode === true && savedSettings.backupCodeEnabled === true;
+        return { ...savedSettings, backupCode: backupCodeEnabled, backupCodeEnabled };
       }catch(e){}
     }
 
@@ -48,6 +50,7 @@ export function DashboardProvider({children}){
       passwordlessAuth:true,
       geoFencing:false,
       backupCode:false,
+      backupCodeEnabled:false,
       multiFactor:false,
     };
   });
@@ -80,7 +83,6 @@ export function DashboardProvider({children}){
   const logout=()=>{
     localStorage.removeItem('mp_user');
     localStorage.removeItem('mp_avatar');
-    localStorage.removeItem('mp_settings');
     localStorage.removeItem('user_devices');
     localStorage.removeItem('recent_activities');
     window.location.href='/login';
@@ -89,7 +91,6 @@ export function DashboardProvider({children}){
   const logoutAll=()=>{
     localStorage.removeItem('mp_user');
     localStorage.removeItem('mp_avatar');
-    localStorage.removeItem('mp_settings');
     localStorage.removeItem('user_devices');
     localStorage.removeItem('recent_activities');
     window.location.href='/login';

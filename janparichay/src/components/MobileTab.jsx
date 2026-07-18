@@ -4,6 +4,7 @@ import { useLoginSession } from '../hooks/useLoginSession'
 import PhoneInput from './PhoneInput'
 import PasswordInput from './PasswordInput'
 import { useLanguage } from '../context/LanguageContext'
+import { isBackupAuthenticationRequired, savePendingUser } from '../utils/backupAuthentication'
 
 export default function MobileTab({ onForgotPassword, onForgetUserId }) {
   const [mobile, setMobile] = useState('')
@@ -21,13 +22,18 @@ export default function MobileTab({ onForgotPassword, onForgetUserId }) {
     e.preventDefault()
     if (!canSubmit) return
 
-    await recordSession('Mobile')
-
-    localStorage.setItem('mp_user', JSON.stringify({
+    const user = {
       username: mobile,
       name: 'NAMAN RAJ',
       mobile,
-    }))
+    }
+    if (isBackupAuthenticationRequired(user.username)) {
+      savePendingUser(user)
+      navigate('/authentication')
+      return
+    }
+    await recordSession('Mobile')
+    localStorage.setItem('mp_user', JSON.stringify(user))
     navigate('/dashboard')
   }
 

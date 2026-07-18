@@ -13,6 +13,7 @@ import ApplicationPolicies from './pages/ApplicationPolicies'
 import FAQ from './pages/FAQ'
 import AboutUs from './pages/AboutUs'
 import Services from './pages/Services'
+import Authentication from './pages/Authentication'
 import {DashboardProvider} from './context/DashboardContext.jsx'
 import AccessibilityWidget from './components/AccessibilityOptions/AccessibilityWidget.jsx'
 
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/authentication" element={<Authentication />} />
             <Route path="/signup" element={<Signup/>} />
             <Route path="/terms-conditions" element={<TermsConditions />} />
             <Route path="/application-policies" element={<ApplicationPolicies />} />
