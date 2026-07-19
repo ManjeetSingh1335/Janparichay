@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LanguageSwitcher from '../components/LanguageSwitcher'
-import meriPehchaanLogo from '../images/meri-pehchaan.png'
+import meriPehchaanLogo from '../images/pehchaan_logo.webp'
 import { useLoginSession } from '../hooks/useLoginSession'
 import {
   clearPendingUser,

@@ -21,133 +21,141 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const createBackupCodes = () => {
-  const codes = new Set();
-  while (codes.size < 6) {
-    const value = new Uint32Array(1);
+const createBackupCodes=()=>{
+  const codes=new Set();
+  while(codes.size<6){
+    const value=new Uint32Array(1);
     crypto.getRandomValues(value);
-    codes.add(String(100000 + (value[0] % 900000)));
+    codes.add(String(100000+(value[0]%900000)));
   }
-  return [...codes].map(code => ({ code, used: false }));
+  return [...codes].map(code=>({code, used: false}));
 };
 
-const loadBackupCodes = () => {
-  try {
-    const savedCodes = JSON.parse(localStorage.getItem('mp_backup_codes') || '[]');
-    return Array.isArray(savedCodes) ? savedCodes : [];
-  } catch {
+const loadBackupCodes=()=>{
+  try{
+    const savedCodes=JSON.parse(localStorage.getItem('mp_backup_codes') || '[]');
+    return Array.isArray(savedCodes)? savedCodes : [];
+  }catch{
     return [];
   }
 };
-// 889624
+
+
 function Dashboard() {
+
   const {t}=useLanguage()
   const navigate=useNavigate();
   const {settings, updateSetting, logoutAll}=useDashboard();
+
   const [showUpdatePassword, setShowUpdatePassword]=React.useState(false);
   const [currentPassword, setCurrentPassword]=React.useState('');
   const [newPassword, setNewPassword]=React.useState('');
   const [confirmPassword, setConfirmPassword]=React.useState('');
   const [showCurrent, setShowCurrent]=React.useState(false);
   const [showNew, setShowNew]=React.useState(false);
+
   const [hoveredDataset, setHoveredDataset]=React.useState(null);
+
   const [backupCodes, setBackupCodes] = React.useState(loadBackupCodes);
   const [showBackupCodePanel, setShowBackupCodePanel] = React.useState(false);
 
-  React.useEffect(() => {
+  React.useEffect(()=>{
     localStorage.setItem('mp_backup_codes', JSON.stringify(backupCodes));
   }, [backupCodes]);
 
-  const regenerateBackupCodes = () => setBackupCodes(createBackupCodes());
+  const regenerateBackupCodes=()=>setBackupCodes(createBackupCodes());
 
-  const downloadBackupCodes = async () => {
-    const content = [
+  const downloadBackupCodes=async()=>{
+
+    const content=[
       'JanParichay Backup Codes',
       'Keep these codes in a safe place. Each code can be used only once.',
       '',
-      ...backupCodes.map(({ code, used }) => `${code}${used ? ' (already used)' : ''}`),
+      ...backupCodes.map(({code, used})=> `${code}${used? ' (already used)' : ''}`),
     ].join('\n');
-    const blob = new Blob([content], { type: 'text/plain' });
 
-    if ('showSaveFilePicker' in window) {
-      try {
-        const fileHandle = await window.showSaveFilePicker({
+    const blob=new Blob([content], {type: 'text/plain'});
+
+    if('showSaveFilePicker' in window){
+      try{
+        const fileHandle=await window.showSaveFilePicker({
           suggestedName: 'BackupCodes.txt',
           types: [{
             description: 'Text file',
             accept: { 'text/plain': ['.txt'] },
           }],
         });
-        const writable = await fileHandle.createWritable();
+
+        const writable=await fileHandle.createWritable();
         await writable.write(blob);
         await writable.close();
         return;
-      } catch (error) {
-        if (error.name === 'AbortError') return;
+      }catch(error){
+        if(error.name==='AbortError') return;
       }
     }
 
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'BackupCodes.txt';
+    const link=document.createElement('a');
+    link.href=URL.createObjectURL(blob);
+    link.download='BackupCodes.txt';
     document.body.appendChild(link);
     link.click();
     link.remove();
     URL.revokeObjectURL(link.href);
   };
 
-  const handleBackupCodeToggle = (enabled) => {
+  const handleBackupCodeToggle=(enabled)=>{
     updateSetting('backupCode', enabled);
     updateSetting('backupCodeEnabled', enabled);
-    if (enabled && backupCodes.length === 0) regenerateBackupCodes();
-    if (!enabled) clearPendingUser();
+    if(enabled && backupCodes.length===0) regenerateBackupCodes();
+    if(!enabled) clearPendingUser();
     setShowBackupCodePanel(enabled);
   };
 
   const getLoggedDevicesCount=()=>{
-    const existing = localStorage.getItem('user_devices');
-    if (existing) {
-      try {
-        const devices = JSON.parse(existing);
-        const unique = [];
-        devices.forEach(d => {
-          if (!unique.some(u => u.os === d.os)) {
+    const existing=localStorage.getItem('user_devices');
+    if(existing){
+      try{
+        const devices=JSON.parse(existing);
+        const unique=[];
+        devices.forEach(d=>{
+          if(!unique.some(u=> u.os===d.os)){
             unique.push(d);
           }
         });
         return unique.length || 1;
-      } catch (e) {
-        return 1;
+      }catch(e){
+        return "error";
       }
     }
     return 1;
   };
 
   const activityCards=[
-    { key: 'logged', label: t('dashboard_card_logged_in_devices'), value: getLoggedDevicesCount(), className: 'card-indigo' },
-    { key: 'remember', label: t('dashboard_card_remember_devices'), value: 0, className: 'card-teal' },
-    { key: 'consent', label: t('dashboard_card_consent_to_service'), value: 0, className: 'card-red' },
-    { key: 'mfa', label: t('dashboard_card_mfa_configured'), value: 0, className: 'card-orange' },
+    {key: 'logged', label: t('dashboard_card_logged_in_devices'), value: getLoggedDevicesCount(), className: 'card-indigo'},
+    {key: 'remember', label: t('dashboard_card_remember_devices'), value: 0, className: 'card-teal'},
+    {key: 'consent', label: t('dashboard_card_consent_to_service'), value: 0, className: 'card-red'},
+    {key: 'mfa', label: t('dashboard_card_mfa_configured'), value: 0, className: 'card-orange'},
   ];
 
   const getLatestActivity=()=>{
-    const existing = localStorage.getItem('recent_activities');
-    if (existing) {
-      try {
-        const activities = JSON.parse(existing);
-        const current = activities.find(a => a.isCurrent) || activities[0];
-        if (current) {
-          return {
-            os: current.os || 'Windows',
-            browser: current.browser || 'Chrome',
-            time: current.loginTime || '06-07-2026 06:16:19'
+    const existing=localStorage.getItem('recent_activities');
+    if(existing){
+      try{
+        const activities=JSON.parse(existing);
+        const current=activities.find(a=> a.isCurrent) || activities[0];
+        if(current){
+          return{
+            os: current.os || '',
+            browser: current.browser || '',
+            time: current.loginTime || ''
           };
         }
-      } catch (e) {
+      }catch(e){
         console.error(e);
       }
     }
-    return { os: 'Windows', browser: 'Chrome', time: '06-07-2026 06:16:19' };
+    return {os: 'Windows', browser: 'Chrome', time: '06-07-2026 06:16:19'};
   };
 
   const latestActivity=getLatestActivity();
@@ -155,9 +163,9 @@ function Dashboard() {
   const handleCardClick=(key)=>{
     if(key==='logged'){
       navigate('/dashboard/activity');
-    } else if(key==='remember'){
+    }else if(key==='remember'){
       navigate('/dashboard/activity', {state:{openRemembered:true}});
-    } else if(key==='consent'){
+    }else if(key==='consent'){
       navigate('/dashboard/consent');
     }
   };
