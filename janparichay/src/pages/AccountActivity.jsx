@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {useLocation} from 'react-router-dom'
-import { useLanguage } from '../context/LanguageContext'
+import {useLanguage} from '../context/LanguageContext'
 import analyticsLogo from '../images/analytics-logo.png'
 import chromeLogo from '../images/chrome.png'
 import edgeLogo from '../images/edge.png'
@@ -11,7 +11,7 @@ import macosLogo from '../images/macOS.png'
 import iosLogo from '../images/ios.png'
 import '../AccountActivity.css'
 
-function DeviceOSIcon({ os }) {
+function DeviceOSIcon({ os }){
   if (os === 'Windows') return <img src={windowsLogo} alt="Windows" className="device-os-icon" />;
   if (os === 'Android') return <img src={androidLogo} alt="Android" className="device-os-icon" />;
   if (os === 'macOS')   return <img src={macosLogo}   alt="macOS"   className="device-os-icon" />;
@@ -54,11 +54,11 @@ function AccountActivity() {
   const [limitRecent, setLimitRecent] = useState(6)
   const [limitRemembered, setLimitRemembered] = useState(6)
   
-  //sort states
+
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
   const [sortConfigRemembered, setSortConfigRemembered] = useState({ key: null, direction: 'desc' });
 
-  //pagination states
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageRemembered, setCurrentPageRemembered] = useState(1);
 
@@ -104,7 +104,6 @@ function AccountActivity() {
       }
     }
     
-    //generate default/current active session to ensure real data is shown
     const now = new Date();
     const pad = (num) => String(num).padStart(2, '0');
     const timeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;

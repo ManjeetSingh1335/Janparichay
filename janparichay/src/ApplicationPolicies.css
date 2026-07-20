@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-/*header styles*/
+/* header styles */
 .ap-header {
   background-color: #124369;
   height: 62px;
@@ -89,7 +89,7 @@
   width: 100%;
 }
 
-/*content area*/
+/* content area */
 .ap-body {
   max-width: 1470px;
   margin: 0 auto;
@@ -97,7 +97,7 @@
   box-sizing: border-box;
 }
 
-/*section-headings*/
+/* section-headings */
 .ap-heading {
   font-size: 29px;
   font-weight: 550;
@@ -106,7 +106,7 @@
   letter-spacing: 1px;
 }
 
-/*subheadings*/
+/* subheadings */
 .ap-subheading {
   font-size: 18px;
   font-weight: 300;
@@ -115,7 +115,7 @@
   text-decoration: underline;
 }
 
-/*body-para*/
+/* body-para */
 .ap-para {
   font-size: 16px;
   color: #334155;  
@@ -124,7 +124,7 @@
   text-align: justify;
 }
 
-/*card*/
+/* card */
 .ap-card-box {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -151,7 +151,7 @@
   margin-bottom: 0;
 }
 
-/*styled-lists*/
+/* styled-lists */
 .ap-list {
   padding-left: 20px;
   margin-bottom: 20px;
@@ -177,7 +177,7 @@
   margin-bottom: 6px;
 }
 
-/*responsive*/
+/* responsive */
 @media (max-width: 768px) {
   .ap-header {
     padding: 0 20px;

@@ -17,7 +17,7 @@
   letter-spacing: 0.5px;
 }
 
-/*recent activities*/
+/* recent activities */
 .activity-analytics-toolbar {
   display: flex;
   justify-content: space-between;
@@ -29,7 +29,7 @@
   margin-left: 2px;
 }
 
-/*analytics logo styling*/
+/* analytics logo styling */
 .analytics-logo-wrapper {
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@
   display: block;
 }
 
-/*logout button*/
+/* logout button */
 .btn-logout-all {
   background-color: #dc2626; /* Crimson red */
   color: #ffffff;
@@ -59,7 +59,7 @@
   background-color: #b91c1c;
 }
 
-/*table controls*/
+/* table controls */
 .table-controls-row {
   display: flex;
   justify-content: space-between;
@@ -76,7 +76,7 @@
   background-color: #ffffff;
 }
 
-/*styled table*/
+/* styled table */
 .activity-table-wrapper {
   overflow-x: auto;
   border-radius: 6px;
@@ -121,7 +121,7 @@
   font-weight: 500;
 }
 
-/*table-pag.*/
+/* table-pag. */
 .table-footer-row {
   display: flex;
   justify-content: space-between;
@@ -163,7 +163,7 @@
   font-weight: 600;
 }
 
-/*user devices*/
+/* user devices */
 .user-devices-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -241,7 +241,7 @@
   margin-top: 16px;
 }
 
-/*remove all button*/
+/* remove all button */
 .btn-remove-all-devices {
   background-color: #cbd5e1;
   color: #64748b;
@@ -320,7 +320,7 @@
   cursor: not-allowed;
 }
 
-/*responsive*/
+/* responsive */
 @media (max-width: 1024px) {
   .activity-section { padding: 20px; }
 }

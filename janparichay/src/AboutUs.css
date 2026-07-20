@@ -221,7 +221,7 @@
   font-size: 20px;
 }
 
-/*section*/
+/* section */
 .about-section {
   padding: 80px 68px;
 }
@@ -252,7 +252,7 @@
   margin: 0 0 40px 0;
 }
 
-/*Who We Are*/
+/* Who We Are */
 .about-intro-grid {
   display: flex;
   gap: 60px;
@@ -322,7 +322,7 @@
   flex-shrink: 0;
 }
 
-/*service partners*/
+/* service partners */
 .about-partners {
   background-color: #124369;
   color: #ffffff;
@@ -336,7 +336,7 @@
   margin-bottom: 25px;
 }
 
-/*zoom out animation on load*/
+/* zoom out animation on load */
 @keyframes partnersZoomOut {
   from {
     transform: scale(1.6);
@@ -415,7 +415,7 @@
   object-fit: contain;
 }
 
-/*key features*/
+/* key features */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -475,7 +475,7 @@
   margin: 0;
 }
 
-/*FAQ-section*/
+/* FAQ-section */
 .about-faq {
   background-color: #f8fafc;
 }
@@ -521,7 +521,7 @@
   color: #475569;
 }
 
-/*contact us*/
+/* contact us */
 .about-contact-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -568,7 +568,7 @@
   margin: 0;
 }
 
-/*footer*/
+/* footer */
 .about-footer-partners {
   border-top: 1px solid #e2e8f0;
   padding: 70px 48px;
@@ -629,7 +629,7 @@
   font-size: 14.5px;
 }
 
-/*responsive*/
+/* responsive */
 @media (max-width: 1024px) {
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -836,7 +836,7 @@
 #contact.in-view .contact-card:nth-of-type(3) { animation-delay: 1.2s; }
 #contact.in-view .contact-card:nth-of-type(4) { animation-delay: 1.5s; }
 
-/*loading*/
+/* loading */
 .about-loading-container {
   position: fixed;
   top: 0;

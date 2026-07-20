@@ -24,7 +24,7 @@ import { useLanguage } from '../context/LanguageContext'
 
 
 export default function AboutUs() {
-  const { t } = useLanguage()
+  const {t} = useLanguage()
   const navigate = useNavigate()
   const location = useLocation()
   const [activeTab, setActiveTab] = useState('about')
@@ -162,7 +162,7 @@ export default function AboutUs() {
     if (element) {
       if (['about', 'services', 'faq', 'contact'].includes(sectionId)) {
         element.classList.remove('in-view')
-        void element.offsetWidth; // Force reflow
+        void element.offsetWidth; 
         element.classList.add('in-view')
       }
       element.scrollIntoView({ behavior: 'smooth' })
@@ -194,6 +194,7 @@ export default function AboutUs() {
 
   return (
     <div className="about-page">
+
       {/* Navigation bar */}
       <nav className="about-nav">
         <Link to="/login">
@@ -248,7 +249,7 @@ export default function AboutUs() {
         </div>
       )}
 
-      {/*Home Section*/}
+      {/*Home section*/}
       <header className="about-hero-slider-viewport" id="home">
         <div
           className="about-hero-slider-track"
@@ -286,7 +287,7 @@ export default function AboutUs() {
         </div>
       </header>
 
-      {/*About Section*/}
+      {/*About section*/}
       <section className="about-section" id="about">
         <div className="about-section-tag">{t('about_section_tag_about')}</div>
         <h2 className="about-section-title">{t('about_section_title_who_we_are')}</h2>
@@ -343,7 +344,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/*Service Partners*/}
+      {/* Service partners  */}
       <section className="about-partners">
         <h3 className="about-partners-title">{t('about_partners_title')}</h3>
         <div className="about-partners-slider-viewport">
@@ -405,7 +406,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Key Features */}
+      {/* Key features */}
       <section className="about-section" id="services">
         <div className="about-section-tag">{t('about_section_tag_features')}</div>
         <h2 className="about-section-title">{t('about_section_title_key_features')}</h2>
@@ -480,7 +481,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ section */}
       <section className="about-section about-faq" id="faq">
         <div className="about-section-tag">{t('about_section_tag_faq')}</div>
         <h2 className="about-section-title">{t('about_section_title_faq')}</h2>
@@ -526,7 +527,7 @@ export default function AboutUs() {
         </Link>
       </section>
 
-      {/* Contact Us */}
+      {/* Contact us */}
       <section className="about-section" id="contact">
         <div className="about-section-tag">{t('about_section_tag_contact')}</div>
         <h2 className="about-section-title">{t('about_section_title_contact_us')}</h2>
@@ -573,7 +574,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Partners Footer */}
+      {/* Partners footer */}
       <div className="about-footer-partners">
         <div className="about-footer-partner-card">
           <img src={NIC_logo} alt={t('about_footer_nic_alt')} className="about-footer-partner-img" />
@@ -596,7 +597,7 @@ export default function AboutUs() {
         Copyright © 2026 JanParichay Meripehchaan All Rights Reserved
       </footer>
 
-      {/* Floating Back to Top Button */}
+      {/* Floating back to top button */}
       <button 
         className={`about-back-to-top ${showBackToTop ? 'visible' : ''}`}
         onClick={scrollToTop}

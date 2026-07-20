@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-/*header*/
+/* header */
 .faq-header {
   background-color: #124369;
   height: 62px;
@@ -89,7 +89,7 @@
   width: 100%;
 }
 
-/*main-body*/
+/* main-body */
 .faq-body {
   max-width: 1000px;
   margin: 0 auto;
@@ -97,7 +97,7 @@
   box-sizing: border-box;
 }
 
-/*title*/
+/* title */
 .faq-title {
   font-size: 38px;
   font-weight: 300;
@@ -190,7 +190,7 @@
   line-height: 1.8;
 }
 
-/*responsive*/
+/* responsive */
 @media (max-width: 768px) {
   .faq-header {
     padding: 0 20px;

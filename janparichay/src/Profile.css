@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/*page header*/
+/* page header */
 .profile-component-header {
   background-color: #f1f5f9;
   padding: 16px 24px;
@@ -21,7 +21,7 @@
   color: #0f172a;
 }
 
-/*two-column layout grid*/
+/* two-column layout grid */
 .profile-component-grid {
   display: grid;
   grid-template-columns: 1.47fr 1.4fr;
@@ -32,7 +32,7 @@
   align-items: start;
 }
 
-/*box panel*/
+/* box panel */
 .profile-details-panel {
   background-color: #f8fafc;
   border: 2px solid #e2e8f0;
@@ -51,7 +51,7 @@
   text-decoration: underline;
 }
 
-/*subsection containers*/
+/* subsection containers */
 .profile-details-section {
   background-color: #f1f5f9;
   border: 2px solid #e2e8f0;
@@ -71,7 +71,7 @@
   letter-spacing: 0.5px;
 }
 
-/*card layout enclosing field rows*/
+/* card layout enclosing field rows */
 .profile-fields-card-box {
   background-color: #ffffff;
   border: 1px solid #cbd5e1;
@@ -88,7 +88,7 @@
   border-bottom: none;
 }
 
-/*field header*/
+/* field header */
 .profile-field-item-header {
   display: flex;
   align-items: center;
@@ -102,7 +102,7 @@
   letter-spacing: 0.2px;
 }
 
-/*field display value*/
+/* field display value */
 .profile-field-text-value {
   margin: 6px 0 0 0;
   font-size: 15px;
@@ -115,7 +115,7 @@
   font-weight: 400;
 }
 
-/*action button icons*/
+/* action button icons */
 .profile-edit-pencil-btn {
   background: none;
   border: none;
@@ -141,7 +141,7 @@
   color: #b91c1c;
 }
 
-/*input boxes in Edit mode*/
+/* input boxes in Edit mode */
 .profile-input-group-row {
   display: flex;
   align-items: center;
@@ -196,7 +196,8 @@
 .profile-save-check-btn:hover {
   background-color: #15803d;
 }
-/*main action button at bottom of USER DETAILS*/
+
+/* main action button at bottom of USER DETAILS */
 .profile-action-btn-row {
   display: flex;
   justify-content: center;
@@ -224,7 +225,7 @@
 .btn-profile-edit-toggle.active:hover {
   background-color: #0056b3;
 }
-/*buttons in global edit mode*/
+/* buttons in global edit mode */
 .profile-global-editing-buttons {
   display: flex;
   gap: 12px;
@@ -260,7 +261,7 @@
   background-color: #475569;
 }
 
-/*VERIFICATION DETAILS panel styling*/
+/* VERIFICATION DETAILS panel styling */
 .verification-details-content {
   display: flex;
   margin-top: 35px;
@@ -332,7 +333,7 @@
   background-color: #f1f5f9;
 }
 
-/*VERIFICATION PARAMETERS select layout*/
+/* VERIFICATION PARAMETERS select layout */
 .verification-param-select-row {
   display: flex;
   align-items: center;
@@ -362,7 +363,7 @@
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
-/*password Verification modal ooverlay*/
+/* password Verification modal ooverlay */
 .profile-modal-backdrop {
   position: fixed;
   top: 0;
@@ -470,7 +471,7 @@
 }
 
 
-/*verification parameters*/
+/* verification parameters */
 .profile-verify-modal-backdrop {
   position: fixed;
   top: 0;
@@ -563,7 +564,7 @@
   background-color: #1f2937;
 }
 
-/*secondary mobile no country*/
+/* secondary mobile no country */
 .profile-flag-picker-container {
   display: flex;
   align-items: center;
@@ -633,7 +634,7 @@
   background-color: #f1f5f9;
 }
 
-/*driving Licence input icons*/
+/* driving Licence input icons */
 .profile-input-icons-wrapper {
   position: absolute;
   top: 50%;
@@ -653,7 +654,7 @@
   color: #0f172a;
 }
 
-/*user custom country dropdown item*/
+/* user custom country dropdown item */
 .country-option {
   display: flex;
   align-items: center;
@@ -673,7 +674,7 @@
 }
 
 
-/*responsive*/
+/* responsive */
 @media (max-width: 992px) {
   .profile-component-grid {
     grid-template-columns: 1fr;

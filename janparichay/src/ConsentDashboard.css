@@ -212,7 +212,7 @@
   cursor: not-allowed;
 }
 
-/*responsive*/
+/* responsive */
 @media (max-width: 765px) {
   .consent-section-header {
     margin: -16px -16px 16px -16px;

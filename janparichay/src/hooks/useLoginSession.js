@@ -2,13 +2,13 @@ import {UAParser} from 'ua-parser-js';
 
 export function useLoginSession() {
 
-  const getIpData = async() => {
+  const getIpData=async()=>{
     try{
-      const response = await fetch('/api/ip-info');
+      const response=await fetch('/api/ip-info');
       if(!response.ok){
         throw new Error('IP request failed');
       }
-      const data = await response.json();
+      const data=await response.json();
       return{
         ip: data.ip || 'Unavailable',
         city: data.city || 'Unknown',
@@ -21,63 +21,63 @@ export function useLoginSession() {
 
   function getDeviceInfo() {
 
-    const result = new UAParser().getResult();
+    const result=new UAParser().getResult();
     let os = result.os.name || 'Windows';
-    if (os === 'Mac OS'){
+    if(os === 'Mac OS'){
       os = 'macOS';
     } 
     const browser = result.browser.name || 'Chrome';
-    return { os, browser };
+    return {os, browser};
 
   }
 
   async function recordSession(loginWith){
 
-    const ipData = await getIpData();
-    const now = new Date();
-    const pad = n => String(n).padStart(2, '0');
-    const timeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ` +
+    const ipData=await getIpData();
+    const now=new Date();
+    const pad=n=>String(n).padStart(2, '0');
+    const timeStr=`${pad(now.getDate())}-${pad(now.getMonth()+1)}-${now.getFullYear()} ` +
                     `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
 
-    const validTime = new Date(now.getTime() + 12 * 60 * 60 * 1000);
-    const validStr  = `${pad(validTime.getDate())}-${pad(validTime.getMonth() + 1)}-${validTime.getFullYear()} ` +
+    const validTime=new Date(now.getTime()+12*60*60*1000);
+    const validStr =`${pad(validTime.getDate())}-${pad(validTime.getMonth()+1)}-${validTime.getFullYear()} ` +
                       `${pad(validTime.getHours())}:${pad(validTime.getMinutes())}:${pad(validTime.getSeconds())}`;
 
-    const {os, browser} = getDeviceInfo();
+    const {os, browser}=getDeviceInfo();
 
-    let city = ipData.city === 'Delhi' ? 'Delhi' : ipData.city;
-    const locationStr = `${city}, ${ipData.country}`;
+    let city=ipData.city === 'Delhi'? 'Delhi' : ipData.city;
+    const locationStr=`${city}, ${ipData.country}`;
 
    
-    let devices = [];
+    let devices=[];
     try{
-      devices = JSON.parse(localStorage.getItem('user_devices') || '[]'); 
+      devices=JSON.parse(localStorage.getItem('user_devices') || '[]'); 
     }catch{
-      devices = []; 
+      devices=[]; 
     }
 
-    const devIdx = devices.findIndex(d => d.os === os && d.browser === browser);
+    const devIdx=devices.findIndex(d=>d.os===os && d.browser===browser);
     if(devIdx !== -1){
-      devices[devIdx].time = timeStr;
+      devices[devIdx].time=timeStr;
     }else{
-      devices.push({ id: Date.now(), os, browser, time: timeStr });
+      devices.push({id: Date.now(), os, browser, time: timeStr});
     }
-    devices.sort((a, b) => b.time.localeCompare(a.time));
+    devices.sort((a, b)=>b.time.localeCompare(a.time));
     localStorage.setItem('user_devices', JSON.stringify(devices));
 
     
-    let activities = [];
+    let activities=[];
     try{ 
-      activities = JSON.parse(localStorage.getItem('recent_activities') || '[]'); 
+      activities=JSON.parse(localStorage.getItem('recent_activities') || '[]'); 
     }catch{ 
-      activities = []; 
+      activities=[]; 
     }
 
-    activities = activities.map(act => ({...act, isCurrent: false}));
+    activities=activities.map(act=>({...act, isCurrent: false}));
 
-    const actIdx = activities.findIndex(a => a.os === os && a.browser === browser);
-    if(actIdx !== -1){
-      activities[actIdx] = {
+    const actIdx=activities.findIndex(a=>a.os===os && a.browser===browser);
+    if(actIdx!== -1){
+      activities[actIdx]={
         ...activities[actIdx],
         loginTime: timeStr,
         validUpto: validStr,
@@ -85,7 +85,7 @@ export function useLoginSession() {
         ip: ipData.ip,
         isCurrent: true,
       };
-      const [updated] = activities.splice(actIdx, 1);
+      const [updated]=activities.splice(actIdx, 1);
       activities.unshift(updated);
     }else{
       activities.unshift({

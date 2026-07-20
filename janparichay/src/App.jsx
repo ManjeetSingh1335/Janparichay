@@ -27,24 +27,28 @@ export default function App() {
 
   const location = useLocation();
 
-  useEffect(() => {
+  useEffect(()=>{
     if(location.hash){
-      const timeoutId = setTimeout(() => {
-        const id = location.hash.replace('#', '')
-        const el = document.getElementById(id)
+      const timeoutId=setTimeout(()=>{
+        const id=location.hash.replace('#', '')
+        const el=document.getElementById(id)
         if(el){
           el.scrollIntoView({ behavior: 'smooth' })
         }
       }, 100)
-      return() => clearTimeout(timeoutId);
+      return()=>clearTimeout(timeoutId);
     }
   }, [location]);
 
   return (
     <LanguageProvider>
+
       <>
+
         <DashboardProvider>
+
           <Routes>
+
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
@@ -80,11 +84,13 @@ export default function App() {
             />
 
             <Route path="*" element={<Navigate to="/login" replace />} />
+
           </Routes>
+          
         </DashboardProvider>
 
-
       </>
+
     </LanguageProvider>
   )
 }

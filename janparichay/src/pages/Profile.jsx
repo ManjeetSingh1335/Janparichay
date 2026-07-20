@@ -311,8 +311,8 @@ const convertYYYYMMDDToDDMMYYYY=(dateStr)=>{
 
 
 function Profile() {
-  const { t } = useLanguage()
 
+  const {t}=useLanguage()
   const {profile, updateProfile}=useDashboard();
   const getNameParts=(fullNameStr)=>{
     const trimmed=(fullNameStr || '').trim()
@@ -417,10 +417,10 @@ function Profile() {
     //reset
     if(fieldName==='name'){
       const nameObj=getNameParts(profile.fullName || profile.name)
-      setFirstName(nameObj.first || 'MANJEET SINGH')
-      setLastName(nameObj.last || 'TAWATIYA')
+      setFirstName(nameObj.first || '')
+      setLastName(nameObj.last || '')
     }else if(fieldName==='gender'){
-      setGender(profile.gender || 'MALE')
+      setGender(profile.gender || '')
     }else if(fieldName==='dob'){
       setDob(convertDDMMYYYYToYYYYMMDD(profile.dob || ''))
     }else if(fieldName==='fatherName'){
@@ -558,21 +558,24 @@ function Profile() {
 
   return (
     <div className="profile-component-container">
+
       <div className="profile-component-header">
         <h2>{t('profile_page_heading')}</h2>
       </div>
+
       <div className="profile-component-grid">
         
-        {/*USER DETAILS*/}
+        {/* User details */}
         <div className="profile-details-panel user-details-box">
           <h3 className="panel-box-title">{t('profile_panel_user_details')}</h3>
-          {/*BASIC SECTION*/}
+          
+          {/* Basic section */}
           <div className="profile-details-section">
             <h4 className="section-subtitle">{t('profile_section_basic')}</h4>
             
             <div className="profile-fields-card-box">
               
-              {/*NAME*/}
+              {/* Name */}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
                   <span className="profile-field-item-label">{t('profile_label_name')}</span>
@@ -622,7 +625,7 @@ function Profile() {
                 )}
               </div>
 
-              {/*GENDER*/}
+              {/* Gender */}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
                   <span className="profile-field-item-label">{t('profile_label_gender')}</span>
@@ -630,7 +633,7 @@ function Profile() {
                     <button
                       type="button"
                       className="profile-cancel-x-btn"
-                      onClick={() => cancelEditField('gender')}
+                      onClick={()=>cancelEditField('gender')}
                       aria-label={t('profile_aria_cancel_edit_gender')}
                     >
                       <i className="bi bi-x-lg"></i>
@@ -639,7 +642,7 @@ function Profile() {
                     <button
                       type="button"
                       className="profile-edit-pencil-btn"
-                      onClick={() => startEditField('gender')}
+                      onClick={()=>startEditField('gender')}
                       title={t('profile_title_edit_gender')}
                       aria-label={t('profile_aria_edit_gender')}
                     >
@@ -667,7 +670,7 @@ function Profile() {
                 )}
               </div>
 
-              {/*D.O.B*/}
+              {/* D.O.B */}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
                   <span className="profile-field-item-label">{t('profile_label_dob')}</span>
@@ -711,12 +714,12 @@ function Profile() {
             </div>
           </div>
 
-          {/*OTHER*/}
+          {/* Other*/}
           <div className="profile-details-section">
             <h4 className="section-subtitle">{t('profile_section_other')}</h4>
             <div className="profile-fields-card-box">
               
-              {/*FATHER'S NAME*/}
+              {/* Father's name */}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
                   <span className="profile-field-item-label">{t('profile_label_fathers_name')}</span>
@@ -759,7 +762,7 @@ function Profile() {
                 )}
               </div>
 
-              {/*ADDRESS*/}
+              {/* Address */}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
                   <span className="profile-field-item-label">{t('profile_label_address')}</span>
@@ -800,7 +803,7 @@ function Profile() {
                 )}
               </div>
 
-              {/*STATE*/}
+              {/* State */}
               <div className="profile-field-item-row">
                 <div className="profile-field-item-header">
                   <span className="profile-field-item-label">{t('profile_label_state')}</span>
@@ -850,7 +853,7 @@ function Profile() {
             </div>
           </div>
 
-          {/*User Details (EDIT BUTTON)*/}
+          {/* Edit Button */}
           <div className="profile-action-btn-row">
             <button
               type="button"
@@ -863,12 +866,12 @@ function Profile() {
         </div>
 
 
-        {/*VERIFICATION DETAILS*/}
+        {/* Verif. details */}
         <div className="profile-details-panel verification-details-box">
           <h3 className="panel-box-title underline">{t('profile_panel_verification_details')}</h3>
           <div className="verification-details-content">
             
-            {/*PRIMARY MOBILE NO*/}
+            {/* Primary mobile */}
             <div className="verification-field-row">
               <span className="verification-field-label">{t('profile_label_primary_mobile_no')}</span>
               {!isEditingMobile ? (
@@ -913,7 +916,7 @@ function Profile() {
               )}
             </div>
 
-            {/*SELECT VERIFICATION PARAMETERS*/}
+            {/* Select verif. parameter */}
             <div className="verification-param-select-row">
               <label className="verification-param-label">
                 {t('profile_label_select_verification_parameters')}
@@ -925,7 +928,7 @@ function Profile() {
               >
                 <div 
                   className="verification-param-select-dropdown" 
-                  onClick={() => setDropdownOpen(prev => !prev)}
+                  onClick={()=>setDropdownOpen(prev=>!prev)}
                   style={{ 
                     cursor: 'pointer', 
                     display: 'flex', 
@@ -935,12 +938,12 @@ function Profile() {
                   }}
                 >
                   <span>
-                    {verificationParam === 'secondary_email' ? t('profile_verification_option_secondary_email') :
-                     verificationParam === 'primary_email' ? t('profile_verification_option_primary_email') :
-                     verificationParam === 'aadhaar' ? t('profile_verification_option_aadhaar') :
-                     verificationParam === 'secondary_mobile' ? t('profile_verification_option_secondary_mobile') :
-                     verificationParam === 'driving_license' ? t('profile_verification_option_driving_licence') :
-                     verificationParam === 'pan' ? t('profile_verification_option_pan') : t('profile_verification_option_select')}
+                    {verificationParam==='secondary_email'? t('profile_verification_option_secondary_email') :
+                     verificationParam==='primary_email'? t('profile_verification_option_primary_email') :
+                     verificationParam==='aadhaar'? t('profile_verification_option_aadhaar') :
+                     verificationParam==='secondary_mobile'? t('profile_verification_option_secondary_mobile') :
+                     verificationParam==='driving_license'? t('profile_verification_option_driving_licence') :
+                     verificationParam==='pan'? t('profile_verification_option_pan') : t('profile_verification_option_select')}
                   </span>
                   <i className={`bi ${dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`} style={{ fontSize: '12px', color: '#64748b' }}></i>
                 </div>
@@ -972,30 +975,30 @@ function Profile() {
                       { value: 'secondary_mobile', label: t('profile_verification_option_secondary_mobile') },
                       { value: 'driving_license', label: t('profile_verification_option_driving_licence') },
                       { value: 'pan', label: t('profile_verification_option_pan') }
-                    ].map((opt) => (
+                    ].map((opt)=>(
                       <li
                         key={opt.value}
-                        onClick={() => {
+                        onClick={()=>{
                           handleVerifyParamSelectChange({ target: { value: opt.value } });
                           setDropdownOpen(false);
                         }}
                         style={{
                           padding: '8px 12px',
                           fontSize: '14px',
-                          color: opt.value === verificationParam ? '#2563eb' : '#334155',
-                          backgroundColor: opt.value === verificationParam ? '#f0f7ff' : 'transparent',
+                          color: opt.value===verificationParam? '#2563eb' : '#334155',
+                          backgroundColor: opt.value===verificationParam? '#f0f7ff' : 'transparent',
                           cursor: 'pointer',
-                          fontWeight: opt.value === verificationParam ? '600' : 'normal',
+                          fontWeight: opt.value===verificationParam? '600' : 'normal',
                           transition: 'background-color 0.15s ease'
                         }}
-                        onMouseEnter={(e) => {
-                          if (opt.value !== verificationParam) {
-                            e.currentTarget.style.backgroundColor = '#f8fafc';
+                        onMouseEnter={(e)=>{
+                          if(opt.value!==verificationParam){
+                            e.currentTarget.style.backgroundColor='#f8fafc';
                           }
                         }}
-                        onMouseLeave={(e) => {
-                          if (opt.value !== verificationParam) {
-                            e.currentTarget.style.backgroundColor = 'transparent';
+                        onMouseLeave={(e)=>{
+                          if(opt.value!==verificationParam){
+                            e.currentTarget.style.backgroundColor='transparent';
                           }
                         }}
                       >
@@ -1010,7 +1013,7 @@ function Profile() {
         </div>
       </div>
 
-      {/*Password verification modal*/}
+      {/* Password verif. modal */}
       {showPasswordModal && (
         <div className="profile-modal-backdrop" onClick={() => setShowPasswordModal(false)}>
           <div className="profile-password-modal" onClick={(e) => e.stopPropagation()}>
@@ -1053,7 +1056,7 @@ function Profile() {
       )}
 
 
-      {/* Verification Parameter Popup Modal */}
+      {/* Verif. parameter popup modal */}
       {showVerifyModal && (
         <div className="profile-verify-modal-backdrop" onClick={closeVerifyModal}>
           <div className="profile-verify-modal" onClick={(e)=>e.stopPropagation()}>
@@ -1125,8 +1128,8 @@ function Profile() {
                       </ul>
                     )}
                   </div>
-                ) : showVerifyModal==='driving_license' ? (
-                  <div style={{ position: 'relative' }}>
+                ) : showVerifyModal==='driving_license'? (
+                  <div style={{position: 'relative'}}>
                     <input
                       type={showLicenseText ? 'text' : 'password'}
                       className="profile-verify-input-field"
@@ -1179,6 +1182,7 @@ function Profile() {
           </div>
         </div>
       )}
+
     </div>
   )
 

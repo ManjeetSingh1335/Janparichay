@@ -95,6 +95,7 @@ export default function FAQ() {
 
   return (
     <div className="faq-page">
+
       <header className="faq-header">
         <div className="faq-header-logo-container">
           <img src={meriPehchaanLogo} alt={t('navbar_logo_alt')} className="faq-header-logo" />
@@ -102,18 +103,18 @@ export default function FAQ() {
         <div className="faq-header-lang" ref={langRef}>
           <div 
             className="faq-lang-trigger" 
-            onClick={() => setLangDropdownOpen(prev => !prev)}
+            onClick={()=>setLangDropdownOpen(prev=>!prev)}
           >
-            <span>{languages.find(lang => lang.code === pageLangCode)?.label || 'English'}</span>
+            <span>{languages.find(lang=>lang.code===pageLangCode)?.label || 'English'}</span>
             <i className="bi bi-chevron-down faq-lang-chevron"></i>
           </div>
           {langDropdownOpen && (
             <ul className="faq-lang-menu">
-              {languages.map(lang => (
+              {languages.map(lang=>(
                 <li 
                   key={lang.code} 
-                  className={`faq-lang-item ${pageLangCode === lang.code ? 'active' : ''}`}
-                  onClick={() => {
+                  className={`faq-lang-item ${pageLangCode===lang.code? 'active' : ''}`}
+                  onClick={()=>{
                     setPageLangCode(lang.code)
                     setLangDropdownOpen(false)
                   }}
@@ -126,19 +127,18 @@ export default function FAQ() {
         </div>
       </header>
 
-      {/* Scrollable Content Wrapper */}
       <div className="faq-content-wrapper">
         <div className="faq-body">
           <h1 className="faq-title">{text.title}</h1>
           
           <div className="faq-list">
-            {text.faqs.map((faq, index) => {
-              const isOpen = activeIndex === index
+            {text.faqs.map((faq, index)=>{
+              const isOpen=activeIndex===index
               return (
-                <div key={index} className={`faq-item ${isOpen ? 'active' : ''}`}>
+                <div key={index} className={`faq-item ${isOpen? 'active' : ''}`}>
                   <button 
                     className="faq-question-btn" 
-                    onClick={() => toggleAccordion(index)}
+                    onClick={()=>toggleAccordion(index)}
                     aria-expanded={isOpen}
                   >
                     <span className="faq-question-text">{faq.q}</span>
@@ -157,6 +157,7 @@ export default function FAQ() {
       </div>
 
       <Footer showSlider={true} />
+      
     </div>
   )
 }

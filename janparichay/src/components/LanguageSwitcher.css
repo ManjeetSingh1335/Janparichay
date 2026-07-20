@@ -1,4 +1,3 @@
-/* ── Language Switcher ────────────────────────────── */
 .lang-switcher {
   position: relative;
   display: inline-flex;
@@ -7,7 +6,7 @@
   z-index: 1000;
 }
 
-/* Trigger button — white pill with border */
+/* Trigger button */
 .lang-trigger {
   display: flex;
   align-items: center;
@@ -99,7 +98,7 @@
   background: #f0f7ff;
 }
 
-/* Selected / active item — blue highlight */
+/* Selected(active item) */
 .lang-option.selected {
   background: #1a73e8;
   color: #ffffff;
