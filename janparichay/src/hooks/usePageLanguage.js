@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useLanguage } from '../context/LanguageContext'
+import {useCallback, useEffect, useState} from 'react'
+import {useLanguage} from '../context/LanguageContext'
 import englishTranslations from '../locales/en.json'
 
 export function usePageLanguage() {
+  
   const { langCode, languages } = useLanguage()
   const [pageLangCode, setPageLangCode] = useState(langCode)
   const [translations, setTranslations] = useState(englishTranslations)

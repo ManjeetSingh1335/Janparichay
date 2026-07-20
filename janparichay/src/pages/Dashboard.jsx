@@ -19,7 +19,7 @@ import {
   Legend
 } from 'chart.js'
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const createBackupCodes=()=>{
   const codes=new Set();
@@ -176,6 +176,7 @@ function Dashboard() {
       <div className="dashboard-section-header">
         <h2>{t('dashboard_section_heading_frequently_used_services')}</h2>
       </div>
+
       <div className="services-panel">
         <p className="services-empty-text">{t('dashboard_no_recent_services')}</p>
         <button type="button" className="view-all-link" onClick={() => navigate('/dashboard/services')}>
@@ -193,12 +194,12 @@ function Dashboard() {
           {activityCards.map((card)=>(
             <div 
               key={card.key} 
-              className={`activity-card ${card.className} ${card.key === 'mfa' ? 'non-clickable' : ''}`}
-              onClick={() => card.key !== 'mfa' && handleCardClick(card.key)}
+              className={`activity-card ${card.className} ${card.key==='mfa'? 'non-clickable' : ''}`}
+              onClick={()=>card.key!=='mfa' && handleCardClick(card.key)}
             >
               <p className="activity-card-label">{card.label}</p>
               <p className="activity-card-value">{card.value}</p>
-              {card.key !== 'mfa' && (
+              {card.key!=='mfa' && (
                 <span className="activity-card-arrow">
                   <i className="bi bi-arrow-right"></i>
                 </span>
@@ -625,6 +626,7 @@ function Dashboard() {
         </div>
 
       </div>
+
     </div>
   )
 }
