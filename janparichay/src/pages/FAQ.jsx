@@ -1,44 +1,45 @@
 import React, {useState, useEffect, useRef} from 'react'
 import meriPehchaanLogo from '../images/meri-pehchaan.png'
 import Footer from '../components/layout/Footer'
-import { usePageLanguage } from '../hooks/usePageLanguage'
+import {usePageLanguage} from '../hooks/usePageLanguage'
 import '../FAQ.css'
 
 export default function FAQ() {
-  const { t, pageLangCode, setPageLangCode } = usePageLanguage()
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(null) 
+
+  const {t, pageLangCode, setPageLangCode}=usePageLanguage()
+  const [langDropdownOpen, setLangDropdownOpen]=useState(false)
+  const [activeIndex, setActiveIndex]=useState(null) 
   const langRef = useRef(null)
 
-  const languages = [
-    { code: 'en', label: 'English' },
-    { code: 'ml', label: 'മലയാളം' },
-    { code: 'hi', label: 'हिन्दी' },
-    { code: 'te', label: 'తెలుగు' },
-    { code: 'mr', label: 'मराठी' },
-    { code: 'ta', label: 'தமிழ்' },
-    { code: 'or', label: 'ଓଡ଼ିଆ' }
+  const languages=[
+    {code: 'en', label: 'English'},
+    {code: 'ml', label: 'മലയാളം'},
+    {code: 'hi', label: 'हिन्दी'},
+    {code: 'te', label: 'తెలుగు'},
+    {code: 'mr', label: 'मराठी'},
+    {code: 'ta', label: 'தமிழ்'},
+    {code: 'or', label: 'ଓଡ଼ିଆ'}
   ]
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (langRef.current && !langRef.current.contains(e.target)) {
+  useEffect(()=>{
+    function handleClickOutside(e){
+      if(langRef.current && !langRef.current.contains(e.target)){
         setLangDropdownOpen(false)
       }
     }
-    if (langDropdownOpen) {
+    if(langDropdownOpen){
       document.addEventListener('mousedown', handleClickOutside)
     }
-    return () => {
+    return()=>{
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [langDropdownOpen])
 
-  const toggleAccordion = (index) => {
-    setActiveIndex(activeIndex === index ? null : index)
+  const toggleAccordion=(index)=>{
+    setActiveIndex(activeIndex===index? null : index)
   }
 
-  const text = {
+  const text={
     title: t('faq_page_title'),
     faqs: [
       { q: t('faq_q1'), a: t('faq_a1') },
@@ -67,34 +68,33 @@ export default function FAQ() {
     ]
   }
 
-  const renderAnswer = (faq) => {
-    if (faq.intro) {
-      return (
+  const renderAnswer=(faq)=>{
+    if(faq.intro){
+      return(
         <div>
-          <p style={{ margin: '0 0 12px 0' }}>{faq.intro}</p>
-          <ul style={{ paddingLeft: '20px', margin: 0, listStyleType: 'disc' }}>
-            {faq.a.map((item, idx) => (
-              <li key={idx} style={{ marginBottom: '8px' }}>{item}</li>
+          <p style={{margin: '0 0 12px 0'}}>{faq.intro}</p>
+          <ul style={{paddingLeft: '20px', margin: 0, listStyleType: 'disc'}}>
+            {faq.a.map((item, idx)=>(
+              <li key={idx} style={{marginBottom: '8px'}}>{item}</li>
             ))}
           </ul>
         </div>
       )
     }
-    if (Array.isArray(faq.a)) {
-      return (
-        <ul style={{ paddingLeft: '20px', margin: 0, listStyleType: 'disc' }}>
-          {faq.a.map((item, idx) => (
-            <li key={idx} style={{ marginBottom: '8px' }}>{item}</li>
+    if(Array.isArray(faq.a)){
+      return(
+        <ul style={{paddingLeft: '20px', margin: 0, listStyleType: 'disc'}}>
+          {faq.a.map((item, idx)=>(
+            <li key={idx} style={{marginBottom: '8px'}}>{item}</li>
           ))}
         </ul>
       )
     }
-    return <p style={{ margin: 0 }}>{faq.a}</p>
+    return <p style={{margin: 0}}>{faq.a}</p>
   }
 
   return (
     <div className="faq-page">
-      {/* Header */}
       <header className="faq-header">
         <div className="faq-header-logo-container">
           <img src={meriPehchaanLogo} alt={t('navbar_logo_alt')} className="faq-header-logo" />

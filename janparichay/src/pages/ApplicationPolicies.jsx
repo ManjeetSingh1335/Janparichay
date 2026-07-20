@@ -1,38 +1,39 @@
 import React, {useState, useEffect, useRef} from 'react'
 import meriPehchaanLogo from '../images/meri-pehchaan.png'
-import { usePageLanguage } from '../hooks/usePageLanguage'
+import {usePageLanguage} from '../hooks/usePageLanguage'
 import '../ApplicationPolicies.css'
 
 export default function ApplicationPolicies() {
-  const { t, pageLangCode, setPageLangCode } = usePageLanguage()
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false)
-  const langRef = useRef(null)
 
-  const languages = [
-    { code: 'en', label: 'English' },
-    { code: 'ml', label: 'മലയാളം' },
-    { code: 'hi', label: 'हिन्दी' },
-    { code: 'te', label: 'తెలుగు' },
-    { code: 'mr', label: 'मराठी' },
-    { code: 'ta', label: 'தமிழ்' },
-    { code: 'or', label: 'ଓଡ଼ିଆ' }
+  const {t, pageLangCode, setPageLangCode}=usePageLanguage()
+  const [langDropdownOpen, setLangDropdownOpen]=useState(false)
+  const langRef=useRef(null)
+
+  const languages=[
+    {code: 'en', label: 'English'},
+    {code: 'ml', label: 'മലയാളം'},
+    {code: 'hi', label: 'हिन्दी'},
+    {code: 'te', label: 'తెలుగు'},
+    {code: 'mr', label: 'मराठी'},
+    {code: 'ta', label: 'தமிழ்'},
+    {code: 'or', label: 'ଓଡ଼ିଆ'}
   ]
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (langRef.current && !langRef.current.contains(e.target)) {
+  useEffect(()=>{
+    function handleClickOutside(e){
+      if(langRef.current && !langRef.current.contains(e.target)){
         setLangDropdownOpen(false)
       }
     }
-    if (langDropdownOpen) {
+    if(langDropdownOpen){
       document.addEventListener('mousedown', handleClickOutside)
     }
-    return () => {
+    return()=>{
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [langDropdownOpen])
 
-  const text = {
+  const text={
     copyrightTitle: t('policies_copyright_title'),
     copyrightDesc: t('policies_copyright_desc'),
     hyperlinkTitle: t('policies_hyperlink_title'),
@@ -59,8 +60,9 @@ export default function ApplicationPolicies() {
   }
 
   return (
+
     <div className="ap-page">
-      {/* Header */}
+
       <header className="ap-header">
         <div className="ap-header-logo-container">
           <img src={meriPehchaanLogo} alt="Meri Pehchaan" className="ap-header-logo" />
@@ -68,18 +70,18 @@ export default function ApplicationPolicies() {
         <div className="ap-header-lang" ref={langRef}>
           <div 
             className="ap-lang-trigger" 
-            onClick={() => setLangDropdownOpen(prev => !prev)}
+            onClick={()=>setLangDropdownOpen(prev=>!prev)}
           >
-            <span>{languages.find(lang => lang.code === pageLangCode)?.label || 'English'}</span>
+            <span>{languages.find(lang=>lang.code===pageLangCode)?.label || 'English'}</span>
             <i className="bi bi-chevron-down ap-lang-chevron"></i>
           </div>
           {langDropdownOpen && (
             <ul className="ap-lang-menu">
-              {languages.map(lang => (
+              {languages.map(lang=>(
                 <li 
                   key={lang.code} 
-                  className={`ap-lang-item ${pageLangCode === lang.code ? 'active' : ''}`}
-                  onClick={() => {
+                  className={`ap-lang-item ${pageLangCode===lang.code? 'active' : ''}`}
+                  onClick={()=>{
                     setPageLangCode(lang.code)
                     setLangDropdownOpen(false)
                   }}
@@ -91,16 +93,16 @@ export default function ApplicationPolicies() {
           )}
         </div>
       </header>
-
-      {/* Scrollable Content Wrapper */}
+      
       <div className="ap-content-wrapper">
+
         <div className="ap-body">
           
-          {/* Copyright Policy */}
+          
           <h1 className="ap-heading">{text.copyrightTitle}</h1>
           <p className="ap-para">{text.copyrightDesc}</p>
 
-          {/* Hyperlink Policy */}     
+             
           <div className="ap-card-box">
             <h1 className="ap-heading">{text.hyperlinkTitle}</h1>
             <h2 className="ap-subheading">{text.extWebsitesTitle}</h2>
@@ -110,15 +112,15 @@ export default function ApplicationPolicies() {
             <p className="ap-para">{text.intWebsitesDesc}</p>
           </div>
 
-          {/* Social Login Policy */}
+      
           <h1 className="ap-heading">{text.socialLoginTitle}</h1>
           <ul className="ap-list">
-            {text.socialLoginBullets.map((bullet, idx) => (
+            {text.socialLoginBullets.map((bullet, idx)=>(
               <li key={idx} className="ap-list-item">{bullet}</li>
             ))}
           </ul>
 
-          {/* Password Policy */}
+  
           <h1 className="ap-heading">{text.passwordTitle}</h1>
           
           <h2 className="ap-subheading">{text.pwOverviewTitle}</h2>
@@ -129,29 +131,29 @@ export default function ApplicationPolicies() {
 
           <h2 className="ap-subheading">{text.pwRequirementsTitle}</h2>
           <ul className="ap-list">
-            {text.pwRequirementsBullets.map((bullet, idx) => (
+            {text.pwRequirementsBullets.map((bullet, idx)=>(
               <li key={idx} className="ap-list-item">{bullet}</li>
             ))}
           </ul>
 
           <h2 className="ap-subheading">{text.pwProtectionTitle}</h2>
           <ul className="ap-list">
-            {text.pwProtectionBullets.map((bullet, idx) => (
+            {text.pwProtectionBullets.map((bullet, idx)=>(
               <li key={idx} className="ap-list-item">{bullet}</li>
             ))}
           </ul>
 
-          {/* Data Protection Policy */}
+          
           <h1 className="ap-heading">{text.dataProtectionTitle}</h1>
           <p className="ap-para">{text.dataProtectionDesc}</p>
           <ul className="ap-list">
-            {text.dataProtectionBullets.map((bullet, idx) => (
+            {text.dataProtectionBullets.map((bullet, idx)=>(
               <li key={idx} className="ap-list-item">{bullet}</li>
             ))}
             <li className="ap-list-item">
               {text.nestedIntro}
               <ul className="ap-nested-list">
-                {text.nestedBullets.map((bullet, idx) => (
+                {text.nestedBullets.map((bullet, idx)=>(
                   <li key={idx} className="ap-nested-list-item">{bullet}</li>
                 ))}
               </ul>
@@ -159,7 +161,10 @@ export default function ApplicationPolicies() {
           </ul>
 
         </div>
+
       </div>
+
     </div>
+
   )
 }
