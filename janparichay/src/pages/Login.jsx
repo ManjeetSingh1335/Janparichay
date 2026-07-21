@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeaderLogo from '../components/HeaderLogo'
 import ThreeDot from '../components/ThreeDot'
@@ -10,11 +10,13 @@ import ForgotPassword from '../components/ForgotPassword'
 import RecoverUserId from '../components/RecoverUserId'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { useLanguage } from '../context/LanguageContext'
+import logo11Years from '../images/11 Year Logo.png'
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState('Username')
   const [view, setView] = useState('login')
   const [kebabOpen, setKebabOpen] = useState(false)
+  const kebabBtnRef = useRef(null)
   const { t } = useLanguage()
 
   const tabs = [
@@ -38,6 +40,9 @@ export default function Login() {
 
   return (
     <div className="auth-page" style={{ position: 'relative' }}>
+      {/* 11 Year Logo — top-left */}
+      <img src={logo11Years} alt="Digital India 11 Year Logo" className="top-left-logo" />
+
       {/* Language Switcher — top-right */}
       <div style={{ position: 'absolute', top: '14px', right: '18px', zIndex: 100 }}>
         <LanguageSwitcher />
@@ -52,6 +57,7 @@ export default function Login() {
             {t('login_sign_in_via')} <span className="jp-link">{t('login_janparichay')}</span>
           </h2>
           <button
+            ref={kebabBtnRef}
             type="button"
             className="kebab-btn"
             onClick={() => setKebabOpen(v => !v)}
@@ -59,7 +65,7 @@ export default function Login() {
           >
             ⋮
           </button>
-          <ThreeDot open={kebabOpen} onClose={() => setKebabOpen(false)} />
+          <ThreeDot open={kebabOpen} onClose={() => setKebabOpen(false)} triggerRef={kebabBtnRef} />
         </div>
 
         {view === 'login' && (

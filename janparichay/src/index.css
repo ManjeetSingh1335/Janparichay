@@ -166,30 +166,30 @@ a { text-decoration: none; }
 /* Kebab dropdown menu */
 .kebab-menu {
   position: absolute;
-  top: 32px;
+  top: calc(100% + 4px);
   right: 0;
   background: #fff;
   border: 1px solid var(--mp-border);
-  border-radius: 6px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-  width: 220px;
+  border-radius: 7px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+  width: 155px;
   z-index: 50;
-  padding: 6px 0;
+  padding: 3px 0;
 }
 
 .kebab-menu-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 16px;
-  font-size: 0.85rem;
+  gap: 7px;
+  padding: 7px 11px;
+  font-size: 0.73rem;
   color: #2c3e50;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .kebab-menu-item:hover { background: #f4f8ff; color: var(--mp-blue); }
-.kebab-menu-item i { width: 16px; font-size: 0.9rem; color: #5f6368; }
+.kebab-menu-item i { width: 13px; font-size: 0.78rem; color: #5f6368; }
 
 /* ══════════════════════════════════════
    TAB NAVIGATION (Username | Mobile | Others)
@@ -1143,7 +1143,25 @@ img, canvas, svg { max-width: 100%; }
   .activity-card-value { font-size: 20px; }
   .mobile-drawer { width: 100%; }
   .navbar-logo { height: 32px; }
-  .tc-heading { font-size: 20px; }
   /* footer is static so no extra bottom padding is needed */
   .layout-content { padding-bottom: 16px; }
 }
+
+/* ─ Top Left 11 Year Logo ─ */
+.top-left-logo {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  height: 52px;
+  width: auto;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .top-left-logo {
+    top: 12px;
+    left: 12px;
+    height: 40px;
+  }
+}
+

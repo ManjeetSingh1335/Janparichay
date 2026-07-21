@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import meriPehchaanLogo from '../images/pehchaan_logo.webp'
@@ -9,6 +9,10 @@ import {
   isBackupAuthenticationRequired,
   trustCurrentDevice,
 } from '../utils/backupAuthentication'
+import logo11Years from '../images/11 Year Logo.png'
+import backupAuthIcon from '../images/Backup-Auth.png'
+import ThreeDot from '../components/ThreeDot'
+import AccessibilityWidget from '../components/AccessibilityOptions/AccessibilityWidget'
 import '../Authentication.css'
 
 export default function Authentication() {
@@ -22,6 +26,8 @@ export default function Authentication() {
   const [trustDevice, setTrustDevice] = useState(false)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [kebabOpen, setKebabOpen] = useState(false)
+  const kebabBtnRef = useRef(null)
 
   useEffect(() => {
     if (!pendingUser || !isBackupAuthenticationRequired(pendingUser.username)) {
@@ -65,25 +71,56 @@ export default function Authentication() {
 
   return (
     <main className="authentication-page">
+      {/* 11 Year Logo — top-left */}
+      <img src={logo11Years} alt="Digital India 11 Year Logo" className="top-left-logo" />
+
       <div className="authentication-language"><LanguageSwitcher /></div>
       <img className="authentication-logo" src={meriPehchaanLogo} alt="Meri Pehchaan Single Sign-On Service" />
 
       <section className="authentication-card" aria-labelledby="authentication-title">
         {step === 'choose' ? (
           <>
-            <h1 id="authentication-title">Sign In to your account via</h1>
-            <p className="authentication-service">JanParichay<br />Two Step Authentication</p>
+            {/* Title row — heading centered, ⋮ in flex row */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginBottom: '2px' }}>
+              <h1 id="authentication-title" style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#111', lineHeight: 1.4, textAlign: 'center', flex: 1 }}>
+                Sign In to your account via{' '}
+                <span style={{ color: '#1264ed' }}>JanParichay</span>
+              </h1>
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <button
+                  ref={kebabBtnRef}
+                  type="button"
+                  className="kebab-btn"
+                  onClick={() => setKebabOpen(v => !v)}
+                  aria-label="More options"
+                >
+                  ⋮
+                </button>
+                <ThreeDot
+                  open={kebabOpen}
+                  onClose={() => setKebabOpen(false)}
+                  triggerRef={kebabBtnRef}
+                  menuStyle={{ right: 'auto', left: '100%', marginLeft: '6px', top: 0 }}
+                />
+              </div>
+            </div>
+
+            {/* Sub-title */}
+            <p className="authentication-service">Two Step Authentication</p>
             <div className="authentication-divider" />
-            <p className="authentication-instruction">Select one of the options and Click 'Next'</p>
+            <p className="authentication-instruction">Select the option and Click 'Next'</p>
+
+            {/* Option */}
             <button
               type="button"
               className={`authentication-option${selected ? ' is-selected' : ''}`}
               aria-pressed={selected}
               onClick={() => setSelected(true)}
             >
-              <span className="authentication-option-icon" aria-hidden="true">&#128274;</span>
+              <img src={backupAuthIcon} alt="" className="authentication-option-icon" style={{ width: '16px', height: 'auto', objectFit: 'contain' }} />
               Backup Code Authentication
             </button>
+
             <button type="button" className="authentication-next" disabled={!selected} onClick={() => setStep('code')}>
               Next
             </button>
@@ -109,9 +146,7 @@ export default function Authentication() {
                   placeholder="Enter Backup code"
                   autoFocus
                 />
-                <button type="button" onClick={() => setShowCode(value => !value)} aria-label={showCode ? 'Hide backup code' : 'Show backup code'}>
-                  {showCode ? '◉' : '◈'}
-                </button>
+    
               </div>
               {error && <p className="authentication-error" role="alert">{error}</p>}
               <label className="authentication-checkbox">
@@ -126,7 +161,7 @@ export default function Authentication() {
           </>
         )}
       </section>
-      <p className="authentication-help" aria-hidden="true">&#9855;</p>
+      <AccessibilityWidget />
     </main>
   )
 }
