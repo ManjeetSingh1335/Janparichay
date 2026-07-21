@@ -11,6 +11,7 @@ import androidLogo from '../images/android.png'
 import macosLogo from '../images/macOS.png'
 import iosLogo from '../images/ios.png'
 import windowsLogo from '../images/windows.jpg'
+import qrCodeImg from '../images/qr_code.png'
 import {Doughnut} from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -56,8 +57,66 @@ function Dashboard() {
 
   const [hoveredDataset, setHoveredDataset]=React.useState(null);
 
-  const [backupCodes, setBackupCodes] = React.useState(loadBackupCodes);
-  const [showBackupCodePanel, setShowBackupCodePanel] = React.useState(false);
+  const [backupCodes, setBackupCodes]=React.useState(loadBackupCodes);
+  const [showBackupCodePanel, setShowBackupCodePanel]=React.useState(false);
+
+  const [showMultiFactorPanel, setShowMultiFactorPanel]=React.useState(settings.multiFactor);
+  const [showConfirmModal, setShowConfirmModal]=React.useState(false);
+  const [mfaDevicesCount, setMfaDevicesCount]=React.useState(()=>{
+    const saved=localStorage.getItem('mp_mfa_devices_count');
+    return saved!==null? parseInt(saved, 10) : 0;
+  });
+
+  const [showMfaSetup, setShowMfaSetup] = React.useState(false);
+  const [mfaTimer, setMfaTimer] = React.useState(50);
+  const [authKey, setAuthKey] = React.useState('QARIORBG');
+  const [mfaToken, setMfaToken] = React.useState('');
+  const [showMfaToken, setShowMfaToken] = React.useState(false);
+
+  const generateRandomAuthKey = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 8; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  React.useEffect(() => {
+    localStorage.setItem('mp_mfa_devices_count', mfaDevicesCount.toString());
+  }, [mfaDevicesCount]);
+
+  React.useEffect(() => {
+    let interval;
+    if (showMfaSetup && mfaTimer > 0) {
+      interval = setInterval(() => {
+        setMfaTimer(prev => prev - 1);
+      }, 1000);
+    } else if (showMfaSetup && mfaTimer === 0) {
+      setMfaTimer(59);
+      setAuthKey(generateRandomAuthKey());
+    }
+    return () => clearInterval(interval);
+  }, [showMfaSetup, mfaTimer]);
+
+  const handleConfirmYes = () => {
+    setShowConfirmModal(false);
+    setShowMfaSetup(true);
+    setMfaTimer(50);
+    setAuthKey(generateRandomAuthKey());
+  };
+
+  const handleMfaSubmit = (e) => {
+    e.preventDefault();
+    if (!mfaToken || mfaToken.length !== 6 || !/^\d+$/.test(mfaToken)) {
+      alert('Please enter a valid 6-digit verification code.');
+      return;
+    }
+    setMfaDevicesCount(prev => prev + 1);
+    setShowMfaSetup(false);
+    setMfaToken('');
+    alert('MFA Device added successfully!');
+  };
 
   React.useEffect(()=>{
     localStorage.setItem('mp_backup_codes', JSON.stringify(backupCodes));
@@ -135,7 +194,7 @@ function Dashboard() {
     {key: 'logged', label: t('dashboard_card_logged_in_devices'), value: getLoggedDevicesCount(), className: 'card-indigo'},
     {key: 'remember', label: t('dashboard_card_remember_devices'), value: 0, className: 'card-teal'},
     {key: 'consent', label: t('dashboard_card_consent_to_service'), value: 0, className: 'card-red'},
-    {key: 'mfa', label: t('dashboard_card_mfa_configured'), value: 0, className: 'card-orange'},
+    {key: 'mfa', label: t('dashboard_card_mfa_configured'), value: mfaDevicesCount, className: 'card-orange'},
   ];
 
   const getLatestActivity=()=>{
@@ -606,20 +665,118 @@ function Dashboard() {
               )}
             </div>
 
-            <div className="settings-row">
-              <span className="settings-label">
-                <i className="bi bi-key-fill settings-icon"></i>
-                {t('dashboard_settings_multi_factor')}
-                <i className="bi bi-info-circle-fill settings-info"></i>
-              </span>
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.multiFactor}
-                  onChange={(e) => updateSetting('multiFactor', e.target.checked)}
-                />
-                <span className="toggle-slider"></span>
-              </label>
+            <div className="settings-row-wrapper mfa-wrapper">
+              <div className="settings-row">
+                <span className="settings-label">
+                  <i className="bi bi-key-fill settings-icon"></i>
+                  {t('dashboard_settings_multi_factor')}
+                  <i className="bi bi-info-circle-fill settings-info"></i>
+                </span>
+                
+                {settings.multiFactor && (
+                  <button
+                    type="button"
+                    className={`backup-code-panel-toggle${showMultiFactorPanel? ' is-open' : ''}`}
+                    onClick={()=>setShowMultiFactorPanel(open=>!open)}
+                    aria-label={showMultiFactorPanel? 'Hide MFA details' : 'Show MFA details'}
+                    aria-expanded={showMultiFactorPanel}
+                    title={showMultiFactorPanel? 'Hide MFA devices' : 'Configure MFA devices'}
+                  >
+                    <i className="bi bi-gear-fill" aria-hidden="true"></i>
+                  </button>
+                )}
+
+                <label className="toggle-switch">
+                  <input
+                    type="checkbox"
+                    checked={settings.multiFactor}
+                    onChange={(e)=>{
+                      updateSetting('multiFactor', e.target.checked);
+                      if(e.target.checked){
+                        setShowMultiFactorPanel(true);
+                      }else{
+                        setShowMultiFactorPanel(false);
+                        setShowMfaSetup(false);
+                      }
+                    }}
+                  />
+                  <span className="toggle-slider"></span>
+                </label>
+              </div>
+
+              {settings.multiFactor && showMultiFactorPanel && (
+                <div className="mfa-panel">
+                  {!showMfaSetup ? (
+                    <div className="mfa-add-row" onClick={() => setShowConfirmModal(true)}>
+                      <span className="mfa-add-label">Add More Devices</span>
+                      <span className="mfa-plus-box">+</span>
+                    </div>
+                  ) : (
+                    <div className="mfa-setup-container">
+                      <h4 className="mfa-setup-title">Add More Devices</h4>
+                      <p className="mfa-setup-desc">
+                        Please set up an account in Parichay Authenticator app on your device. The account can be set up either by scanning the below QR Code or manually with the two-factor secret key.
+                      </p>
+                      
+                       <div className="mfa-qr-wrapper">
+                         <div className="mfa-qr-box empty-qr-space">
+                           <span>QR Code Space</span>
+                         </div>
+                        
+                       </div>
+ 
+                       <div className="mfa-auth-key-box empty-key-space">
+                         <span>Auth Key Space</span>
+                       </div>
+                      
+                      <p className="mfa-note-text">
+                        Note: Kindly check your Parichay Authenticator App to insert Authkey to configure your Account.
+                      </p>
+                      
+                      <p className="mfa-setup-instruction">
+                        Once you set up the account, enter the six digit verification code generated by the Parichay Authenticator app
+                      </p>
+                      
+                      <form className="mfa-submit-form" onSubmit={handleMfaSubmit}>
+                        <div className="mfa-input-wrapper">
+                          <input
+                            type={showMfaToken ? "text" : "password"}
+                            placeholder="Enter Token"
+                            maxLength={6}
+                            value={mfaToken}
+                            onChange={(e) => setMfaToken(e.target.value.replace(/\D/g, ''))}
+                            className="mfa-token-input"
+                          />
+                          <button
+                            type="button"
+                            className="mfa-toggle-visibility"
+                            onClick={() => setShowMfaToken(!showMfaToken)}
+                            aria-label={showMfaToken ? "Hide token" : "Show token"}
+                          >
+                            <i className={showMfaToken ? "bi bi-eye" : "bi bi-eye-slash"}></i>
+                          </button>
+                        </div>
+                        <button type="submit" className="mfa-submit-btn">
+                          Submit
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {showConfirmModal && (
+                <div className="mfa-modal-overlay">
+                  <div className="mfa-modal-container">
+                    <p className="mfa-modal-text">Do you really want to configure New Device?</p>
+                      <div className="mfa-modal-buttons">
+                        <button className="mfa-btn-yes" onClick={handleConfirmYes}>YES</button>
+                        <button className="mfa-btn-no" onClick={()=>setShowConfirmModal(false)}>NO</button>
+                      </div>
+                  </div>
+                </div>
+              )}
+              
             </div>
 
           </div>

@@ -639,3 +639,328 @@
   .panel-title-2 { font-size: 14px; }
   .chartjs-donut-container { width: 90px; height: 90px; }
 }
+
+/* Multi-factor auth. styles */
+.mfa-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.mfa-panel {
+  margin: 3px 1px 5px;
+  padding: 0;
+}
+
+.mfa-add-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 5px 0.5px 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  width: auto;
+  box-sizing: border-box;
+}
+
+.mfa-add-row:hover {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.mfa-add-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: #1e293b;
+}
+
+.mfa-plus-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #10855c;
+  color: #ffffff;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  padding-bottom: 1.5px;
+  box-sizing: border-box;
+}
+
+/* Modal dialog styles */
+.mfa-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.4); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.mfa-modal-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 38px 44px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 440px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid #e2e8f0;
+  animation: mfa-modal-show 0.15s ease-out;
+}
+
+@keyframes mfa-modal-show {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.mfa-modal-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.mfa-modal-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+.mfa-btn-yes {
+  background-color: #10855c;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 50px;
+}
+
+.mfa-btn-yes:hover {
+  background-color: #0c6a49;
+}
+
+.mfa-btn-no {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 50px;
+}
+
+.mfa-btn-no:hover {
+  background-color: #b91c1c;
+}
+
+/* MFA setup screen styles */
+.mfa-setup-container {
+  margin-top: 10px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.mfa-setup-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+}
+
+.mfa-setup-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0;
+}
+
+.mfa-qr-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 6px 0;
+}
+
+.mfa-qr-box {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mfa-qr-img {
+  width: 180px;
+  height: 180px;
+  display: block;
+}
+
+.mfa-timer {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.mfa-auth-key-box {
+  background-color: #64748b;
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+}
+
+.mfa-auth-key-val {
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.mfa-note-text {
+  font-size: 13px;
+  color: #ef4444;
+  margin: -4px 0 0 0;
+  line-height: 1.4;
+}
+
+.mfa-setup-instruction {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1e293b;
+  font-weight: 500;
+  margin: 8px 0 0 0;
+}
+
+.mfa-submit-form {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.mfa-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0 12px;
+}
+
+.mfa-token-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding: 10px 30px 10px 0;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.mfa-toggle-visibility {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.mfa-submit-btn {
+  background-color: #10855c;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0 24px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mfa-submit-btn:hover {
+  background-color: #0c6a49;
+}
+
+.mfa-qr-box.empty-qr-space {
+  width: 180px;
+  height: 180px;
+  background-color: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: none;
+  padding: 0;
+}
+
+.mfa-auth-key-box.empty-key-space {
+  height: 44px;
+  background-color: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+

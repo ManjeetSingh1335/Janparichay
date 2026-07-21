@@ -154,9 +154,20 @@ const servicesByGroup={
   ],
 
   'Goa State Services': [
-    item('')
-
+    item(
+      'Mygov - Goa', 
+      GoaMygov, 
+      "MYGOV - GOA", 
+      'https://goa.mygov.in/', 
+      'MyGovAuth - The citizen-centric platform empowers people to connect with the Government and contribute towards good governance.'
+    )
   ],
+  // 'Gujarat State Services': [
+  //   item('Gatishakti National Master Plan Production', , ),
+  //   item(),
+  //   item(),
+
+  // ],
 
   'Uttarakhand State Services': [
     item('Apuni Sarkar Production', UKJanparichay, 'https://eservices.uk.gov.in/login/', 'CitizenCentricService Portal'),
