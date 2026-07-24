@@ -8,7 +8,7 @@ export default function TermsConditions() {
   const navigate=useNavigate()
   const {t, pageLangCode, setPageLangCode}=usePageLanguage()
   const [langDropdownOpen, setLangDropdownOpen]=useState(false)
-  const langRef = useRef(null)
+  const langRef=useRef(null)
 
   const languages=[
     {code: 'en', label: 'English'},
