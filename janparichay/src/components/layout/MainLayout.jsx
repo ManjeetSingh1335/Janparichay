@@ -6,9 +6,14 @@ import Footer from './Footer.jsx'
 import './Layout.css'
 
 function MainLayout() {
-  const {pathname} = useLocation();
+  const location = useLocation();
+  const {pathname} = location;
 
   useEffect(() => {
+    if (location.state?.openRemembered) {
+      return;
+    }
+
     if('scrollRestoration' in window.history){
       window.history.scrollRestoration = 'manual';
     }

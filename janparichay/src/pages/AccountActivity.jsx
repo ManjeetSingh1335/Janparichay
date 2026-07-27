@@ -65,22 +65,32 @@ function AccountActivity() {
   const rememberedSectionRef = useRef(null)
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (!location.state?.openRemembered) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (location.state?.openRemembered) {
-      setShowRemembered(true)
+      setShowRemembered(true);
     }
-  }, [location.state])
+  }, [location.state]);
 
   useEffect(() => {
-    if (showRemembered) {
-      setTimeout(() => {
-        rememberedSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+    if (showRemembered && location.state?.openRemembered) {
+      const timer = setTimeout(() => {
+        const target = rememberedSectionRef.current;
+        const container = document.querySelector('.layout-content');
+        if (target && container) {
+          const topOffset = target.offsetTop - 20;
+          container.scrollTo({ top: topOffset, behavior: 'smooth' });
+        } else if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
     }
-  }, [showRemembered])
+  }, [showRemembered, location.state]);
 
   const getInitialDevices = () => {
     const existing = localStorage.getItem('user_devices');

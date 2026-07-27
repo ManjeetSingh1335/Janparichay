@@ -4,6 +4,7 @@ import '../Dashboard.css'
 import {useDashboard} from '../context/DashboardContext.jsx'
 import { clearPendingUser } from '../utils/backupAuthentication'
 import {useLanguage} from '../context/LanguageContext'
+import EyeIcon from '../components/EyeIcon'
 import chromeLogo from '../images/chrome.png'
 import edgeLogo from '../images/edge.png'
 import firefoxLogo from '../images/firefox.png'
@@ -56,6 +57,7 @@ function Dashboard() {
   const [showNew, setShowNew]=React.useState(false);
 
   const [hoveredDataset, setHoveredDataset]=React.useState(null);
+  const [clickedDataset, setClickedDataset]=React.useState(null);
 
   const [backupCodes, setBackupCodes]=React.useState(loadBackupCodes);
   const [showBackupCodePanel, setShowBackupCodePanel]=React.useState(false);
@@ -63,6 +65,7 @@ function Dashboard() {
   const [showMultiFactorPanel, setShowMultiFactorPanel]=React.useState(settings.multiFactor);
   const [showConfirmModal, setShowConfirmModal]=React.useState(false);
   const [mfaDevicesCount, setMfaDevicesCount]=React.useState(()=>{
+    if (!settings.multiFactor) return 0;
     const saved=localStorage.getItem('mp_mfa_devices_count');
     return saved!==null? parseInt(saved, 10) : 0;
   });
@@ -190,11 +193,24 @@ function Dashboard() {
     return 1;
   };
 
+  const getRememberedDevicesCount=()=>{
+    const existing=localStorage.getItem('remembered_devices');
+    if(existing){
+      try{
+        const devices=JSON.parse(existing);
+        return Array.isArray(devices) ? devices.length : 0;
+      }catch(e){
+        return 0;
+      }
+    }
+    return 0;
+  };
+
   const activityCards=[
     {key: 'logged', label: t('dashboard_card_logged_in_devices'), value: getLoggedDevicesCount(), className: 'card-indigo'},
-    {key: 'remember', label: t('dashboard_card_remember_devices'), value: 0, className: 'card-teal'},
+    {key: 'remember', label: t('dashboard_card_remember_devices'), value: getRememberedDevicesCount(), className: 'card-teal'},
     {key: 'consent', label: t('dashboard_card_consent_to_service'), value: 0, className: 'card-red'},
-    {key: 'mfa', label: t('dashboard_card_mfa_configured'), value: mfaDevicesCount, className: 'card-orange'},
+    {key: 'mfa', label: t('dashboard_card_mfa_configured'), value: settings.multiFactor ? mfaDevicesCount : 0, className: 'card-orange'},
   ];
 
   const getLatestActivity=()=>{
@@ -321,9 +337,9 @@ function Dashboard() {
                         label: 'Operating System',
                         data: [100],
                         backgroundColor: ['#4a7fb5'],
-                        hoverBackgroundColor: ['#3a6a9f'],
+                        hoverBackgroundColor: ['#4a7fb5'],
                         borderWidth: 0,
-                        weight: 8,
+                        weight: hoveredDataset === 0 ? 13 : 8,
                         hoverOffset: 0,
                       },
                       {
@@ -339,9 +355,9 @@ function Dashboard() {
                         label: 'Browser',
                         data: [100],
                         backgroundColor: ['#6b9fd4'],
-                        hoverBackgroundColor: ['#5a8ec0'],
+                        hoverBackgroundColor: ['#6b9fd4'],
                         borderWidth: 0,
-                        weight: 8,
+                        weight: hoveredDataset === 2 ? 13 : 8,
                         hoverOffset: 0,
                       },
                     ],
@@ -353,8 +369,19 @@ function Dashboard() {
                     onHover: (event, elements) => {
                       if (elements && elements.length > 0) {
                         setHoveredDataset(elements[0].datasetIndex);
+                        event.native.target.style.cursor = 'pointer';
                       } else {
                         setHoveredDataset(null);
+                        event.native.target.style.cursor = 'default';
+                      }
+                    },
+                    onClick: (event, elements) => {
+                      if (elements && elements.length > 0) {
+                        const idx = elements[0].datasetIndex;
+                        if (idx === 1) return;
+                        setClickedDataset(prev => prev === idx ? null : idx);
+                      } else {
+                        setClickedDataset(null);
                       }
                     },
                     interaction: {
@@ -362,12 +389,8 @@ function Dashboard() {
                       intersect: true,
                     },
                     plugins: {
-                      legend: {
-                        display: false,
-                      },
-                      tooltip: {
-                        enabled: false,
-                      },
+                      legend: { display: false },
+                      tooltip: { enabled: false },
                     },
                     hover: {
                       mode: 'point',
@@ -375,14 +398,14 @@ function Dashboard() {
                     },
                     animation: {
                       animateRotate: true,
-                      duration: 800,
+                      duration: 300,
                     },
                   }}
                 />
-                <div className={`chartjs-ring-label inner-ring-label ${hoveredDataset === 2 ? 'active' : ''}`}>
+                <div className={`chartjs-ring-label inner-ring-label ${hoveredDataset === 2 || clickedDataset === 2 ? 'active' : ''} ${clickedDataset === 2 ? 'clicked' : ''}`}>
                   └───────{latestActivity.browser}
                 </div>
-                <div className={`chartjs-ring-label outer-ring-label ${hoveredDataset === 0 ? 'active' : ''}`}>
+                <div className={`chartjs-ring-label outer-ring-label ${hoveredDataset === 0 || clickedDataset === 0 ? 'active' : ''} ${clickedDataset === 0 ? 'clicked' : ''}`}>
                   └───────{latestActivity.os}
                 </div>
               </div>
@@ -477,7 +500,7 @@ function Dashboard() {
                         color: '#64748b'
                       }}
                     >
-                      <i className={`bi ${showCurrent ? 'bi-eye' : 'bi-eye-slash'}`}></i>
+                      <EyeIcon show={showCurrent} />
                     </span>
                   </div>
 
@@ -510,7 +533,7 @@ function Dashboard() {
                         color: '#64748b'
                       }}
                     >
-                      <i className={`bi ${showNew ? 'bi-eye' : 'bi-eye-slash'}`}></i>
+                      <EyeIcon show={showNew} />
                     </span>
                   </div>
 
@@ -691,12 +714,15 @@ function Dashboard() {
                     type="checkbox"
                     checked={settings.multiFactor}
                     onChange={(e)=>{
-                      updateSetting('multiFactor', e.target.checked);
-                      if(e.target.checked){
+                      const checked = e.target.checked;
+                      updateSetting('multiFactor', checked);
+                      if(checked){
                         setShowMultiFactorPanel(true);
                       }else{
                         setShowMultiFactorPanel(false);
                         setShowMfaSetup(false);
+                        setMfaDevicesCount(0);
+                        localStorage.setItem('mp_mfa_devices_count', '0');
                       }
                     }}
                   />
@@ -753,7 +779,7 @@ function Dashboard() {
                             onClick={() => setShowMfaToken(!showMfaToken)}
                             aria-label={showMfaToken ? "Hide token" : "Show token"}
                           >
-                            <i className={showMfaToken ? "bi bi-eye" : "bi bi-eye-slash"}></i>
+                            <EyeIcon show={showMfaToken} />
                           </button>
                         </div>
                         <button type="submit" className="mfa-submit-btn">

@@ -1,6 +1,3 @@
-/* =============================================
-   Floating Action Button (FAB)
-   ============================================= */
 .acc-fab {
   position: fixed;
   bottom: 28px;
@@ -52,9 +49,6 @@
   margin-left: 10px;
 }
 
-/* =============================================
-   Overlay
-   ============================================= */
 .acc-overlay {
   position: fixed;
   top: 0;
@@ -71,9 +65,6 @@
   to   { opacity: 1; }
 }
 
-/* =============================================
-   Side Panel
-   ============================================= */
 .acc-panel {
   position: fixed;
   top: 0;
@@ -96,9 +87,6 @@
   transform: translateX(0);
 }
 
-/* =============================================
-   Header
-   ============================================= */
 .acc-header {
   background-color: #3a7b93;
   padding: 18px 22px;
@@ -134,9 +122,6 @@
   opacity: 1;
 }
 
-/* =============================================
-   Options Grid
-   ============================================= */
 .acc-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -146,9 +131,6 @@
   align-content: start;
 }
 
-/* =============================================
-   Option Card
-   ============================================= */
 .acc-card {
   background-color: #fff;
   border: 1.5px solid #e8e8e8;
@@ -178,17 +160,21 @@
 }
 
 .acc-card-icon {
+  display: inline-block;
   width: 38px;
   height: 38px;
-  object-fit: contain;
+  background-color: #333;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  flex-shrink: 0;
 }
 
-.acc-icon-textToSpeech {
-  transform: scale(1.45);
-}
-
-.acc-icon-biggerText {
-  transform: scale(1.4);
+.acc-card.active .acc-card-icon {
+  background-color: #2a6d85;
 }
 
 .acc-card-label {
@@ -199,9 +185,6 @@
   font-weight: 500;
 }
 
-/* =============================================
-   Footer / Reset Button
-   ============================================= */
 .acc-footer {
   padding: 16px 22px 22px;
   background-color: white;
@@ -230,9 +213,6 @@
   background-color: #c4e4f0;
 }
 
-/* =============================================
-   Responsive — 765px and below: 2 columns
-   ============================================= */
 @media (max-width: 765px) {
   .acc-panel {
     width: 100vw;
@@ -254,4 +234,1544 @@
     min-height: 110px;
     padding: 18px 8px 14px;
   }
+}
+
+.acc-card-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.acc-badge-tick {
+  position: absolute;
+  top: -12px;
+  right: 2px;
+  background-color: #3a7b93;
+  color: #ffffff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acc-step-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.acc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #cbd5e1;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.acc-dot.active {
+  background-color: #3a7b93;
+  transform: scale(1.25);
+}
+
+body[data-bigger-text="1"] {
+  zoom: 1.03;
+}
+body[data-bigger-text="2"] {
+  zoom: 1.06;
+}
+body[data-bigger-text="3"] {
+  zoom: 1.09;
+}
+body[data-bigger-text="4"] {
+  zoom: 1.12;
+}
+
+.acc-panel,
+.acc-fab {
+  zoom: 1 !important;
+}
+
+
+body[data-text-spacing="1"] *:not(.acc-panel *):not(.acc-fab *) {
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.12em !important;
+}
+body[data-text-spacing="2"] *:not(.acc-panel *):not(.acc-fab *) {
+  letter-spacing: 0.14em !important;
+  word-spacing: 0.20em !important;
+}
+body[data-text-spacing="3"] *:not(.acc-panel *):not(.acc-fab *) {
+  letter-spacing: 0.20em !important;
+  word-spacing: 0.28em !important;
+}
+
+body[data-line-height="1"] *:not(.acc-panel *):not(.acc-fab *) {
+  line-height: 1.6 !important;
+}
+body[data-line-height="2"] *:not(.acc-panel *):not(.acc-fab *) {
+  line-height: 1.9 !important;
+}
+body[data-line-height="3"] *:not(.acc-panel *):not(.acc-fab *) {
+  line-height: 2.2 !important;
+}
+body[data-line-height="4"] *:not(.acc-panel *):not(.acc-fab *) {
+  line-height: 2.5 !important;
+}
+
+body.acc-highlight-links a:not(.acc-panel *),
+body.acc-highlight-links [role="link"]:not(.acc-panel *) {
+  background-color: #ffeb3b !important;
+  color: #000000 !important;
+  outline: 2px dashed #000000 !important;
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
+body.acc-dyslexia-mode *:not(.acc-panel *):not(.acc-fab *) {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Comic Sans', sans-serif !important;
+}
+
+
+body.acc-hide-images img:not(.acc-panel *):not(.acc-fab *),
+body.acc-hide-images picture:not(.acc-panel *):not(.acc-fab *),
+body.acc-hide-images video:not(.acc-panel *):not(.acc-fab *),
+body.acc-hide-images svg:not(.acc-panel *):not(.acc-fab *):not(.bi) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+body.acc-custom-cursor,
+body.acc-custom-cursor *:not(.acc-panel *):not(.acc-fab *) {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24' fill='%233a7b93' stroke='%23ffffff' stroke-width='1.5'><path d='M3 3l7 18 3-7 7-3L3 3z'/></svg>"), auto !important;
+}
+
+
+body.acc-dark-mode {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .layout-container,
+body.acc-dark-mode .layout-body,
+body.acc-dark-mode .layout-content,
+body.acc-dark-mode .dashboard-container,
+body.acc-dark-mode .profile-container,
+body.acc-dark-mode .profile-component-container,
+body.acc-dark-mode .account-activity-container,
+body.acc-dark-mode .consent-dashboard-container,
+body.acc-dark-mode .auth-page {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+
+body.acc-dark-mode .navbar-container {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #222222 !important;
+}
+
+body.acc-dark-mode .navbar-user-name,
+body.acc-dark-mode .navbar-user-username {
+  color: #ffffff !important;
+}
+
+
+body.acc-dark-mode .sidebar-container,
+body.acc-dark-mode .sidebar-nav {
+  background-color: #000000 !important;
+}
+
+body.acc-dark-mode .sidebar-nav a.non-active-link:not(.acc-panel *) {
+  background-color: transparent !important;
+  color: #ffff00 !important;
+  font-weight: 600 !important;
+}
+
+body.acc-dark-mode .sidebar-nav a.active-link:not(.acc-panel *) {
+  background-color: #475569 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .dashboard-section-header,
+body.acc-dark-mode .profile-component-header,
+body.acc-dark-mode .profile-section-header,
+body.acc-dark-mode .section-banner,
+body.acc-dark-mode .page-section-header {
+  background-color: #555555 !important;
+  border-left: none !important;
+  padding: 12px 24px !important;
+  margin-top: -24px !important;
+  margin-left: -24px !important;
+  margin-right: -24px !important;
+}
+
+body.acc-dark-mode .dashboard-section-header h2,
+body.acc-dark-mode .profile-component-header h2,
+body.acc-dark-mode .profile-section-header h2,
+body.acc-dark-mode .dashboard-section-header h3,
+body.acc-dark-mode .page-section-header h2 {
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  margin: 0 !important;
+}
+
+body.acc-dark-mode .activity-card .activity-card-arrow {
+  color: #ffff00 !important;
+}
+
+body.acc-dark-mode .dashboard-panel-1 {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.acc-dark-mode .dashboard-panel-1 h3,
+body.acc-dark-mode .dashboard-panel-1 p {
+  color: #000000 !important;
+}
+
+body.acc-dark-mode .dashboard-panel-2,
+body.acc-dark-mode .settings-column {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+body.acc-dark-mode .dashboard-panel-2 h3,
+body.acc-dark-mode .settings-column .panel-title {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .profile-card,
+body.acc-dark-mode .user-details-card {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .profile-row-item,
+body.acc-dark-mode .profile-info-box,
+body.acc-dark-mode .detail-field-box {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+body.acc-dark-mode .profile-info-label,
+body.acc-dark-mode .detail-field-label {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+body.acc-dark-mode .profile-info-value,
+body.acc-dark-mode .detail-field-value {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode table thead tr,
+body.acc-dark-mode .table-header {
+  background-color: #1a73e8 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode table tbody tr:nth-child(even) {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode table tbody tr:nth-child(odd) {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.acc-dark-mode table tbody tr:nth-child(odd) td {
+  color: #000000 !important;
+}
+
+body.acc-dark-mode table tbody tr:nth-child(even) td {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode table a,
+body.acc-dark-mode .table-action-btn,
+body.acc-dark-mode .action-revoke,
+body.acc-dark-mode td a {
+  color: #ffff00 !important;
+  font-weight: 700 !important;
+}
+
+body.acc-dark-mode .profile-dropdown-menu {
+  background-color: #1a1a1a !important;
+  border: 1px solid #333333 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.acc-dark-mode .dropdown-item .dropdown-text,
+body.acc-dark-mode .dropdown-item .dropdown-icon {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .dropdown-item:hover {
+  background-color: #333333 !important;
+}
+
+body.acc-dark-mode .footer-container {
+  background-color: #124369 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .footer-links a {
+  color: #ffff00 !important;
+}
+
+body.acc-dark-mode .tc-page,
+body.acc-dark-mode .tc-content-wrapper,
+body.acc-dark-mode .tc-body,
+body.acc-dark-mode .faq-page,
+body.acc-dark-mode .faq-content-wrapper,
+body.acc-dark-mode .faq-body,
+body.acc-dark-mode .ap-page,
+body.acc-dark-mode .ap-content-wrapper,
+body.acc-dark-mode .ap-body {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .services-page,
+body.acc-dark-mode .services-main,
+body.acc-dark-mode .services-content {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .services-topbar {
+  background-color: #000000 !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #222222 !important;
+}
+
+body.acc-dark-mode .services-sidebar {
+  background: #000000 !important;
+  box-shadow: none !important;
+  border-right: 1px solid #222222 !important;
+}
+
+body.acc-dark-mode .services-brand {
+  border-bottom: 1px solid #222222 !important;
+}
+
+body.acc-dark-mode .services-group {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .services-group.has-chevron::before {
+  color: #ffff00 !important;
+}
+
+body.acc-dark-mode .services-group.selected,
+body.acc-dark-mode .services-group:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffff00 !important;
+}
+
+body.acc-dark-mode .service-search input {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.acc-dark-mode .services-user-trigger {
+  color: #ffff00 !important;
+}
+
+body.acc-dark-mode .services-content h1 {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+  padding: 12px 18px !important;
+  font-size: 18px !important;
+  margin-bottom: 24px !important;
+}
+
+body.acc-dark-mode .services-content h1 span {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .service-card {
+  background-color: #ffffff !important;
+  border-bottom: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+  padding: 8px 6px 0 6px !important;
+  overflow: hidden !important;
+}
+
+body.acc-dark-mode .service-logo-wrap {
+  background-color: #ffffff !important;
+}
+
+body.acc-dark-mode .service-card span {
+  display: block !important;
+  width: 100% !important;
+  background-color: #555555 !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  padding: 4px 6px !important;
+  margin-top: 4px !important;
+  border-bottom-left-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+body.acc-dark-mode .services-dropdown {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+body.acc-dark-mode .services-dropdown a,
+body.acc-dark-mode .services-dropdown button {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .tc-header,
+body.acc-dark-mode .faq-header,
+body.acc-dark-mode .ap-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #222222 !important;
+}
+
+body.acc-dark-mode .tc-banner-container,
+body.acc-dark-mode .tc-banner {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .tc-heading,
+body.acc-dark-mode .faq-title,
+body.acc-dark-mode .ap-heading {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .ap-subheading {
+  color: #38bdf8 !important;
+}
+
+body.acc-dark-mode .tc-para,
+body.acc-dark-mode .tc-bullet-item,
+body.acc-dark-mode .ap-para,
+body.acc-dark-mode .ap-list-item,
+body.acc-dark-mode .ap-nested-list-item,
+body.acc-dark-mode .ap-card-box p {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .ap-card-box {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+body.acc-dark-mode .faq-item {
+  background-color: #ffffff !important;
+  border-radius: 4px !important;
+  border: none !important;
+  margin-bottom: 10px !important;
+}
+
+body.acc-dark-mode .faq-question-btn {
+  background-color: #ffffff !important;
+}
+
+body.acc-dark-mode .faq-question-text {
+  color: #eab308 !important; 
+  font-style: italic !important;
+  font-weight: 600 !important;
+}
+
+body.acc-dark-mode .faq-chevron {
+  color: #124369 !important;
+}
+
+body.acc-dark-mode .faq-answer-container {
+  background-color: #555555 !important;
+  border-top: 1px solid #777777 !important;
+}
+
+body.acc-dark-mode .faq-answer-content {
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .tc-lang-menu,
+body.acc-dark-mode .faq-lang-menu,
+body.acc-dark-mode .ap-lang-menu {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #ffffff !important;
+}
+
+body.acc-dark-mode .tc-lang-item,
+body.acc-dark-mode .faq-lang-item,
+body.acc-dark-mode .ap-lang-item {
+  color: #e2e8f0 !important;
+}
+
+body.acc-dark-mode .tc-lang-item:hover,
+body.acc-dark-mode .faq-lang-item:hover,
+body.acc-dark-mode .ap-lang-item:hover {
+  background-color: #334155 !important;
+}
+
+html.acc-invert-colors body,
+html.acc-invert-colors .layout-container,
+html.acc-invert-colors .layout-body,
+html.acc-invert-colors .layout-content,
+html.acc-invert-colors .dashboard-container,
+html.acc-invert-colors .profile-container,
+html.acc-invert-colors .profile-component-container,
+html.acc-invert-colors .account-activity-container,
+html.acc-invert-colors .consent-dashboard-container,
+html.acc-invert-colors .services-page,
+html.acc-invert-colors .services-main,
+html.acc-invert-colors .services-content,
+html.acc-invert-colors .auth-page {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .navbar-container,
+html.acc-invert-colors .footer-container,
+html.acc-invert-colors .tc-header,
+html.acc-invert-colors .faq-header,
+html.acc-invert-colors .ap-header {
+  background-color: #f5cba7 !important;
+  color: #000000 !important;
+  border-color: #e5b995 !important;
+}
+
+html.acc-invert-colors .navbar-user-name,
+html.acc-invert-colors .navbar-user-username,
+html.acc-invert-colors .footer-copyright,
+html.acc-invert-colors .footer-links a,
+html.acc-invert-colors .footer-container a {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .sidebar-container,
+html.acc-invert-colors .sidebar-nav {
+  background-color: #ffffff !important;
+  border-right: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors .sidebar-nav a.non-active-link:not(.acc-panel *) {
+  background-color: transparent !important;
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors .sidebar-nav a.active-link:not(.acc-panel *) {
+  background-color: #888888 !important;
+  color: #0d6efd !important;
+  border-radius: 20px !important;
+}
+
+html.acc-invert-colors .dashboard-section-header,
+html.acc-invert-colors .section-banner {
+  background-color: #808080 !important;
+  border-left: none !important;
+  padding: 8px 16px !important;
+}
+
+html.acc-invert-colors .dashboard-section-header h2,
+html.acc-invert-colors .dashboard-section-header h3 {
+  color: #e8d0c0 !important;
+}
+
+html.acc-invert-colors .card-indigo {
+  background: #ffff55 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .card-teal {
+  background: #ff6b6b !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .card-red {
+  background: #55d4d4 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .card-orange {
+  background: #4a90e2 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .activity-card .activity-card-label,
+html.acc-invert-colors .activity-card .activity-card-value,
+html.acc-invert-colors .activity-card .activity-card-arrow {
+  color: #000000 !important;
+}
+
+
+html.acc-invert-colors .dashboard-container {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .services-panel {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+html.acc-invert-colors .service-card {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #222222 !important;
+}
+
+html.acc-invert-colors .service-card span {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .dashboard-panel-1 {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #222222 !important;
+}
+
+html.acc-invert-colors .dashboard-panel-1 h3,
+html.acc-invert-colors .dashboard-panel-1 p,
+html.acc-invert-colors .panel-title-1,
+html.acc-invert-colors .login-activity-label {
+  color: #cccccc !important;
+}
+
+html.acc-invert-colors .dashboard-panel-2 {
+  background-color: #808080 !important;
+  color: #000000 !important;
+  border: 1px solid #777777 !important;
+}
+
+html.acc-invert-colors .dashboard-panel-2 h3,
+html.acc-invert-colors .panel-title-2 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .settings-column {
+  background-color: #808080 !important;
+  color: #000000 !important;
+  border: 1px solid #777777 !important;
+}
+
+html.acc-invert-colors .settings-column .panel-title {
+  color: #000000 !important;
+}
+
+
+html.acc-invert-colors .settings-row {
+  background-color: #050505 !important;
+  border: 1px solid #1a1a1a !important;
+  border-radius: 10px !important;
+}
+
+html.acc-invert-colors .settings-row:hover {
+  background-color: #0d0d0d !important;
+}
+
+html.acc-invert-colors .settings-label {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .settings-icon,
+html.acc-invert-colors .settings-info {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .settings-gear-btn,
+html.acc-invert-colors .backup-code-panel-toggle {
+  color: #8f867c !important;
+}
+
+html.acc-invert-colors .backup-code-panel-toggle.is-open,
+html.acc-invert-colors .backup-code-panel-toggle:hover {
+  background-color: #1a1a1a !important;
+}
+
+html.acc-invert-colors .btn-deactivate {
+  background-color: #00bcd4 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+html.acc-invert-colors .btn-deactivate:hover {
+  background-color: #00acc1 !important;
+}
+
+
+html.acc-invert-colors .toggle-slider {
+  background-color: #2e2e2e !important;
+  border: none !important;
+  overflow: hidden !important;
+}
+
+html.acc-invert-colors .toggle-slider::before {
+  background-color: #1a1a1a !important;
+  top: 3px !important;
+  left: 3px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+html.acc-invert-colors .toggle-switch input:checked + .toggle-slider {
+  background-color: #ff9800 !important;
+  border: none !important;
+}
+
+html.acc-invert-colors .toggle-switch input:checked + .toggle-slider::before {
+  background-color: #000000 !important;
+  transform: translateX(20px) !important;
+}
+
+
+html.acc-invert-colors .backup-code-panel {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+}
+
+html.acc-invert-colors .backup-code-legend {
+  color: #b0b0b0 !important;
+}
+
+html.acc-invert-colors .backup-code-swatch.unused {
+  background-color: #001038 !important;
+  border-color: #002060 !important;
+}
+
+html.acc-invert-colors .backup-code-swatch.used {
+  background-color: #222222 !important;
+  border-color: #333333 !important;
+}
+
+html.acc-invert-colors .backup-code {
+  background-color: #001038 !important;
+  border-color: #002266 !important;
+  color: #7090e0 !important;
+}
+
+html.acc-invert-colors .backup-code.is-used {
+  background-color: #222222 !important;
+  border-color: #333333 !important;
+  color: #555555 !important;
+}
+
+html.acc-invert-colors .backup-code-actions button {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+
+html.acc-invert-colors .backup-code-actions button:hover {
+  background-color: #e08800 !important;
+}
+
+
+html.acc-invert-colors .update-password-card {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+}
+
+html.acc-invert-colors .update-password-input {
+  background-color: #000000 !important;
+  border-color: #5c4a3d !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .update-password-input::placeholder {
+  color: #888888 !important;
+}
+
+html.acc-invert-colors .update-password-card span {
+  color: #b0b0b0 !important;
+}
+
+html.acc-invert-colors .update-password-card button {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .mfa-add-label {
+  color: #cccccc !important;
+}
+
+html.acc-invert-colors .mfa-plus-box {
+  background-color: #ff85c1 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .mfa-modal-container {
+  background-color: #000000 !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+html.acc-invert-colors .mfa-modal-text {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .mfa-btn-yes {
+  background-color: #ff85c1 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .mfa-btn-no {
+  background-color: #00bcd4 !important;
+  color: #000000 !important;
+}
+
+
+html.acc-invert-colors .mfa-setup-title {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .mfa-setup-desc,
+html.acc-invert-colors .mfa-setup-instruction {
+  color: #b0b0b0 !important;
+}
+
+html.acc-invert-colors .mfa-qr-box {
+  background-color: #000000 !important;
+  border-color: #333333 !important;
+}
+
+html.acc-invert-colors .mfa-timer,
+html.acc-invert-colors .mfa-note-text {
+  color: #00bcd4 !important;
+}
+
+html.acc-invert-colors .mfa-auth-key-box {
+  background-color: #8f867c !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .mfa-input-wrapper {
+  background-color: #000000 !important;
+  border-color: #333333 !important;
+}
+
+html.acc-invert-colors .mfa-token-input {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .mfa-token-input::placeholder {
+  color: #888888 !important;
+}
+
+html.acc-invert-colors .mfa-toggle-visibility {
+  color: #b0b0b0 !important;
+}
+
+html.acc-invert-colors .mfa-submit-btn {
+  background-color: #ff85c1 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .chartjs-ring-label {
+  color: #ffffff !important;
+}
+html.acc-invert-colors .chartjs-donut-container canvas {
+  filter: grayscale(1) sepia(1) hue-rotate(350deg) saturate(1.5) brightness(0.8) !important;
+}
+
+html.acc-invert-colors .profile-dropdown-menu {
+  background-color: #000000 !important;
+  border: 1px solid #333333 !important;
+}
+
+html.acc-invert-colors .dropdown-item .dropdown-text,
+html.acc-invert-colors .dropdown-item .dropdown-icon {
+  color: #edbc96 !important;
+}
+
+html.acc-invert-colors .dropdown-item:hover {
+  background-color: #1a1a1a !important;
+}
+
+html.acc-invert-colors .upload-modal-container {
+  background-color: #000000 !important;
+  border: 1px solid #333333 !important;
+}
+
+html.acc-invert-colors .upload-modal-close {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .upload-file-selector-box {
+  background-color: #111111 !important;
+  border: 1px solid #333333 !important;
+}
+
+html.acc-invert-colors .upload-file-placeholder,
+html.acc-invert-colors .upload-file-icons,
+html.acc-invert-colors .capture-image {
+  color: #cccccc !important;
+}
+
+html.acc-invert-colors .btn-upload-submit {
+  background-color: #333333 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+
+html.acc-invert-colors .profile-component-container,
+html.acc-invert-colors .profile-container {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .profile-component-header,
+html.acc-invert-colors .profile-section-header {
+  background-color: #808080 !important;
+  border-bottom: 1px solid #777777 !important;
+  padding: 8px 16px !important;
+}
+
+html.acc-invert-colors .profile-component-header h2,
+html.acc-invert-colors .profile-section-header h2 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .profile-details-panel,
+html.acc-invert-colors .profile-card,
+html.acc-invert-colors .user-details-card {
+  background-color: #808080 !important;
+  border: 1px solid #777777 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .verification-details-box {
+  background-color: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .panel-box-title {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .section-subtitle {
+  background: #000000 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .profile-details-section,
+html.acc-invert-colors .profile-fields-card-box {
+  background-color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+html.acc-invert-colors .profile-field-item-row {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+html.acc-invert-colors .profile-field-item-label {
+  color: #000000 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .profile-field-text-value {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .profile-edit-pencil-btn,
+html.acc-invert-colors .profile-field-item-header i,
+html.acc-invert-colors .profile-field-item-header .bi-pencil-square,
+html.acc-invert-colors .verification-field-row .bi-pencil-square {
+  color: #ff9800 !important;
+}
+
+html.acc-invert-colors .profile-toggle-edit-btn {
+  background-color: #cccccc !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+html.acc-invert-colors .verification-details-content {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .verification-details-box h3,
+html.acc-invert-colors .verification-details-box h4 {
+  color: #000000 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .verification-field-row {
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+html.acc-invert-colors .verification-field-label,
+html.acc-invert-colors .verification-field-value,
+html.acc-invert-colors .verification-param-label {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .verification-param-select-dropdown {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+html.acc-invert-colors .verification-param-select-container ul {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .account-activity-container,
+html.acc-invert-colors .consent-dashboard-container {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .activity-section-header,
+html.acc-invert-colors .consent-section-header {
+  background-color: #808080 !important;
+  border-left: none !important;
+  padding: 8px 16px !important;
+}
+
+html.acc-invert-colors .activity-section-header h2,
+html.acc-invert-colors .activity-section-header h3,
+html.acc-invert-colors .consent-section-header h2,
+html.acc-invert-colors .consent-section-header h3 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .activity-data-table th {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .activity-data-table td {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #333333 !important;
+}
+
+html.acc-invert-colors .btn-logout-all,
+html.acc-invert-colors .btn-remove-all-devices,
+html.acc-invert-colors .btn-table-logout {
+  background-color: transparent !important;
+  color: #000000 !important;
+  border: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors .btn-load-remembered {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .table-controls-row select,
+html.acc-invert-colors .table-controls-row input,
+html.acc-invert-colors .table-limit-select {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #cccccc !important;
+}
+
+html.acc-invert-colors .btn-pagination-nav {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors .btn-pagination-nav.active-page {
+  background-color: #e0e0e0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .user-device-card {
+  background-color: #ffffff !important;
+  border: 1px solid #cccccc !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .consent-data-table th {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .consent-data-table td {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #333333 !important;
+}
+
+html.acc-invert-colors .btn-revoke-all {
+  background-color: #00bcd4 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .btn-revoke-action {
+  color: #00bcd4 !important;
+  background: none !important;
+}
+
+html.acc-invert-colors .consent-table-controls input,
+html.acc-invert-colors .consent-table-controls select {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #cccccc !important;
+}
+
+html.acc-invert-colors .btn-consent-pagination {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors .btn-consent-pagination.active-page {
+  background-color: #e0e0e0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .profile-field-text-input {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+html.acc-invert-colors .profile-field-select-dropdown {
+  background-color: #ffffff !important;
+  color: #334155 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+
+html.acc-invert-colors table thead tr,
+html.acc-invert-colors .table-header {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors table thead th {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors table tbody tr {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #222222 !important;
+}
+
+html.acc-invert-colors table tbody tr td {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors table a,
+html.acc-invert-colors .action-revoke,
+html.acc-invert-colors td a {
+  color: #00bcd4 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors .table-action-btn {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+
+html.acc-invert-colors .acc-panel {
+  background-color: #1a100c !important;
+}
+
+html.acc-invert-colors .acc-header {
+  background-color: #2a1a12 !important;
+}
+
+html.acc-invert-colors .acc-card {
+  background-color: #000000 !important;
+  border-color: #33221a !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .acc-card-label {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .acc-card-icon {
+  background-color: #ffffff !important;
+}
+
+html.acc-invert-colors .acc-card.active {
+  background-color: #3a2216 !important;
+  border-color: #ff9800 !important;
+}
+
+html.acc-invert-colors .acc-card.active .acc-card-icon {
+  background-color: #ff9800 !important;
+}
+
+html.acc-invert-colors .acc-badge-tick {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .acc-footer {
+  background-color: #1a100c !important;
+}
+
+html.acc-invert-colors .acc-reset-btn {
+  background-color: #3a2216 !important;
+  color: #ff9800 !important;
+}
+
+html.acc-invert-colors .faq-page,
+html.acc-invert-colors .faq-content-wrapper,
+html.acc-invert-colors .faq-body {
+  background-color: #808080 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .faq-title {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .faq-item {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+html.acc-invert-colors .faq-question-text {
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors .faq-item.active .faq-question-text {
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors .faq-chevron {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors .faq-answer-container {
+  background-color: #f0f0f0 !important;
+  border-top-color: #cccccc !important;
+}
+
+html.acc-invert-colors .faq-answer-content {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .tc-page,
+html.acc-invert-colors .tc-content-wrapper,
+html.acc-invert-colors .tc-body {
+  background-color: #808080 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .tc-heading {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .tc-para {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .tc-banner {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors .tc-bullet-box {
+  background-color: #ffffff !important;
+  border-color: #cccccc !important;
+}
+
+html.acc-invert-colors .tc-bullet-box p,
+html.acc-invert-colors .tc-bullet-star {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .tc-body a {
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors .tc-body h1,
+html.acc-invert-colors .tc-body h2,
+html.acc-invert-colors .tc-body h3,
+html.acc-invert-colors .tc-body h4,
+html.acc-invert-colors .tc-body h5 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .tc-back-btn {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .ap-page,
+html.acc-invert-colors .ap-content-wrapper,
+html.acc-invert-colors .ap-body {
+  background-color: #808080 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors .ap-body a,
+html.acc-invert-colors .ap-body strong,
+html.acc-invert-colors .ap-subheading {
+  color: #ff9800 !important;
+}
+
+html.acc-invert-colors .ap-heading,
+html.acc-invert-colors .ap-body h1,
+html.acc-invert-colors .ap-body h2 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode {
+  background-color: #e8e0d8 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .sidebar-container,
+html.acc-invert-colors body.acc-dark-mode .sidebar-nav {
+  background-color: #ffffff !important;
+  border-right: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .sidebar-nav a.non-active-link:not(.acc-panel *) {
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .sidebar-nav a.active-link:not(.acc-panel *) {
+  background-color: #ffffff !important;
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .dashboard-panel-1,
+html.acc-invert-colors body.acc-dark-mode .services-panel,
+html.acc-invert-colors body.acc-dark-mode .logo-slider-wrapper {
+  background-color: #ffffff !important;
+  border: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .panel-title,
+html.acc-invert-colors body.acc-dark-mode .panel-title-2 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .dashboard-panel-2 {
+  background-color: #d0d0d0 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .settings-column {
+  background-color: #888888 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .settings-row {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .settings-label,
+html.acc-invert-colors body.acc-dark-mode .settings-icon,
+html.acc-invert-colors body.acc-dark-mode .settings-info {
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .btn-deactivate {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .toggle-slider {
+  background-color: #555555 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .toggle-switch input:checked + .toggle-slider {
+  background-color: #ff9800 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .chartjs-ring-label {
+  color: #333333 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-component-container,
+html.acc-invert-colors body.acc-dark-mode .profile-container {
+  background-color: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-component-header {
+  background-color: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-component-header h2 {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-card,
+html.acc-invert-colors body.acc-dark-mode .profile-details-panel,
+html.acc-invert-colors body.acc-dark-mode .verification-details-box {
+  background-color: #ffffff !important;
+  border: 1px solid #cccccc !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .section-subtitle {
+  background: linear-gradient(90deg, #222222, #444444, #222222) !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-detail-label {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-detail-value {
+  color: #333333 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .profile-toggle-edit-btn {
+  color: #ff9800 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .verification-param-select-dropdown {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .activity-data-table th {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .activity-data-table td {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .user-device-card {
+  background-color: #ffffff !important;
+  border: 1px solid #cccccc !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .btn-load-remembered {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .btn-logout-all {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .consent-data-table th {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .consent-data-table td {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #cccccc !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .btn-revoke-all {
+  background-color: #ff9800 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .btn-revoke-action {
+  color: #ff9800 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-page,
+html.acc-invert-colors body.acc-dark-mode .faq-content-wrapper,
+html.acc-invert-colors body.acc-dark-mode .faq-body {
+  background-color: #e8d0c0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-title {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-item {
+  background-color: #333333 !important;
+  border-color: #555555 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-question-text {
+  color: #0d6efd !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-chevron {
+  color: #cccccc !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-answer-container {
+  background-color: #f0f0f0 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .faq-answer-content {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .tc-page,
+html.acc-invert-colors body.acc-dark-mode .tc-content-wrapper,
+html.acc-invert-colors body.acc-dark-mode .tc-body {
+  background-color: #e8d0c0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .tc-heading {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .tc-para {
+  color: #333333 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .ap-page,
+html.acc-invert-colors body.acc-dark-mode .ap-content-wrapper,
+html.acc-invert-colors body.acc-dark-mode .ap-body {
+  background-color: #e8d0c0 !important;
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .ap-heading {
+  color: #000000 !important;
+}
+
+html.acc-invert-colors body.acc-dark-mode .ap-body h1,
+html.acc-invert-colors body.acc-dark-mode .ap-body h2,
+html.acc-invert-colors body.acc-dark-mode .ap-body h3,
+html.acc-invert-colors body.acc-dark-mode .ap-body h4,
+html.acc-invert-colors body.acc-dark-mode .ap-body h5 {
+  color: #000000 !important;
 }

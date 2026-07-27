@@ -36,55 +36,55 @@ export default function AboutUs() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
 
-  useEffect(() => {
+  useEffect(()=>{
     const pageEl = document.querySelector('.about-page')
-    if (!pageEl) return
+    if(!pageEl) return
 
-    const handleScroll = () => {
-      setShowBackToTop(pageEl.scrollTop > 300)
+    const handleScroll=()=>{
+      setShowBackToTop(pageEl.scrollTop>300)
     }
 
     pageEl.addEventListener('scroll', handleScroll)
-    return () => pageEl.removeEventListener('scroll', handleScroll)
+    return()=>pageEl.removeEventListener('scroll', handleScroll)
   }, [isLoading])
 
-  const scrollToTop = () => {
-    const pageEl = document.querySelector('.about-page')
-    if (pageEl) {
-      pageEl.scrollTo({ top: 0, behavior: 'smooth' })
+  const scrollToTop=()=>{
+    const pageEl=document.querySelector('.about-page')
+    if(pageEl){
+      pageEl.scrollTo({top: 0, behavior: 'smooth'})
     }
   }
 
-  const heroSlides = [
-    { img: banner1, link: 'https://www.digitalindia.gov.in/' },
-    { img: banner2, link: 'https://www.digitalindia.gov.in/' },
-    { img: banner3, link: 'https://analytics.gov.in/' },
-    { img: banner4, link: 'https://analytics.gov.in/' }
+  const heroSlides=[
+    {img: banner1, link: 'https://www.digitalindia.gov.in/'},
+    {img: banner2, link: 'https://www.digitalindia.gov.in/'},
+    {img: banner3, link: 'https://analytics.gov.in/'},
+    {img: banner4, link: 'https://analytics.gov.in/'}
   ]
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000)
-    return () => clearTimeout(timer)
+  useEffect(()=>{
+    const timer=setTimeout(()=>setIsLoading(false), 2000)
+    return()=>clearTimeout(timer)
   }, [])
 
-  useEffect(() => {
-    if (!isLoading) {
-      const hash = location.hash || '#about'
-      const id = hash.replace('#', '')
-      const element = document.getElementById(id)
-      if (element) {
-        setTimeout(() => {
-          const pageEl = document.querySelector('.about-page')
-          if (pageEl) {
-            const navbarHeight = 64 
-            const padding = 16     
-            const offsetTop = element.getBoundingClientRect().top
+  useEffect(()=>{
+    if(!isLoading){
+      const hash=location.hash || '#about'
+      const id=hash.replace('#', '')
+      const element=document.getElementById(id)
+      if(element){
+        setTimeout(()=>{
+          const pageEl=document.querySelector('.about-page')
+          if(pageEl){
+            const navbarHeight=64 
+            const padding=16     
+            const offsetTop=element.getBoundingClientRect().top
               + pageEl.scrollTop
               - pageEl.getBoundingClientRect().top
               - navbarHeight
               - padding
-            pageEl.scrollTo({ top: offsetTop, behavior: 'smooth' })
-          } else {
+            pageEl.scrollTo({top: offsetTop, behavior: 'smooth'})
+          }else{
             element.scrollIntoView({ behavior: 'smooth' })
           }
         }, 150)
@@ -92,30 +92,30 @@ export default function AboutUs() {
     }
   }, [isLoading, location.hash])
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentHeroSlide(prev => (prev + 1) % heroSlides.length)
+  useEffect(()=>{
+    const timer=setInterval(()=>{
+      setCurrentHeroSlide(prev=>(prev+1)%heroSlides.length)
     }, 5000)
-    return () => clearInterval(timer)
+    return()=>clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentPack(prev => (prev === 0 ? 1 : 0))
+  useEffect(()=>{
+    const timer=setInterval(()=>{
+      setCurrentPack(prev=>(prev===0? 1 : 0))
     }, 7000)
-    return () => clearInterval(timer)
+    return ()=>clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    if (isLoading) return
+  useEffect(()=>{
+    if(isLoading) return
 
-    const sectionIds = ['home', 'about', 'services', 'faq', 'contact']
+    const sectionIds=['home', 'about', 'services', 'faq', 'contact']
 
    
-    const navObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+    const navObserver=new IntersectionObserver(
+      (entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
             setActiveTab(entry.target.id)
           }
         })
@@ -123,10 +123,10 @@ export default function AboutUs() {
       { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
     )
 
-    const animObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+    const animObserver=new IntersectionObserver(
+      (entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
             entry.target.classList.add('in-view')
           }
         })
@@ -134,33 +134,35 @@ export default function AboutUs() {
       { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
     )
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) navObserver.observe(el)
+    sectionIds.forEach((id)=>{
+      const el=document.getElementById(id)
+      if(el) navObserver.observe(el)
     })
 
 
     const aboutEl = document.getElementById('about')
+    const partnersEl = document.querySelector('.about-partners')
     const servicesEl = document.getElementById('services')
     const faqEl = document.getElementById('faq')
     const contactEl = document.getElementById('contact')
-    if (aboutEl) animObserver.observe(aboutEl)
-    if (servicesEl) animObserver.observe(servicesEl)
-    if (faqEl) animObserver.observe(faqEl)
-    if (contactEl) animObserver.observe(contactEl)
+    if(aboutEl) animObserver.observe(aboutEl)
+    if(partnersEl) animObserver.observe(partnersEl)
+    if(servicesEl) animObserver.observe(servicesEl)
+    if(faqEl) animObserver.observe(faqEl)
+    if(contactEl) animObserver.observe(contactEl)
 
-    return () => {
+    return ()=>{
       navObserver.disconnect()
       animObserver.disconnect()
     }
   }, [isLoading])
 
-  const handleNavClick = (sectionId) => {
+  const handleNavClick=(sectionId)=>{
     setActiveTab(sectionId)
     setMobileMenuOpen(false)
-    const element = document.getElementById(sectionId)
-    if (element) {
-      if (['about', 'services', 'faq', 'contact'].includes(sectionId)) {
+    const element=document.getElementById(sectionId)
+    if(element){
+      if(['about', 'services', 'faq', 'contact'].includes(sectionId)){
         element.classList.remove('in-view')
         void element.offsetWidth; 
         element.classList.add('in-view')
@@ -169,11 +171,11 @@ export default function AboutUs() {
     }
   }
 
-  const toggleFaq = (idx) => {
-    setOpenFaq(openFaq === idx ? null : idx)
+  const toggleFaq=(idx)=>{
+    setOpenFaq(openFaq===idx? null : idx)
   }
 
-  const navItems = [
+  const navItems=[
     { id: 'home', label: t('about_nav_item_home') },
     { id: 'about', label: t('about_nav_item_about') },
     { id: 'services', label: t('about_nav_item_services') },
@@ -181,7 +183,7 @@ export default function AboutUs() {
     { id: 'contact', label: t('about_nav_item_contact') }
   ]
 
-  if (isLoading) {
+  if(isLoading){
     return (
       <div className="about-loading-container">
         <div className="about-pure-spinner">
@@ -201,12 +203,12 @@ export default function AboutUs() {
           <img src={meriPehchaanLogo} alt={t('about_logo_alt')} className="about-nav-logo" style={{ cursor: 'pointer' }} />
         </Link>
         <ul className="about-nav-links">
-          {navItems.map(({ id, label }) => (
+          {navItems.map(({ id, label })=>(
             <li key={id}>
               <button
                 type="button"
-                className={`about-nav-link ${activeTab === id ? 'active' : ''}`}
-                onClick={() => handleNavClick(id)}
+                className={`about-nav-link ${activeTab===id ? 'active' : ''}`}
+                onClick={()=>handleNavClick(id)}
               >
                 {label}
               </button>
@@ -216,7 +218,7 @@ export default function AboutUs() {
         <button
           type="button"
           className="about-mobile-menu-toggle"
-          onClick={() => setMobileMenuOpen(true)}
+          onClick={()=>setMobileMenuOpen(true)}
           aria-label={t('about_mobile_menu_open_aria')}
           aria-expanded={mobileMenuOpen}
         >
@@ -225,7 +227,7 @@ export default function AboutUs() {
       </nav>
 
       {mobileMenuOpen && (
-        <div className="about-mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}>
+        <div className="about-mobile-menu-overlay" onClick={()=>setMobileMenuOpen(false)}>
           <button
             type="button"
             className="about-mobile-menu-close"
@@ -235,12 +237,12 @@ export default function AboutUs() {
             ×
           </button>
           <nav className="about-mobile-menu" aria-label={t('about_mobile_navigation_aria')} onClick={(event) => event.stopPropagation()}>
-            {navItems.map(({ id, label }) => (
+            {navItems.map(({id, label})=>(
               <button
                 type="button"
                 key={id}
                 className={`about-mobile-menu-link ${activeTab === id ? 'active' : ''}`}
-                onClick={() => handleNavClick(id)}
+                onClick={()=>handleNavClick(id)}
               >
                 {label}
               </button>
@@ -258,7 +260,7 @@ export default function AboutUs() {
             width: `${heroSlides.length * 100}%`
           }}
         >
-          {heroSlides.map((slide, index) => (
+          {heroSlides.map((slide, index)=>(
             <div
               className="about-hero-slide"
               key={index}
@@ -267,7 +269,7 @@ export default function AboutUs() {
               <a href={slide.link} target="_blank" rel="noopener noreferrer">
                 <img
                   src={slide.img}
-                  alt={t('about_banner_alt').replace('{{number}}', index + 1)}
+                  alt={t('about_banner_alt').replace('{{number}}', index+1)}
                   className="about-hero-banner-img"
                 />
               </a>
@@ -277,10 +279,10 @@ export default function AboutUs() {
 
         {/* Dot indicators */}
         <div className="about-hero-dots">
-          {heroSlides.map((_, index) => (
+          {heroSlides.map((_, index)=>(
             <span
               key={index}
-              className={`about-hero-dot ${currentHeroSlide === index ? 'active' : ''}`}
+              className={`about-hero-dot ${currentHeroSlide===index ? 'active' : ''}`}
               onClick={() => setCurrentHeroSlide(index)}
             ></span>
           ))}
@@ -302,7 +304,7 @@ export default function AboutUs() {
             </p>
             <button 
               className="about-readmore-btn" 
-              onClick={() => window.open('https://meripehchaan.gov.in/', '_blank', 'noopener,noreferrer')}
+              onClick={()=>window.open('https://meripehchaan.gov.in/', '_blank', 'noopener,noreferrer')}
             >
               {t('about_read_more_button')}
             </button>
@@ -397,11 +399,11 @@ export default function AboutUs() {
         <div className="about-partners-indicators">
           <span 
             className={`about-partners-indicator ${currentPack === 0 ? 'active' : ''}`}
-            onClick={() => setCurrentPack(0)}
+            onClick={()=>setCurrentPack(0)}
           ></span>
           <span 
             className={`about-partners-indicator ${currentPack === 1 ? 'active' : ''}`}
-            onClick={() => setCurrentPack(1)}
+            onClick={()=>setCurrentPack(1)}
           ></span>
         </div>
       </section>
@@ -487,34 +489,34 @@ export default function AboutUs() {
         <h2 className="about-section-title">{t('about_section_title_faq')}</h2>
         
         <div className="about-faq-list">
-          <div className={`about-faq-item ${openFaq === 0 ? 'active' : ''}`}>
-            <button className="about-faq-question" onClick={() => toggleFaq(0)}>
+          <div className={`about-faq-item ${openFaq===0? 'active' : ''}`}>
+            <button className="about-faq-question" onClick={()=>toggleFaq(0)}>
               <span>{t('about_faq_q1')}</span>
-              <i className={`bi bi-chevron-${openFaq === 0 ? 'up' : 'down'}`}></i>
+              <i className={`bi bi-chevron-${openFaq===0? 'up' : 'down'}`}></i>
             </button>
-            {openFaq === 0 && (
+            {openFaq===0 && (
               <div className="about-faq-answer">
                 {t('about_faq_a1')}
               </div>
             )}
           </div>
-          <div className={`about-faq-item ${openFaq === 1 ? 'active' : ''}`}>
-            <button className="about-faq-question" onClick={() => toggleFaq(1)}>
+          <div className={`about-faq-item ${openFaq===1 ? 'active' : ''}`}>
+            <button className="about-faq-question" onClick={()=>toggleFaq(1)}>
               <span>{t('about_faq_q2')}</span>
-              <i className={`bi bi-chevron-${openFaq === 1 ? 'up' : 'down'}`}></i>
+              <i className={`bi bi-chevron-${openFaq===1 ? 'up' : 'down'}`}></i>
             </button>
-            {openFaq === 1 && (
+            {openFaq===1 && (
               <div className="about-faq-answer">
                 {t('about_faq_a2')}
               </div>
             )}
           </div>
-          <div className={`about-faq-item ${openFaq === 2 ? 'active' : ''}`}>
-            <button className="about-faq-question" onClick={() => toggleFaq(2)}>
+          <div className={`about-faq-item ${openFaq===2? 'active' : ''}`}>
+            <button className="about-faq-question" onClick={()=>toggleFaq(2)}>
               <span>{t('about_faq_q3')}</span>
-              <i className={`bi bi-chevron-${openFaq === 2 ? 'up' : 'down'}`}></i>
+              <i className={`bi bi-chevron-${openFaq===2? 'up' : 'down'}`}></i>
             </button>
-            {openFaq === 2 && (
+            {openFaq===2 && (
               <div className="about-faq-answer">
                 {t('about_faq_a3')}
               </div>

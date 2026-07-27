@@ -40,8 +40,7 @@ export function DashboardProvider({children}){
     if(saved_data){
       try{
         const savedSettings = JSON.parse(saved_data);
-        const backupCodeEnabled = savedSettings.backupCode === true && savedSettings.backupCodeEnabled === true;
-        return { ...savedSettings, backupCode: backupCodeEnabled, backupCodeEnabled };
+        return { ...savedSettings, backupCode: false, backupCodeEnabled: false };
       }catch(e){}
     }
 
@@ -60,12 +59,12 @@ export function DashboardProvider({children}){
   },[profile]);
 
   useEffect(()=>{
-    localStorage.setItem('mp_settings',JSON.stringify(settings))
+    localStorage.setItem('mp_settings',JSON.stringify(settings));
   },[settings]);
 
   const updateProfile=(newProfile)=>{
     setProfile(prev=>({...prev, ...newProfile}));
-  }
+  };
 
   const updateAvatar=(newAvatar)=>{
     setAvatar(newAvatar);
@@ -78,23 +77,47 @@ export function DashboardProvider({children}){
 
   const updateSetting=(key,value)=>{
     setSettings(prev=>({...prev, [key]:value}));
-  }
+  };
+
+  const resetAccessibility = () => {
+    try {
+      localStorage.removeItem('jp_accessibility_settings');
+      sessionStorage.removeItem('jp_accessibility_settings');
+    } catch {}
+    delete document.body.dataset.biggerText;
+    delete document.body.dataset.textSpacing;
+    delete document.body.dataset.lineHeight;
+    document.body.classList.remove(
+      'acc-highlight-links',
+      'acc-dyslexia-mode',
+      'acc-hide-images',
+      'acc-custom-cursor',
+      'acc-dark-mode'
+    );
+    document.documentElement.classList.remove('acc-invert-colors');
+    document.documentElement.style.fontSize = '';
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  };
 
   const logout=()=>{
+    resetAccessibility();
     localStorage.removeItem('mp_user');
     localStorage.removeItem('mp_avatar');
     localStorage.removeItem('user_devices');
     localStorage.removeItem('recent_activities');
+    localStorage.removeItem('mp_mfa_devices_count');
     window.location.href='/login';
-  }
+  };
 
   const logoutAll=()=>{
+    resetAccessibility();
     localStorage.removeItem('mp_user');
     localStorage.removeItem('mp_avatar');
     localStorage.removeItem('user_devices');
     localStorage.removeItem('recent_activities');
+    localStorage.removeItem('mp_mfa_devices_count');
     window.location.href='/login';
-  }
+  };
 
   const value={
     profile,
@@ -118,7 +141,7 @@ export function DashboardProvider({children}){
 export function useDashboard(){
   const context=useContext(DashboardContext);
   if(!context){
-    throw new error('Error:it must be used within DashboardProvider');
+    throw new Error('Error: it must be used within DashboardProvider');
   }
   return context;
 }

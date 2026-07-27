@@ -63,7 +63,6 @@ export default function App() {
               element={
                 <PrivateRoute>
                   <MainLayout />
-                  <AccessibilityWidget/>
                 </PrivateRoute>
               }
             >
@@ -78,7 +77,6 @@ export default function App() {
               element={
                 <PrivateRoute>
                   <Services />
-                  <AccessibilityWidget/>
                 </PrivateRoute>
               }
             />
@@ -86,6 +84,8 @@ export default function App() {
             <Route path="*" element={<Navigate to="/login" replace />} />
 
           </Routes>
+
+          <AccessibilityWidget/>
           
         </DashboardProvider>
 

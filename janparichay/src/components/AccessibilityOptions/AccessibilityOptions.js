@@ -5,7 +5,7 @@ import lineHeightIcon from '../../assets/icons/line-height.svg';
 import highlightLinksIcon from '../../assets/icons/highlight-links.svg';
 import dyslexiaFriendlyIcon from '../../assets/icons/dyslexia-friendly.svg';
 import hideImagesIcon from '../../assets/icons/hide-images.svg';
-import cursorIcon from '../../assets/icons/cursor.svg';
+import cursorIcon from '../../images/cursor-circle-selection-icon-svg.webp';
 import lightDarkIcon from '../../assets/icons/light-dark.svg';
 import invertColorsIcon from '../../assets/icons/invert-colors.svg';
 

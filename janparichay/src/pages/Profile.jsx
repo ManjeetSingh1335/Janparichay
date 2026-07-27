@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {useDashboard} from '../context/DashboardContext.jsx'
 import { useLanguage } from '../context/LanguageContext'
+import EyeIcon from '../components/EyeIcon'
 import '../Profile.css'
 
 const INDIAN_STATES=[
@@ -1044,7 +1045,7 @@ function Profile() {
                   onClick={() => setShowPassword(prev=>!prev)}
                   aria-label={showPassword ? t('password_input_aria_label_hide') : t('password_input_aria_label_show')}
                 >
-                  <i className={`bi ${showPassword ? 'bi-eye' : 'bi-eye-slash'}`}></i>
+                  <EyeIcon show={showPassword} />
                 </button>
               </div>
               <button type="submit" className="btn-profile-modal-submit">
@@ -1140,10 +1141,11 @@ function Profile() {
                     />
                     <div className="profile-input-icons-wrapper">
                       <i className="bi bi-info-circle-fill profile-input-icon-action" title={t('profile_driving_licence_format_hint')}></i>
-                      <i
-                        className={`bi ${showLicenseText ? 'bi-eye' : 'bi-eye-slash'} profile-input-icon-action`}
+                      <EyeIcon
+                        show={showLicenseText}
+                        className="profile-input-icon-action"
                         onClick={()=>setShowLicenseText(prev=>!prev)}
-                      ></i>
+                      />
                     </div>
                   </div>
                 ) : showVerifyModal==='pan' ? (
@@ -1158,10 +1160,11 @@ function Profile() {
                     />
                     <div className="profile-input-icons-wrapper">
                       <i className="bi bi-info-circle-fill profile-input-icon-action" title={t('profile_pan_format_hint')}></i>
-                      <i
-                        className={`bi ${showPanText ? 'bi-eye' : 'bi-eye-slash'} profile-input-icon-action`}
+                      <EyeIcon
+                        show={showPanText}
+                        className="profile-input-icon-action"
                         onClick={()=>setShowPanText(prev=>!prev)}
-                      ></i>
+                      />
                     </div>
                   </div>
                 ) : (

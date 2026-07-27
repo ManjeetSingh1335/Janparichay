@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Input from './Input'
 import { useLanguage } from '../context/LanguageContext'
 
+import EyeIcon from './EyeIcon'
+
 export default function PasswordInput({
   id,
   label,
@@ -25,8 +27,8 @@ export default function PasswordInput({
       placeholder={placeholder}
       className={className}
       rightAddon={
-        <i
-          className={`bi ${show ? 'bi-eye-slash' : 'bi-eye'}`}
+        <EyeIcon
+          show={show}
           onClick={() => setShow(v => !v)}
           role="button"
           aria-label={show ? t('password_input_aria_label_hide') : t('password_input_aria_label_show')}
