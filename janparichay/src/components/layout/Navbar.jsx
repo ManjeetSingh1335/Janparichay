@@ -4,13 +4,13 @@ import meriPehchaanLogo from '../../images/meri-pehchaan.png';
 import keyIcon from '../../images/key-icon.png';
 import './Layout.css'
 import {useDashboard} from '../../context/DashboardContext.jsx'
-import { useLanguage } from '../../context/LanguageContext'
+import {useLanguage} from '../../context/LanguageContext'
 import {NavLink} from 'react-router-dom'
 
 function Navbar() {
 
   const {profile, avatar, updateAvatar, logout} = useDashboard();
-  const { t } = useLanguage()
+  const {t} = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [mobileUploadOpen, setMobileUploadOpen] = useState(false);
@@ -184,7 +184,7 @@ function Navbar() {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    color: showWebcam ? '#007bff' : (isCameraHovered ? '#0f172a' : '#475569'),
+    color: showWebcam ? '#808080' : (isCameraHovered ? '#0f172a' : '#475569'),
     padding: 0,
     display: 'flex',
     alignItems: 'center',
