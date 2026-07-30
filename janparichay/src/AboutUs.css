@@ -13,7 +13,7 @@
   scrollbar-color: #cbd5e1 #f1f5f9;
 }
 
-/*scrollbar*/
+/* Scrollbar */
 .about-page::-webkit-scrollbar {
   width: 10px;
 }
@@ -150,7 +150,7 @@
   cursor: pointer;
 }
 
-/*banner slider*/
+/* Banner slider */
 .about-hero-slider-viewport {
   position: relative;
   width: 100%;
@@ -222,7 +222,7 @@
   font-size: 20px;
 }
 
-/* section */
+/* Section */
 .about-section {
   padding: 80px 68px;
 }
@@ -323,7 +323,7 @@
   flex-shrink: 0;
 }
 
-/* service partners */
+/* Service partners */
 .about-partners {
   background-color: #124369;
   color: #ffffff;
