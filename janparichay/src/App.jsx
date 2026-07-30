@@ -18,15 +18,15 @@ import {DashboardProvider} from './context/DashboardContext.jsx'
 import AccessibilityWidget from './components/AccessibilityOptions/AccessibilityWidget.jsx'
 
 
-function PrivateRoute({ children }) {
-  const user = localStorage.getItem('mp_user')
-  return user ? children : <Navigate to="/login" replace />
+function PrivateRoute({ children }){
+  const user=localStorage.getItem('mp_user')
+  return user? children : <Navigate to="/login" replace />
 }
 
 export default function App() {
 
-  const location = useLocation();
-
+  const location=useLocation();
+  
   useEffect(()=>{
     if(location.hash){
       const timeoutId=setTimeout(()=>{
@@ -50,33 +50,33 @@ export default function App() {
           <Routes>
 
             <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/authentication" element={<Authentication />} />
+            <Route path="/about" element={<AboutUs/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/authentication" element={<Authentication/>} />
             <Route path="/signup" element={<Signup/>} />
-            <Route path="/terms-conditions" element={<TermsConditions />} />
-            <Route path="/application-policies" element={<ApplicationPolicies />} />
-            <Route path="/faq" element={<FAQ />} />
+            <Route path="/terms-conditions" element={<TermsConditions/>} />
+            <Route path="/application-policies" element={<ApplicationPolicies/>} />
+            <Route path="/faq" element={<FAQ/>} />
 
             <Route
               path="/dashboard"
               element={
                 <PrivateRoute>
-                  <MainLayout />
+                  <MainLayout/>
                 </PrivateRoute>
               }
             >
-              <Route index element={<Dashboard />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="activity" element={<AccountActivity />} />
-              <Route path="consent" element={<ConsentDashboard />} />
+              <Route index element={<Dashboard/>} />
+              <Route path="profile" element={<Profile/>} />
+              <Route path="activity" element={<AccountActivity/>} />
+              <Route path="consent" element={<ConsentDashboard/>} />
             </Route>
 
             <Route
               path="/dashboard/services"
               element={
                 <PrivateRoute>
-                  <Services />
+                  <Services/>
                 </PrivateRoute>
               }
             />
