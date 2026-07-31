@@ -15,25 +15,25 @@ export function useLoginSession() {
         country: data.country_name || 'Unknown',
       };
     }catch{
-      return {ip: 'Unavailable', city: 'Unknown', country: 'Unknown'};
+      return{
+        ip: 'Unavailable',
+        city: 'Unknown', 
+        country: 'Unknown'
+      };
     }
   };
 
-  function getDeviceInfo() {
-
+  function getDeviceInfo(){
     const result=new UAParser().getResult();
-    let os = result.os.name || 'Windows';
-    if(os === 'Mac OS'){
-      os = 'macOS';
-    } 
-    const browser = result.browser.name || 'Chrome';
+    const os=result.os.name || '';
+    const browser=result.browser.name || '';
     return {os, browser};
-
   }
 
   async function recordSession(loginWith){
 
     const ipData=await getIpData();
+
     const now=new Date();
     const pad=n=>String(n).padStart(2, '0');
     const timeStr=`${pad(now.getDate())}-${pad(now.getMonth()+1)}-${now.getFullYear()} ` +
@@ -45,7 +45,7 @@ export function useLoginSession() {
 
     const {os, browser}=getDeviceInfo();
 
-    let city=ipData.city === 'Delhi'? 'Delhi' : ipData.city;
+    let city=ipData.city==='Delhi'? 'Delhi' : ipData.city;
     const locationStr=`${city}, ${ipData.country}`;
 
    
@@ -57,7 +57,7 @@ export function useLoginSession() {
     }
 
     const devIdx=devices.findIndex(d=>d.os===os && d.browser===browser);
-    if(devIdx !== -1){
+    if(devIdx!==-1){
       devices[devIdx].time=timeStr;
     }else{
       devices.push({id: Date.now(), os, browser, time: timeStr});
@@ -76,7 +76,7 @@ export function useLoginSession() {
     activities=activities.map(act=>({...act, isCurrent: false}));
 
     const actIdx=activities.findIndex(a=>a.os===os && a.browser===browser);
-    if(actIdx!== -1){
+    if(actIdx!==-1){
       activities[actIdx]={
         ...activities[actIdx],
         loginTime: timeStr,
@@ -105,4 +105,5 @@ export function useLoginSession() {
   }
 
   return {recordSession};
+
 }

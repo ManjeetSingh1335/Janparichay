@@ -4,9 +4,9 @@ import englishTranslations from '../locales/en.json'
 
 export function usePageLanguage() {
 
-  const {langCode, languages}=useLanguage()
-  const [pageLangCode, setPageLangCode]=useState(langCode)
-  const [translations, setTranslations]=useState(englishTranslations)
+  const {langCode, languages}=useLanguage();
+  const [pageLangCode, setPageLangCode]=useState(langCode);
+  const [translations, setTranslations]=useState(englishTranslations);
 
   useEffect(()=>{
     setPageLangCode(langCode);
@@ -25,12 +25,12 @@ export function usePageLanguage() {
     return()=>{
       isCurrent=false
     }
-  }, [pageLangCode])
+  }, [pageLangCode]);
 
   const t=useCallback(
     key=>translations[key] ?? englishTranslations[key] ?? key,
     [translations]
-  )
+  );
 
-  return {t, pageLangCode, setPageLangCode, languages}
+  return {t, pageLangCode, setPageLangCode, languages};
 }

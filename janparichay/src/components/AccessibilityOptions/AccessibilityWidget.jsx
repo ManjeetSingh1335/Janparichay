@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { accessibilityOptions } from './AccessibilityOptions';
+import React, {useState, useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
+import {accessibilityOptions} from './AccessibilityOptions';
 import './AccessibilityWidget.css';
-import { useLanguage } from '../../context/LanguageContext';
+import {useLanguage} from '../../context/LanguageContext';
 
-const SETTINGS_KEY = 'jp_accessibility_settings';
+const SETTINGS_KEY='jp_accessibility_settings';
 
-const STEP_MAX = {
+const STEP_MAX={
   biggerText: 4,
   textSpacing: 3,
   lineHeight: 4,
 };
 
 function AccessibilityWidget() {
-  const { t } = useLanguage();
+  
+  const { t }=useLanguage();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 

@@ -5,10 +5,11 @@ import {usePageLanguage} from '../hooks/usePageLanguage'
 import '../TermsConditions.css'
 
 export default function TermsConditions() {
-  const navigate=useNavigate()
-  const {t, pageLangCode, setPageLangCode}=usePageLanguage()
-  const [langDropdownOpen, setLangDropdownOpen]=useState(false)
-  const langRef=useRef(null)
+
+  const navigate=useNavigate();
+  const {t, pageLangCode, setPageLangCode}=usePageLanguage();
+  const [langDropdownOpen, setLangDropdownOpen]=useState(false);
+  const langRef=useRef(null);
 
   const languages=[
     {code: 'en', label: 'English'},
@@ -27,10 +28,10 @@ export default function TermsConditions() {
       }
     }
     if(langDropdownOpen){
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('mousedown', handleClickOutside);
     }
     return()=>{
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [langDropdownOpen])
 

@@ -1,7 +1,8 @@
-import React, { useId } from 'react';
+import React, {useId} from 'react';
 
 export function EyeIcon({ show = false, size = '1.1em', className = '', onClick, ...props }) {
-  const maskId = useId();
+  
+  const maskId=useId();
 
   if(show){
     return (

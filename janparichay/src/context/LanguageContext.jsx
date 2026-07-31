@@ -47,7 +47,7 @@ export function LanguageProvider({children}){
   }, [translations]);
 
   return (
-    <LanguageContext.Provider value={{ langCode, changeLanguage, t, languages: LANGUAGES }}>
+    <LanguageContext.Provider value={{langCode, changeLanguage, t, languages: LANGUAGES}}>
       {children}
     </LanguageContext.Provider>
   )
@@ -56,6 +56,6 @@ export function LanguageProvider({children}){
 export function useLanguage(){
   const ctx=useContext(LanguageContext);
   if(!ctx) 
-    throw new Error('useLanguage must be used inside LanguageProvider')
+    throw new Error('Error')
   return ctx
 }

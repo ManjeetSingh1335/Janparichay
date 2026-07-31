@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, {useEffect, useRef, useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import meriPehchaanLogo from '../images/pehchaan_logo.webp'
-import { useLoginSession } from '../hooks/useLoginSession'
+import {useLoginSession} from '../hooks/useLoginSession'
 import {
   clearPendingUser,
   getPendingUser,
   isBackupAuthenticationRequired,
   trustCurrentDevice,
 } from '../utils/backupAuthentication'
-import { useLanguage } from '../context/LanguageContext'
+import {useLanguage} from '../context/LanguageContext'
 import logo11Years from '../images/11 Year Logo.png'
 import backupAuthIcon from '../images/Backup-Auth.png'
 import ThreeDot from '../components/ThreeDot'
@@ -17,59 +17,64 @@ import AccessibilityWidget from '../components/AccessibilityOptions/Accessibilit
 import '../Authentication.css'
 
 export default function Authentication() {
-  const navigate = useNavigate()
-  const {t} = useLanguage()
-  const { recordSession } = useLoginSession()
-  const [pendingUser] = useState(getPendingUser)
-  const [selected, setSelected] = useState(false)
-  const [step, setStep] = useState('choose')
-  const [code, setCode] = useState('')
-  const [showCode, setShowCode] = useState(false)
-  const [trustDevice, setTrustDevice] = useState(false)
-  const [error, setError] = useState('')
-  const [submitting, setSubmitting] = useState(false)
-  const [kebabOpen, setKebabOpen] = useState(false)
-  const kebabBtnRef = useRef(null)
 
-  useEffect(() => {
-    if (!pendingUser || !isBackupAuthenticationRequired(pendingUser.username)) {
-      navigate('/login', { replace: true })
+  const navigate=useNavigate();
+  const {t}=useLanguage();
+  const {recordSession}=useLoginSession();
+
+  const [pendingUser]=useState(getPendingUser);
+  const [selected, setSelected]=useState(false);
+  const [step, setStep]=useState('choose');
+  const [code, setCode]=useState('');
+  const [showCode, setShowCode]=useState(false);
+  const [trustDevice, setTrustDevice]=useState(false);
+  const [error, setError]=useState('');
+
+  const [submitting, setSubmitting]=useState(false);
+  const [kebabOpen, setKebabOpen]=useState(false);
+  const kebabBtnRef=useRef(null);
+
+  useEffect(()=>{
+    if(!pendingUser || !isBackupAuthenticationRequired(pendingUser.username)){
+      navigate('/login', {replace: true})
     }
   }, [navigate, pendingUser])
 
-  const loginAsDifferentUser = () => {
-    clearPendingUser()
-    navigate('/login')
+  const loginAsDifferentUser=()=>{
+    clearPendingUser();
+    navigate('/login');
   }
 
-  const handleSignIn = async event => {
-    event.preventDefault()
-    const enteredCode = code.trim()
-    let backupCodes
+  const handleSignIn=async event=>{
+    event.preventDefault();
+    const enteredCode=code.trim();
+    let backupCodes;
 
-    try {
-      backupCodes = JSON.parse(localStorage.getItem('mp_backup_codes') || '[]')
-    } catch {
-      backupCodes = []
+    try{
+      backupCodes=JSON.parse(localStorage.getItem('mp_backup_codes') || '[]');
+    }catch{
+      backupCodes=[];
     }
 
-    const codeIndex = backupCodes.findIndex(item => item.code === enteredCode && !item.used)
-    if (codeIndex === -1) {
-      setError(t('error_invalid_backup_code', 'Enter an unused backup code from your backup-code list.'))
-      return
+    const codeIndex=backupCodes.findIndex(item=>item.code===enteredCode && !item.used)
+    if(codeIndex===-1){
+      setError(t('error_invalid_backup_code', 'Enter an unused backup code from your backup-code list.'));
+      return;
     }
 
-    setSubmitting(true)
-    backupCodes[codeIndex] = { ...backupCodes[codeIndex], used: true }
-    localStorage.setItem('mp_backup_codes', JSON.stringify(backupCodes))
-    if (trustDevice) trustCurrentDevice(pendingUser.username)
-    await recordSession('Backup Code')
-    localStorage.setItem('mp_user', JSON.stringify(pendingUser))
-    clearPendingUser()
-    navigate('/dashboard', { replace: true })
+    setSubmitting(true);
+    backupCodes[codeIndex]={...backupCodes[codeIndex], used: true};
+    localStorage.setItem('mp_backup_codes', JSON.stringify(backupCodes));
+    if(trustDevice) trustCurrentDevice(pendingUser.username);
+    await recordSession('Backup Code');
+    localStorage.setItem('mp_user', JSON.stringify(pendingUser));
+    clearPendingUser();
+    navigate('/dashboard', {replace: true});
   }
 
-  if (!pendingUser) return null
+  if(!pendingUser){
+    return null;
+  }
 
   return (
     <main className="authentication-page">
@@ -80,7 +85,7 @@ export default function Authentication() {
       <img className="authentication-logo" src={meriPehchaanLogo} alt="Meri Pehchaan Single Sign-On Service" />
 
       <section className="authentication-card" aria-labelledby="authentication-title">
-        {step === 'choose' ? (
+        {step==='choose'? (
           <>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginBottom: '2px' }}>
               <h1 id="authentication-title" style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#111', lineHeight: 1.4, textAlign: 'center', flex: 1 }}>
@@ -92,14 +97,14 @@ export default function Authentication() {
                   ref={kebabBtnRef}
                   type="button"
                   className="kebab-btn"
-                  onClick={() => setKebabOpen(v => !v)}
+                  onClick={()=>setKebabOpen(v=>!v)}
                   aria-label={t('login_kebab_aria_label', 'More options')}
                 >
                   ⋮
                 </button>
                 <ThreeDot
                   open={kebabOpen}
-                  onClose={() => setKebabOpen(false)}
+                  onClose={()=>setKebabOpen(false)}
                   triggerRef={kebabBtnRef}
                   menuStyle={{ right: 'auto', left: '100%', marginLeft: '6px', top: 0 }}
                 />
@@ -122,7 +127,7 @@ export default function Authentication() {
               {t('backup_authentication', 'Backup Code Authentication')}
             </button>
 
-            <button type="button" className="authentication-next" disabled={!selected} onClick={() => setStep('code')}>
+            <button type="button" className="authentication-next" disabled={!selected} onClick={()=>setStep('code')}>
               {t('next', 'Next')}
             </button>
             <button type="button" className="authentication-link" onClick={loginAsDifferentUser}>{t('login_as_different_user', 'Login as Different User')}</button>
@@ -130,7 +135,7 @@ export default function Authentication() {
         ) : (
           <>
             <div className="authentication-code-title">
-              <button type="button" className="authentication-back" onClick={() => setStep('choose')} aria-label={t('back_to_auth_options_aria', 'Back to authentication options')}>&#171;</button>
+              <button type="button" className="authentication-back" onClick={()=>setStep('choose')} aria-label={t('back_to_auth_options_aria', 'Back to authentication options')}>&#171;</button>
               <h1 id="authentication-title">{t('sign_in_via_text', 'Sign In to your account via')} <span>{t('login_janparichay', 'JanParichay')}</span><br /><strong>{t('backup_authentication', 'Backup Code Authentication')}</strong></h1>
               <span className="authentication-menu" aria-hidden="true">&#8942;</span>
             </div>
@@ -140,7 +145,7 @@ export default function Authentication() {
                 <input
                   id="backup-code"
                   value={code}
-                  onChange={event => { setCode(event.target.value.replace(/\s/g, '')); setError('') }}
+                  onChange={event=>{setCode(event.target.value.replace(/\s/g, '')); setError('')}}
                   type={showCode ? 'text' : 'password'}
                   inputMode="numeric"
                   autoComplete="one-time-code"
@@ -151,7 +156,7 @@ export default function Authentication() {
               </div>
               {error && <p className="authentication-error" role="alert">{error}</p>}
               <label className="authentication-checkbox">
-                <input type="checkbox" checked={trustDevice} onChange={event => setTrustDevice(event.target.checked)} />
+                <input type="checkbox" checked={trustDevice} onChange={event=>setTrustDevice(event.target.checked)} />
                 <span>{t('dont_ask', "Don't ask me again on this Device")}</span>
               </label>
               <button type="submit" className="authentication-sign-in" disabled={!code || submitting}>
@@ -162,6 +167,7 @@ export default function Authentication() {
           </>
         )}
       </section>
+      
       <AccessibilityWidget />
     </main>
   )

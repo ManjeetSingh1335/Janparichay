@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-/* header styles */
+/* Header styles */
 .ap-header {
   background-color: #124369;
   height: 62px;
@@ -89,7 +89,7 @@
   width: 100%;
 }
 
-/* content area */
+/* Content area */
 .ap-body {
   max-width: 1470px;
   margin: 0 auto;
@@ -97,7 +97,7 @@
   box-sizing: border-box;
 }
 
-/* section-headings */
+/* Section-headings */
 .ap-heading {
   font-size: 29px;
   font-weight: 550;
@@ -106,7 +106,7 @@
   letter-spacing: 1px;
 }
 
-/* subheadings */
+/* Subheadings */
 .ap-subheading {
   font-size: 18px;
   font-weight: 300;

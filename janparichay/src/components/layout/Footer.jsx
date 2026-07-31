@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import './Layout.css'
 import englishTranslations from '../../locales/en.json'
 
@@ -12,25 +12,25 @@ import janparichay from '../../images/janparichay.png'
 import meity from '../../images/MeitY.png'
 import myGov from '../../images/myGov.png'
 
-const LOGOS = [
-  { src: myGov, alt: 'myGov' },
-  { src: indiaGov, alt: 'indiaGov' },
-  { src: meity, alt: 'MeitY' },
-  { src: digilocker, alt: 'digilocker' },
-  { src: janparichay, alt: 'janparichay' },
-  { src: epramaan, alt: 'epramaan' },
-  { src: digitalIndia, alt: 'Digital India' },
-  { src: govIn, alt: 'govIn' }
-]
+const LOGOS=[
+  {src: myGov, alt: 'myGov'},
+  {src: indiaGov, alt: 'indiaGov'},
+  {src: meity, alt: 'MeitY'},
+  {src: digilocker, alt: 'digilocker'},
+  {src: janparichay, alt: 'janparichay'},
+  {src: epramaan, alt: 'epramaan'},
+  {src: digitalIndia, alt: 'Digital India'},
+  {src: govIn, alt: 'govIn'}
+];
 
-function Footer({ showSlider = false }) {
+function Footer({showSlider=false}){
   return (
     <div className="footer-wrapper">
-      {/* Infinite Logo Slider */}
+      
       {showSlider && (
         <div className="logo-slider-wrapper">
           <div className="logo-slider-track">
-            {[...LOGOS, ...LOGOS, ...LOGOS].map((logo, index) => (
+            {[...LOGOS, ...LOGOS, ...LOGOS].map((logo, index)=>(
               <div className="logo-slider-item" key={index}>
                 <img src={logo.src} alt={logo.alt} />
               </div>
@@ -55,6 +55,7 @@ function Footer({ showSlider = false }) {
               </div>
           </div>
       </footer>
+
     </div>
   )
 }

@@ -337,7 +337,7 @@
   margin-bottom: 25px;
 }
 
-/* zoom out animation on load */
+/* Zoom out animation on load */
 @keyframes partnersZoomOut {
   from {
     transform: scale(1.6);

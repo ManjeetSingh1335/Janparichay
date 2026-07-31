@@ -1,4 +1,4 @@
-/*global reset/utilities for layout*/
+/* global */
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -30,7 +30,7 @@ html, body, #root {
   min-height: 0;
 }
 
-/*navbar styles*/
+/* Navbar styles */
 .navbar-container {
   position: fixed;
   top: 0;
@@ -189,7 +189,7 @@ html, body, #root {
   margin-right: 6px;
 }
 
-/*upload profile pic modal*/
+/* Upload profile pic modal */
 .upload-modal-overlay {
   position: fixed;
   top: 0;
@@ -308,7 +308,7 @@ html, body, #root {
   background-color: #0d3252;
 }
 
-/*sidebar styles*/
+/* Sidebar */
 .sidebar-container {
   width: 250px;
   background-color: #ffffff;
@@ -342,7 +342,7 @@ html, body, #root {
   color: #0f172a;
 }
 
-/*active and non-active navLinks*/
+/* Active and non-active navLinks */
 .sidebar-nav a.active-link {
   background-color: #e2e8f0; 
   color: #0f172a;
@@ -354,7 +354,7 @@ html, body, #root {
   color: #475569;
 }
 
-/*infinite logo slider styles*/
+/* Infinite logo slider */
 .footer-wrapper {
   width: 100%;
   display: flex;
@@ -412,7 +412,7 @@ html, body, #root {
   text-align: center;
   box-sizing: border-box;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  flex-shrink: 0;            /* stays at bottom of flex column */
+  flex-shrink: 0;            
   z-index: 100;
 }
 
@@ -659,7 +659,7 @@ html, body, #root {
     background-color: #ffffff;
   }
 
-  /*footer static at bottom of viewport flexbox*/
+  /* footer */
   .footer-container {
     position: static;
     width: 100%;
@@ -690,7 +690,7 @@ html, body, #root {
     display: none;
   }
 
-  /*upload modal on mobile:can scroll*/
+  /*upload modal on mobile*/
   .upload-modal-overlay {
     align-items: flex-start;
     overflow-y: auto;

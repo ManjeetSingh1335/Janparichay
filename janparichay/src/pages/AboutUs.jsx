@@ -24,28 +24,32 @@ import { useLanguage } from '../context/LanguageContext'
 
 
 export default function AboutUs() {
-  const {t} = useLanguage()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [activeTab, setActiveTab] = useState('about')
-  const [openFaq, setOpenFaq] = useState(null)
-  const [currentPack, setCurrentPack] = useState(0)
-  const [currentHeroSlide, setCurrentHeroSlide] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
-  const [showBackToTop, setShowBackToTop] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const {t}=useLanguage();
+  const navigate=useNavigate();
+  const location=useLocation();
+
+  const [isLoading, setIsLoading]=useState(true);
+  const [showBackToTop, setShowBackToTop]=useState(false);
+
+  const [activeTab, setActiveTab]=useState('about');
+  const [openFaq, setOpenFaq]=useState(null);
+  const [currentPack, setCurrentPack]=useState(0);
+  const [currentHeroSlide, setCurrentHeroSlide]=useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen]=useState(false);
 
 
   useEffect(()=>{
-    const pageEl = document.querySelector('.about-page')
-    if(!pageEl) return
-
-    const handleScroll=()=>{
-      setShowBackToTop(pageEl.scrollTop>300)
+    const pageEl=document.querySelector('.about-page');
+    if(!pageEl){
+      return;
     }
+    const handleScroll=()=>{
+      setShowBackToTop(pageEl.scrollTop>300);
+    }
+    pageEl.addEventListener('scroll', handleScroll);
+    return()=>pageEl.removeEventListener('scroll', handleScroll);
 
-    pageEl.addEventListener('scroll', handleScroll)
-    return()=>pageEl.removeEventListener('scroll', handleScroll)
   }, [isLoading])
 
   const scrollToTop=()=>{
@@ -63,8 +67,8 @@ export default function AboutUs() {
   ]
 
   useEffect(()=>{
-    const timer=setTimeout(()=>setIsLoading(false), 2000)
-    return()=>clearTimeout(timer)
+    const timer=setTimeout(()=>setIsLoading(false), 1500);
+    return()=>clearTimeout(timer);
   }, [])
 
   useEffect(()=>{
@@ -94,16 +98,16 @@ export default function AboutUs() {
 
   useEffect(()=>{
     const timer=setInterval(()=>{
-      setCurrentHeroSlide(prev=>(prev+1)%heroSlides.length)
+      setCurrentHeroSlide(prev=>(prev+1)%heroSlides.length);
     }, 5000)
-    return()=>clearInterval(timer)
+    return()=>clearInterval(timer);
   }, [])
 
   useEffect(()=>{
     const timer=setInterval(()=>{
-      setCurrentPack(prev=>(prev===0? 1 : 0))
-    }, 7000)
-    return ()=>clearInterval(timer)
+      setCurrentPack(prev=>(prev===0? 1 : 0));
+    }, 6000)
+    return ()=>clearInterval(timer);
   }, [])
 
   useEffect(()=>{
@@ -158,9 +162,9 @@ export default function AboutUs() {
   }, [isLoading])
 
   const handleNavClick=(sectionId)=>{
-    setActiveTab(sectionId)
-    setMobileMenuOpen(false)
-    const element=document.getElementById(sectionId)
+    setActiveTab(sectionId);
+    setMobileMenuOpen(false);
+    const element=document.getElementById(sectionId);
     if(element){
       if(['about', 'services', 'faq', 'contact'].includes(sectionId)){
         element.classList.remove('in-view')
@@ -197,7 +201,6 @@ export default function AboutUs() {
   return (
     <div className="about-page">
 
-      {/* Navigation bar */}
       <nav className="about-nav">
         <Link to="/login">
           <img src={meriPehchaanLogo} alt={t('about_logo_alt')} className="about-nav-logo" style={{ cursor: 'pointer' }} />
@@ -251,20 +254,20 @@ export default function AboutUs() {
         </div>
       )}
 
-      {/*Home section*/}
+      {/* Home section */}
       <header className="about-hero-slider-viewport" id="home">
         <div
           className="about-hero-slider-track"
           style={{
-            transform: `translateX(-${currentHeroSlide * 25}%)`,
-            width: `${heroSlides.length * 100}%`
+            transform: `translateX(-${currentHeroSlide*25}%)`,
+            width: `${heroSlides.length*100}%`
           }}
         >
           {heroSlides.map((slide, index)=>(
             <div
               className="about-hero-slide"
               key={index}
-              style={{ width: `${100 / heroSlides.length}%` }}
+              style={{ width: `${100/heroSlides.length}%` }}
             >
               <a href={slide.link} target="_blank" rel="noopener noreferrer">
                 <img
@@ -277,19 +280,18 @@ export default function AboutUs() {
           ))}
         </div>
 
-        {/* Dot indicators */}
         <div className="about-hero-dots">
           {heroSlides.map((_, index)=>(
             <span
               key={index}
               className={`about-hero-dot ${currentHeroSlide===index ? 'active' : ''}`}
-              onClick={() => setCurrentHeroSlide(index)}
+              onClick={()=>setCurrentHeroSlide(index)}
             ></span>
           ))}
         </div>
       </header>
 
-      {/*About section*/}
+      {/* About section */}
       <section className="about-section" id="about">
         <div className="about-section-tag">{t('about_section_tag_about')}</div>
         <h2 className="about-section-title">{t('about_section_title_who_we_are')}</h2>
@@ -346,7 +348,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Service partners  */}
+      {/* Service partners */}
       <section className="about-partners">
         <h3 className="about-partners-title">{t('about_partners_title')}</h3>
         <div className="about-partners-slider-viewport">
@@ -576,7 +578,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Partners footer */}
+
       <div className="about-footer-partners">
         <div className="about-footer-partner-card">
           <img src={NIC_logo} alt={t('about_footer_nic_alt')} className="about-footer-partner-img" />
@@ -594,12 +596,12 @@ export default function AboutUs() {
         </div>
       </div>
       
-      {/* Footer copyright */}
+      {/* Footer */}
       <footer className="about-footer-copyright">
         Copyright © 2026 JanParichay Meripehchaan All Rights Reserved
       </footer>
 
-      {/* Floating back to top button */}
+      {/* Back to top button */}
       <button 
         className={`about-back-to-top ${showBackToTop ? 'visible' : ''}`}
         onClick={scrollToTop}

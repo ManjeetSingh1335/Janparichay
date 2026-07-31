@@ -9,31 +9,31 @@ import {NavLink} from 'react-router-dom'
 
 function Navbar() {
 
-  const {profile, avatar, updateAvatar, logout} = useDashboard();
-  const {t} = useLanguage()
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [mobileUploadOpen, setMobileUploadOpen] = useState(false);
-  const menuRef = useRef(null);
+  const {profile, avatar, updateAvatar, logout}=useDashboard();
+  const {t}=useLanguage()
+  const [menuOpen, setMenuOpen]=useState(false);
+  const [hamburgerOpen, setHamburgerOpen]=useState(false);
+  const [mobileUploadOpen, setMobileUploadOpen]=useState(false);
+  const menuRef=useRef(null);
   
-  const [showUploadModal, setShowUploadModal] = useState(false);
-  const [selectedFileName, setSelectedFileName] = useState('');
-  const [tempFileUrl, setTempFileUrl] = useState(null);
-  const [showWebcam, setShowWebcam] = useState(false);
-  const [cameraError, setCameraError] = useState(false);
-  const fileInputRef = useRef(null);
-  const webcamRef = useRef(null);
+  const [showUploadModal, setShowUploadModal]=useState(false);
+  const [selectedFileName, setSelectedFileName]=useState('');
+  const [tempFileUrl, setTempFileUrl]=useState(null);
+  const [showWebcam, setShowWebcam]=useState(false);
+  const [cameraError, setCameraError]=useState(false);
+  const fileInputRef=useRef(null);
+  const webcamRef=useRef(null);
 
-  const [isCloseHovered, setIsCloseHovered] = useState(false);
-  const [isCameraHovered, setIsCameraHovered] = useState(false);
-  const [isImageHovered, setIsImageHovered] = useState(false);
-  const [isSubmitHovered, setIsSubmitHovered] = useState(false);
+  const [isCloseHovered, setIsCloseHovered]=useState(false);
+  const [isCameraHovered, setIsCameraHovered]=useState(false);
+  const [isImageHovered, setIsImageHovered]=useState(false);
+  const [isSubmitHovered, setIsSubmitHovered]=useState(false);
 
-  const handleAvatarClick = () => {
-    setMenuOpen(prev => !prev);
+  const handleAvatarClick=()=>{
+    setMenuOpen(prev=>!prev);
   }
 
-  const handleUploadClickInMenu = () => {
+  const handleUploadClickInMenu=()=>{
     setMenuOpen(false);
     setSelectedFileName('');
     setTempFileUrl(null);
@@ -50,24 +50,24 @@ function Navbar() {
     }
   }
 
-  const handleFileInput = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleFileInput=(e)=>{
+    const file=e.target.files[0];
+    if(file){
       setSelectedFileName(file.name);
       setShowWebcam(false); 
       setShowWebcam(false); 
-      const reader = new FileReader();
-      reader.onloadend = () => {
+      const reader=new FileReader();
+      reader.onloadend=()=>{
         setTempFileUrl(reader.result);
       };
       reader.readAsDataURL(file);
     }
   }
 
-  const handleCameraToggle = () => {
-    setShowWebcam(prev => {
-      const next = !prev;
-      if (next) {
+  const handleCameraToggle=()=>{
+    setShowWebcam(prev=>{
+      const next=!prev;
+      if(next){
         setCameraError(false);
         setSelectedFileName('');
         setTempFileUrl(null);
@@ -76,15 +76,15 @@ function Navbar() {
     });
   }
 
-  const handleWebcamError = (error) => {
+  const handleWebcamError=(error)=>{
     console.error("Webcam hardware error:", error);
     setCameraError(true);
   }
 
-  const capturePhoto = () => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      if (imageSrc) {
+  const capturePhoto=()=>{
+    if(webcamRef.current){
+      const imageSrc=webcamRef.current.getScreenshot();
+      if(imageSrc){
         setTempFileUrl(imageSrc);
         setSelectedFileName('CapturedImage.jpg');
         setShowWebcam(false); 
@@ -92,23 +92,23 @@ function Navbar() {
     }
   }
 
-  const handleUploadSubmit = () => {
-    if (tempFileUrl) {
+  const handleUploadSubmit=()=>{
+    if(tempFileUrl){
       updateAvatar(tempFileUrl);
       setShowUploadModal(false);
     }
   }
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+  useEffect(()=>{
+    function handleClickOutside(e){
+      if(menuRef.current && !menuRef.current.contains(e.target)){
         setMenuOpen(false);
       }
     }
-    if (menuOpen) {
+    if(menuOpen){
       document.addEventListener('mousedown', handleClickOutside);
     }
-    return () => {
+    return()=>{
       document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [menuOpen]);
@@ -311,9 +311,9 @@ function Navbar() {
           <p className="navbar-user-name">
             {profile.fullName || profile.name}
           </p>
-          {/* <p className="navbar-user-username">
+          <p className="navbar-user-username">
             {profile.username}
-          </p> */}
+          </p>
         </div>
         <div className="navbar-avatar-wrapper" style={{ position: 'relative' }}>
           <div className="navbar-avatar-container" onClick={handleAvatarClick} style={{ cursor: 'pointer', overflow: 'hidden' }}>
@@ -342,8 +342,8 @@ function Navbar() {
 
       <button
         className="hamburger-btn"
-        onClick={() => {
-          setHamburgerOpen(prev => !prev);
+        onClick={()=>{
+          setHamburgerOpen(prev=>!prev);
           setMobileUploadOpen(false);
         }}
         aria-label={t('navbar_hamburger_aria_label')}
@@ -355,13 +355,13 @@ function Navbar() {
 
 
       {hamburgerOpen && (
-        <div className="mobile-drawer-overlay" onClick={() => { setHamburgerOpen(false); setMobileUploadOpen(false); }}>
-          <div className="mobile-drawer" onClick={e => e.stopPropagation()}>
+        <div className="mobile-drawer-overlay" onClick={()=>{setHamburgerOpen(false); setMobileUploadOpen(false);}}>
+          <div className="mobile-drawer" onClick={e=>e.stopPropagation()}>
        
             <div className="mobile-drawer-header">
               <div 
                 className="mobile-drawer-avatar" 
-                onClick={() => setMobileUploadOpen(prev => !prev)}
+                onClick={()=>setMobileUploadOpen(prev=>!prev)}
                 style={{ cursor: 'pointer' }}
               >
                 {avatar ? (
@@ -379,29 +379,32 @@ function Navbar() {
                 <p className="mobile-drawer-username">{profile.username}</p>
               </div>
             </div>
+
             {/*upload profile pic*/}
             <div className={`mobile-drawer-upload ${mobileUploadOpen ? 'open' : ''}`}>
-              <button className="mobile-drawer-upload-btn" onClick={() => { setHamburgerOpen(false); setMobileUploadOpen(false); handleUploadClickInMenu(); }}>
+              <button className="mobile-drawer-upload-btn" onClick={()=>{setHamburgerOpen(false); setMobileUploadOpen(false); handleUploadClickInMenu();}}>
                 <i className="bi bi-upload"></i> {t('navbar_mobile_drawer_upload_profile_pic')}
               </button>
             </div>
-            {/*nav links*/}
+
+            {/* nav links */}
             <div className="mobile-drawer-nav">
-              {navLinks.map(link => (
+              {navLinks.map(link=>(
                 <NavLink
                   key={link.to}
                   to={link.to}
                   end={link.end}
-                  className={({ isActive }) => isActive ? 'mobile-nav-link active' : 'mobile-nav-link'}
-                  onClick={() => setHamburgerOpen(false)}
+                  className={({isActive})=>isActive ? 'mobile-nav-link active' : 'mobile-nav-link'}
+                  onClick={()=>setHamburgerOpen(false)}
                 >
                   {link.label}
                 </NavLink>
               ))}
             </div>
-            {/*Logout*/}
+
+            {/* Logout */}
             <div className="mobile-drawer-logout">
-              <button className="mobile-drawer-logout-btn" onClick={() => { setHamburgerOpen(false); logout(); }}>
+              <button className="mobile-drawer-logout-btn" onClick={()=>{setHamburgerOpen(false); logout();}}>
                 <i className="bi bi-power"></i> {t('navbar_mobile_drawer_logout')}
               </button>
             </div>
@@ -410,23 +413,23 @@ function Navbar() {
       )}
 
 
-      {/*upload profile pic*/}
+      {/* upload profile pic */}
       {showUploadModal && (
         <div 
           style={overlayStyle} 
-          onClick={() => setShowUploadModal(false)}
+          onClick={()=>setShowUploadModal(false)}
         >
           <div 
             style={containerStyle} 
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e)=>e.stopPropagation()}
           >
             
             <button 
               type="button" 
               style={closeBtnStyle}
-              onClick={() => setShowUploadModal(false)}
-              onMouseEnter={() => setIsCloseHovered(true)}
-              onMouseLeave={() => setIsCloseHovered(false)}
+              onClick={()=>setShowUploadModal(false)}
+              onMouseEnter={()=>setIsCloseHovered(true)}
+              onMouseLeave={()=>setIsCloseHovered(false)}
               aria-label={t('navbar_upload_modal_close_aria_label')}
             >
               <i className="bi bi-x-lg"></i>
@@ -441,8 +444,8 @@ function Navbar() {
                   type="button" 
                   style={cameraIconStyle}
                   onClick={handleCameraToggle}
-                  onMouseEnter={() => setIsCameraHovered(true)}
-                  onMouseLeave={() => setIsCameraHovered(false)}
+                  onMouseEnter={()=>setIsCameraHovered(true)}
+                  onMouseLeave={()=>setIsCameraHovered(false)}
                   title={t('navbar_upload_modal_camera_title')}
                 >
                   <i className="bi bi-camera-fill"></i>
@@ -451,8 +454,8 @@ function Navbar() {
                   type="button" 
                   style={imageIconStyle}
                   onClick={triggerFileInput}
-                  onMouseEnter={() => setIsImageHovered(true)}
-                  onMouseLeave={() => setIsImageHovered(false)}
+                  onMouseEnter={()=>setIsImageHovered(true)}
+                  onMouseLeave={()=>setIsImageHovered(false)}
                   title={t('navbar_upload_modal_file_title')}
                 >
                   <i className="bi bi-image-fill"></i>
@@ -461,7 +464,7 @@ function Navbar() {
             </div>
 
 
-            {/*webcam*/}
+            {/* webcam */}
             {showWebcam && (
               <div style={webcamContainerStyle}>
                
@@ -480,7 +483,7 @@ function Navbar() {
                       facingMode: "user"
                     }}
                     onUserMediaError={handleWebcamError}
-                    onUserMedia={() => setCameraError(false)}
+                    onUserMedia={()=>setCameraError(false)}
                     style={webcamFeedStyle}
                   />
                 )}
@@ -516,8 +519,8 @@ function Navbar() {
                 style={submitButtonStyle}
                 disabled={!tempFileUrl}
                 onClick={handleUploadSubmit}
-                onMouseEnter={() => setIsSubmitHovered(true)}
-                onMouseLeave={() => setIsSubmitHovered(false)}
+                onMouseEnter={()=>setIsSubmitHovered(true)}
+                onMouseLeave={()=>setIsSubmitHovered(false)}
               >
                 {t('navbar_upload_modal_submit')}
               </button>

@@ -2,7 +2,7 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import '../Dashboard.css'
 import {useDashboard} from '../context/DashboardContext.jsx'
-import { clearPendingUser } from '../utils/backupAuthentication'
+import {clearPendingUser} from '../utils/backupAuthentication'
 import {useLanguage} from '../context/LanguageContext'
 import EyeIcon from '../components/EyeIcon'
 import chromeLogo from '../images/chrome.png'
@@ -65,57 +65,57 @@ function Dashboard() {
   const [showMultiFactorPanel, setShowMultiFactorPanel]=React.useState(settings.multiFactor);
   const [showConfirmModal, setShowConfirmModal]=React.useState(false);
   const [mfaDevicesCount, setMfaDevicesCount]=React.useState(()=>{
-    if (!settings.multiFactor) return 0;
+    if(!settings.multiFactor) return 0;
     const saved=localStorage.getItem('mp_mfa_devices_count');
     return saved!==null? parseInt(saved, 10) : 0;
   });
 
-  const [showMfaSetup, setShowMfaSetup] = React.useState(false);
-  const [mfaTimer, setMfaTimer] = React.useState(50);
-  const [authKey, setAuthKey] = React.useState('QARIORBG');
-  const [mfaToken, setMfaToken] = React.useState('');
-  const [showMfaToken, setShowMfaToken] = React.useState(false);
+  const [showMfaSetup, setShowMfaSetup]=React.useState(false);
+  const [mfaTimer, setMfaTimer]=React.useState(50);
+  const [authKey, setAuthKey]=React.useState('QARIORBG');
+  const [mfaToken, setMfaToken]=React.useState('');
+  const [showMfaToken, setShowMfaToken]=React.useState(false);
 
-  const generateRandomAuthKey = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < 8; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+  const generateRandomAuthKey=()=>{
+    const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result='';
+    for(let i=0;i<8;i++){
+      result+=chars.charAt(Math.floor(Math.random()*chars.length));
     }
     return result;
   };
 
-  React.useEffect(() => {
+  React.useEffect(()=>{
     localStorage.setItem('mp_mfa_devices_count', mfaDevicesCount.toString());
   }, [mfaDevicesCount]);
 
-  React.useEffect(() => {
+  React.useEffect(()=>{
     let interval;
-    if (showMfaSetup && mfaTimer > 0) {
-      interval = setInterval(() => {
-        setMfaTimer(prev => prev - 1);
+    if(showMfaSetup && mfaTimer>0){
+      interval=setInterval(()=>{
+        setMfaTimer(prev=>prev-1);
       }, 1000);
-    } else if (showMfaSetup && mfaTimer === 0) {
+    } else if(showMfaSetup && mfaTimer===0){
       setMfaTimer(59);
       setAuthKey(generateRandomAuthKey());
     }
     return () => clearInterval(interval);
   }, [showMfaSetup, mfaTimer]);
 
-  const handleConfirmYes = () => {
+  const handleConfirmYes=()=>{
     setShowConfirmModal(false);
     setShowMfaSetup(true);
     setMfaTimer(50);
     setAuthKey(generateRandomAuthKey());
   };
 
-  const handleMfaSubmit = (e) => {
+  const handleMfaSubmit=(e)=>{
     e.preventDefault();
-    if (!mfaToken || mfaToken.length !== 6 || !/^\d+$/.test(mfaToken)) {
+    if(!mfaToken || mfaToken.length !== 6 || !/^\d+$/.test(mfaToken)){
       alert('Please enter a valid 6-digit verification code.');
       return;
     }
-    setMfaDevicesCount(prev => prev + 1);
+    setMfaDevicesCount(prev=>prev+1);
     setShowMfaSetup(false);
     setMfaToken('');
     alert('MFA Device added successfully!');
@@ -153,7 +153,9 @@ function Dashboard() {
         await writable.close();
         return;
       }catch(error){
-        if(error.name==='AbortError') return;
+        if(error.name==='AbortError'){
+          return;
+        }
       }
     }
 
@@ -185,7 +187,7 @@ function Dashboard() {
             unique.push(d);
           }
         });
-        return unique.length || 1;
+        return unique.length || 0;
       }catch(e){
         return "error";
       }
@@ -254,7 +256,7 @@ function Dashboard() {
 
       <div className="services-panel">
         <p className="services-empty-text">{t('dashboard_no_recent_services')}</p>
-        <button type="button" className="view-all-link" onClick={() => navigate('/dashboard/services')}>
+        <button type="button" className="view-all-link" onClick={()=>navigate('/dashboard/services')}>
           {t('dashboard_view_all_services_link')}
         </button>
       </div>
@@ -644,8 +646,8 @@ function Dashboard() {
                 {settings.backupCode && (
                   <button
                     type="button"
-                    className={`backup-code-panel-toggle${showBackupCodePanel ? ' is-open' : ''}`}
-                    onClick={() => setShowBackupCodePanel(open => !open)}
+                    className={`backup-code-panel-toggle${showBackupCodePanel? ' is-open' : ''}`}
+                    onClick={()=>setShowBackupCodePanel(open=>!open)}
                     aria-label={showBackupCodePanel ? 'Hide backup code details' : 'Show backup code details'}
                     aria-expanded={showBackupCodePanel}
                     title={showBackupCodePanel ? 'Hide backup codes' : 'Show backup codes'}
@@ -657,7 +659,7 @@ function Dashboard() {
                   <input
                     type="checkbox"
                     checked={settings.backupCode}
-                    onChange={(e) => handleBackupCodeToggle(e.target.checked)}
+                    onChange={(e)=>handleBackupCodeToggle(e.target.checked)}
                   />
                   <span className="toggle-slider"></span>
                 </label>
@@ -670,7 +672,7 @@ function Dashboard() {
                     <span><i className="backup-code-swatch used"></i>Already Used</span>
                   </div>
                   <div className="backup-code-grid">
-                    {backupCodes.map(backupCode => (
+                    {backupCodes.map(backupCode=>(
                       <span
                         key={backupCode.code}
                         className={`backup-code ${backupCode.used ? 'is-used' : ''}`}
@@ -733,7 +735,7 @@ function Dashboard() {
               {settings.multiFactor && showMultiFactorPanel && (
                 <div className="mfa-panel">
                   {!showMfaSetup ? (
-                    <div className="mfa-add-row" onClick={() => setShowConfirmModal(true)}>
+                    <div className="mfa-add-row" onClick={()=>setShowConfirmModal(true)}>
                       <span className="mfa-add-label">Add More Devices</span>
                       <span className="mfa-plus-box">+</span>
                     </div>
@@ -770,13 +772,13 @@ function Dashboard() {
                             placeholder="Enter Token"
                             maxLength={6}
                             value={mfaToken}
-                            onChange={(e) => setMfaToken(e.target.value.replace(/\D/g, ''))}
+                            onChange={(e)=>setMfaToken(e.target.value.replace(/\D/g, ''))}
                             className="mfa-token-input"
                           />
                           <button
                             type="button"
                             className="mfa-toggle-visibility"
-                            onClick={() => setShowMfaToken(!showMfaToken)}
+                            onClick={()=>setShowMfaToken(!showMfaToken)}
                             aria-label={showMfaToken ? "Hide token" : "Show token"}
                           >
                             <EyeIcon show={showMfaToken} />

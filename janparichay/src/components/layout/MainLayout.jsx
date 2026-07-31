@@ -6,11 +6,11 @@ import Footer from './Footer.jsx'
 import './Layout.css'
 
 function MainLayout() {
-  const location = useLocation();
-  const {pathname} = location;
+  const location=useLocation();
+  const {pathname}=location;
 
-  useEffect(() => {
-    if (location.state?.openRemembered) {
+  useEffect(()=>{
+    if(location.state?.openRemembered){
       return;
     }
 
@@ -18,10 +18,10 @@ function MainLayout() {
       window.history.scrollRestoration = 'manual';
     }
 
-    const handleScrollReset = () => {
+    const handleScrollReset=()=>{
       window.scrollTo(0,0);
       
-      const scrollableElements = [
+      const scrollableElements=[
         document.documentElement,
         document.body,
         document.getElementById('root'),
@@ -31,20 +31,20 @@ function MainLayout() {
         document.querySelector('main')
       ];
 
-      scrollableElements.forEach(el => {
+      scrollableElements.forEach(el=>{
         if(el){
-          el.scrollTop = 0;
-          el.scrollLeft = 0;
+          el.scrollTop=0;
+          el.scrollLeft=0;
         }
       });
     };
 
     handleScrollReset();
-    const t1 = setTimeout(handleScrollReset, 20);
-    const t2 = setTimeout(handleScrollReset, 80);
-    const t3 = setTimeout(handleScrollReset, 150);
+    const t1=setTimeout(handleScrollReset, 20);
+    const t2=setTimeout(handleScrollReset, 80);
+    const t3=setTimeout(handleScrollReset, 150);
 
-    return() => {
+    return()=>{
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);

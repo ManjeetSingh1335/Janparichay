@@ -4,7 +4,7 @@ const DashboardContext=createContext();
 
 export function DashboardProvider({children}){
 
-  const [profile,setProfile]=useState(()=>{
+  const [profile, setProfile]=useState(()=>{
     const saved_data=localStorage.getItem('mp_user');
     if(saved_data){
       try{
@@ -31,7 +31,7 @@ export function DashboardProvider({children}){
     };
   }); 
 
-  const [avatar,setAvatar]=useState(()=>{
+  const [avatar, setAvatar]=useState(()=>{
     return localStorage.getItem('mp_avatar') || null;
   });
 
@@ -39,11 +39,10 @@ export function DashboardProvider({children}){
     const saved_data=localStorage.getItem('mp_settings');
     if(saved_data){
       try{
-        const savedSettings = JSON.parse(saved_data);
-        return { ...savedSettings, backupCode: false, backupCodeEnabled: false };
+        const savedSettings=JSON.parse(saved_data);
+        return {...savedSettings, backupCode: false, backupCodeEnabled: false};
       }catch(e){}
     }
-
     return{
       newDeviceAlert:true,
       passwordlessAuth:true,
@@ -75,15 +74,15 @@ export function DashboardProvider({children}){
     }
   };
 
-  const updateSetting=(key,value)=>{
+  const updateSetting=(key, value)=>{
     setSettings(prev=>({...prev, [key]:value}));
   };
 
-  const resetAccessibility = () => {
-    try {
+  const resetAccessibility=()=>{
+    try{
       localStorage.removeItem('jp_accessibility_settings');
       sessionStorage.removeItem('jp_accessibility_settings');
-    } catch {}
+    }catch{}
     delete document.body.dataset.biggerText;
     delete document.body.dataset.textSpacing;
     delete document.body.dataset.lineHeight;
@@ -141,7 +140,7 @@ export function DashboardProvider({children}){
 export function useDashboard(){
   const context=useContext(DashboardContext);
   if(!context){
-    throw new Error('Error: it must be used within DashboardProvider');
+    throw new Error('Error');
   }
   return context;
 }
