@@ -40,7 +40,15 @@ export function DashboardProvider({children}){
     if(saved_data){
       try{
         const savedSettings=JSON.parse(saved_data);
-        return {...savedSettings, backupCode: false, backupCodeEnabled: false};
+        return {
+          newDeviceAlert:true,
+          passwordlessAuth:true,
+          geoFencing:false,
+          backupCode:false,
+          backupCodeEnabled:false,
+          multiFactor:false,
+          ...savedSettings
+        };
       }catch(e){}
     }
     return{

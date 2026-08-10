@@ -36,3 +36,16 @@ export function trustCurrentDevice(username){
     localStorage.setItem(TRUSTED_DEVICES_KEY, JSON.stringify({[username]: true}))
   }
 }
+
+export function clearTrustedDevice(username){
+  try{
+    if(username){
+      const trustedDevices=JSON.parse(localStorage.getItem(TRUSTED_DEVICES_KEY) || '{}');
+      delete trustedDevices[username];
+      localStorage.setItem(TRUSTED_DEVICES_KEY, JSON.stringify(trustedDevices));
+    }else{
+      localStorage.removeItem(TRUSTED_DEVICES_KEY);
+    }
+  }catch{}
+}
+

@@ -2,7 +2,7 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import '../Dashboard.css'
 import {useDashboard} from '../context/DashboardContext.jsx'
-import {clearPendingUser} from '../utils/backupAuthentication'
+import {clearPendingUser, clearTrustedDevice} from '../utils/backupAuthentication'
 import {useLanguage} from '../context/LanguageContext'
 import EyeIcon from '../components/EyeIcon'
 import chromeLogo from '../images/chrome.png'
@@ -60,7 +60,13 @@ function Dashboard() {
   const [clickedDataset, setClickedDataset]=React.useState(null);
 
   const [backupCodes, setBackupCodes]=React.useState(loadBackupCodes);
-  const [showBackupCodePanel, setShowBackupCodePanel]=React.useState(false);
+  const [showBackupCodePanel, setShowBackupCodePanel]=React.useState(settings.backupCode);
+
+  React.useEffect(()=>{
+    if(settings.backupCode){
+      setShowBackupCodePanel(true);
+    }
+  }, [settings.backupCode]);
 
   const [showMultiFactorPanel, setShowMultiFactorPanel]=React.useState(settings.multiFactor);
   const [showConfirmModal, setShowConfirmModal]=React.useState(false);
@@ -171,8 +177,12 @@ function Dashboard() {
   const handleBackupCodeToggle=(enabled)=>{
     updateSetting('backupCode', enabled);
     updateSetting('backupCodeEnabled', enabled);
-    if(enabled && backupCodes.length===0) regenerateBackupCodes();
-    if(!enabled) clearPendingUser();
+    if(enabled){
+      if(backupCodes.length===0) regenerateBackupCodes();
+      if(profile?.username) clearTrustedDevice(profile.username);
+    }else{
+      clearPendingUser();
+    }
     setShowBackupCodePanel(enabled);
   };
 
@@ -637,7 +647,19 @@ function Dashboard() {
             </div>
 
             <div className="settings-row-wrapper backup-code-wrapper">
-              <div className="settings-row">
+              <div
+                className="settings-row"
+                style={{ cursor: 'pointer' }}
+                onClick={(e)=>{
+                  if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && !e.target.closest('button')){
+                    if(settings.backupCode){
+                      setShowBackupCodePanel(open=>!open);
+                    }else{
+                      handleBackupCodeToggle(true);
+                    }
+                  }
+                }}
+              >
                 <span className="settings-label">
                   <i className="bi bi-shield-shaded settings-icon"></i>
                   {t('dashboard_settings_backup_code')}
@@ -647,7 +669,7 @@ function Dashboard() {
                   <button
                     type="button"
                     className={`backup-code-panel-toggle${showBackupCodePanel? ' is-open' : ''}`}
-                    onClick={()=>setShowBackupCodePanel(open=>!open)}
+                    onClick={(e)=>{ e.stopPropagation(); setShowBackupCodePanel(open=>!open); }}
                     aria-label={showBackupCodePanel ? 'Hide backup code details' : 'Show backup code details'}
                     aria-expanded={showBackupCodePanel}
                     title={showBackupCodePanel ? 'Hide backup codes' : 'Show backup codes'}
@@ -655,7 +677,7 @@ function Dashboard() {
                     <i className="bi bi-gear-fill" aria-hidden="true"></i>
                   </button>
                 )}
-                <label className="toggle-switch">
+                <label className="toggle-switch" onClick={(e)=>e.stopPropagation()}>
                   <input
                     type="checkbox"
                     checked={settings.backupCode}
